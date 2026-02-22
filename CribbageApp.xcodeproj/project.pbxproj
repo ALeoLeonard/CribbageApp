@@ -1,0 +1,571 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		054D553F473BF6CAF8A60C19 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEB0D7D23803CB7EF1BFD55 /* GameEngine.swift */; };
+		175FC45B1729C5D6AE5B04E2 /* GameBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E902C0C3243B6857CE3A9E /* GameBoardView.swift */; };
+		1F370BAB856EAC380B687378 /* PlayPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986B7D6BA95868018D7D2 /* PlayPhase.swift */; };
+		2918C67F7D74748DA8A40D7A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07DF68449CC062181A44B4 /* Constants.swift */; };
+		34A598D8F7FB00B3CBDC123F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DB89C988981B3EFD5C58CA /* CardView.swift */; };
+		43BA9691D321EBE4B1B35821 /* PlayPhaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */; };
+		61CAFA57ED8BC3E51C09A3BE /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587E8094E6027D8EAFE30202 /* Deck.swift */; };
+		6BFAAD834E5294B099F07943 /* AIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74F6CAEA289BE054592F85E /* AIProtocol.swift */; };
+		716B224CF7DB4209AC1BE672 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C74977A19BC49777145619 /* GameState.swift */; };
+		750B01449ADF02C544A29A6E /* CribbageAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */; };
+		785B15D4DE4983A641C004B7 /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F80F966A72AF38CC204CD18 /* Scoring.swift */; };
+		7AC5FF60B67DB2C6F4B990EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */; };
+		858341BA1BAEE1A353561116 /* HardAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA28D6157ECA9F550184D78 /* HardAI.swift */; };
+		85C23A4F21716537B725E0D7 /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97650273E09901D07D5EBD3E /* GameEngineTests.swift */; };
+		86AF000D6201E1A831B4E8A3 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DEF5A2AFE6CBFE5C5465 /* Card.swift */; };
+		87A36B718A7B842E1F817A3C /* AITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A158CEE251162854C6511B68 /* AITests.swift */; };
+		9D9FF0806D9D002996FC34B3 /* AIDifficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A6A1B1AA8EA8CBFE898D8E /* AIDifficulty.swift */; };
+		A6733B4B076AEF9791B90615 /* ScoringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC166BD84563EF94C851CB97 /* ScoringTests.swift */; };
+		A8F365E9FC9BAF1DC847CD3F /* PlayAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C61206A93B9376985756EB8 /* PlayAreaView.swift */; };
+		B647D9AF8A70D9076DC9C8B2 /* ScoreBreakdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57E6C2B9534FF9832B484A4D /* ScoreBreakdownView.swift */; };
+		BC92C30CEFE842D0FB0CEF28 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA61F2576AF35FD42E54A0B /* GameViewModel.swift */; };
+		BFB43201056A5B95049B4296 /* ActionBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9E95DBA0E02C77B1961D9 /* ActionBarView.swift */; };
+		CF42656DF4F6A82D59A6F8E8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3C509E24FBC40F85AD6D7C /* SettingsView.swift */; };
+		E0EA41F3DEB12A54C299B466 /* CardFanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD15AC727590EB5D488FD7DD /* CardFanView.swift */; };
+		E57E7DD23A85BFEA14DF8C66 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CE43B2E3B6E9C47EF1BEF8 /* GameOverView.swift */; };
+		F0168D0B15503351FB603832 /* EasyAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B50602FADD7EBEA096BE3C /* EasyAI.swift */; };
+		F8B79F0B63D2EC0605C5B4C4 /* MediumAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFAAE3DBA8A691CF1E3EB8 /* MediumAI.swift */; };
+		FA880C8EDFEB8D33AC37F615 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289A5B4BF6E9EAAF8FF72831 /* MainMenuView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F77D40751A7E946F4E6DB225 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BD42E3C65A71947C76621891 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 45FD731DCF030801FF50CCF5;
+			remoteInfo = CribbageApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		03C9E95DBA0E02C77B1961D9 /* ActionBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionBarView.swift; sourceTree = "<group>"; };
+		0AA28D6157ECA9F550184D78 /* HardAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardAI.swift; sourceTree = "<group>"; };
+		1467CE11B57FE639814FC6ED /* CribbageAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CribbageAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		14CE43B2E3B6E9C47EF1BEF8 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		18DB89C988981B3EFD5C58CA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		1AEB0D7D23803CB7EF1BFD55 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
+		289A5B4BF6E9EAAF8FF72831 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
+		2E07DF68449CC062181A44B4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		33A6A1B1AA8EA8CBFE898D8E /* AIDifficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIDifficulty.swift; sourceTree = "<group>"; };
+		3C61206A93B9376985756EB8 /* PlayAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayAreaView.swift; sourceTree = "<group>"; };
+		47EFAAE3DBA8A691CF1E3EB8 /* MediumAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumAI.swift; sourceTree = "<group>"; };
+		50E902C0C3243B6857CE3A9E /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardView.swift; sourceTree = "<group>"; };
+		57E6C2B9534FF9832B484A4D /* ScoreBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreBreakdownView.swift; sourceTree = "<group>"; };
+		587E8094E6027D8EAFE30202 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		76C74977A19BC49777145619 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CribbageAppApp.swift; sourceTree = "<group>"; };
+		8F80F966A72AF38CC204CD18 /* Scoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
+		97650273E09901D07D5EBD3E /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
+		9AA61F2576AF35FD42E54A0B /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
+		9CD3DEF5A2AFE6CBFE5C5465 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		A158CEE251162854C6511B68 /* AITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AITests.swift; sourceTree = "<group>"; };
+		A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPhaseTests.swift; sourceTree = "<group>"; };
+		AC166BD84563EF94C851CB97 /* ScoringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringTests.swift; sourceTree = "<group>"; };
+		B1E986B7D6BA95868018D7D2 /* PlayPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPhase.swift; sourceTree = "<group>"; };
+		CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CD15AC727590EB5D488FD7DD /* CardFanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFanView.swift; sourceTree = "<group>"; };
+		D571190280CFB9632F72C5FC /* CribbageApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CribbageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF3C509E24FBC40F85AD6D7C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E74F6CAEA289BE054592F85E /* AIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProtocol.swift; sourceTree = "<group>"; };
+		F2B50602FADD7EBEA096BE3C /* EasyAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyAI.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		1F582779EAB56463B794C756 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				E74F6CAEA289BE054592F85E /* AIProtocol.swift */,
+				F2B50602FADD7EBEA096BE3C /* EasyAI.swift */,
+				0AA28D6157ECA9F550184D78 /* HardAI.swift */,
+				47EFAAE3DBA8A691CF1E3EB8 /* MediumAI.swift */,
+			);
+			path = AI;
+			sourceTree = "<group>";
+		};
+		28EA0C2011A6C30E4C207F13 /* CribbageAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				A158CEE251162854C6511B68 /* AITests.swift */,
+				97650273E09901D07D5EBD3E /* GameEngineTests.swift */,
+				A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */,
+				AC166BD84563EF94C851CB97 /* ScoringTests.swift */,
+			);
+			path = CribbageAppTests;
+			sourceTree = "<group>";
+		};
+		328756FB6D279194AA4D5251 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D571190280CFB9632F72C5FC /* CribbageApp.app */,
+				1467CE11B57FE639814FC6ED /* CribbageAppTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3AF3A707AA2DC81D03E7CBB2 /* CribbageApp */ = {
+			isa = PBXGroup;
+			children = (
+				CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */,
+				8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */,
+				65073A6FECEEB75F5324D2EC /* Engine */,
+				5F3BA6B2A3C152504B9B1BC5 /* Models */,
+				DC99AD2BE329EE3A2F246EFC /* Utilities */,
+				92CD00865A217B6443B53920 /* ViewModels */,
+				3EEC5C813D06A8CD638809D5 /* Views */,
+			);
+			path = CribbageApp;
+			sourceTree = "<group>";
+		};
+		3EEC5C813D06A8CD638809D5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B5021D0AAB3E7377F0B597E9 /* Game */,
+				707ACA28623CEF87F055447E /* Menu */,
+				BBA88449EF78C26B80F6915B /* Settings */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5F3BA6B2A3C152504B9B1BC5 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				33A6A1B1AA8EA8CBFE898D8E /* AIDifficulty.swift */,
+				9CD3DEF5A2AFE6CBFE5C5465 /* Card.swift */,
+				76C74977A19BC49777145619 /* GameState.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		65073A6FECEEB75F5324D2EC /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				587E8094E6027D8EAFE30202 /* Deck.swift */,
+				1AEB0D7D23803CB7EF1BFD55 /* GameEngine.swift */,
+				B1E986B7D6BA95868018D7D2 /* PlayPhase.swift */,
+				8F80F966A72AF38CC204CD18 /* Scoring.swift */,
+				1F582779EAB56463B794C756 /* AI */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		707ACA28623CEF87F055447E /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				289A5B4BF6E9EAAF8FF72831 /* MainMenuView.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		92CD00865A217B6443B53920 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				9AA61F2576AF35FD42E54A0B /* GameViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		9AECCBBF7C160D4590F8AF70 = {
+			isa = PBXGroup;
+			children = (
+				3AF3A707AA2DC81D03E7CBB2 /* CribbageApp */,
+				28EA0C2011A6C30E4C207F13 /* CribbageAppTests */,
+				328756FB6D279194AA4D5251 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B5021D0AAB3E7377F0B597E9 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				03C9E95DBA0E02C77B1961D9 /* ActionBarView.swift */,
+				CD15AC727590EB5D488FD7DD /* CardFanView.swift */,
+				18DB89C988981B3EFD5C58CA /* CardView.swift */,
+				50E902C0C3243B6857CE3A9E /* GameBoardView.swift */,
+				14CE43B2E3B6E9C47EF1BEF8 /* GameOverView.swift */,
+				3C61206A93B9376985756EB8 /* PlayAreaView.swift */,
+				57E6C2B9534FF9832B484A4D /* ScoreBreakdownView.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		BBA88449EF78C26B80F6915B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DF3C509E24FBC40F85AD6D7C /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		DC99AD2BE329EE3A2F246EFC /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				2E07DF68449CC062181A44B4 /* Constants.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		45FD731DCF030801FF50CCF5 /* CribbageApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF3EC7737F50F6BE3674386F /* Build configuration list for PBXNativeTarget "CribbageApp" */;
+			buildPhases = (
+				D770FD7EEDB54E637FACBD07 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CribbageApp;
+			packageProductDependencies = (
+			);
+			productName = CribbageApp;
+			productReference = D571190280CFB9632F72C5FC /* CribbageApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B0C8EAF17EB2CF2C9AAFA5DF /* CribbageAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29FD3120C3A6B5D8E217DEC0 /* Build configuration list for PBXNativeTarget "CribbageAppTests" */;
+			buildPhases = (
+				20E84FF3CB8D39C8B569D20A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D52D9936D6FC2462931376AD /* PBXTargetDependency */,
+			);
+			name = CribbageAppTests;
+			packageProductDependencies = (
+			);
+			productName = CribbageAppTests;
+			productReference = 1467CE11B57FE639814FC6ED /* CribbageAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BD42E3C65A71947C76621891 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 1369EA80CD258DBA59ACCEA4 /* Build configuration list for PBXProject "CribbageApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 9AECCBBF7C160D4590F8AF70;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				45FD731DCF030801FF50CCF5 /* CribbageApp */,
+				B0C8EAF17EB2CF2C9AAFA5DF /* CribbageAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		20E84FF3CB8D39C8B569D20A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				87A36B718A7B842E1F817A3C /* AITests.swift in Sources */,
+				85C23A4F21716537B725E0D7 /* GameEngineTests.swift in Sources */,
+				43BA9691D321EBE4B1B35821 /* PlayPhaseTests.swift in Sources */,
+				A6733B4B076AEF9791B90615 /* ScoringTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D770FD7EEDB54E637FACBD07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D9FF0806D9D002996FC34B3 /* AIDifficulty.swift in Sources */,
+				6BFAAD834E5294B099F07943 /* AIProtocol.swift in Sources */,
+				BFB43201056A5B95049B4296 /* ActionBarView.swift in Sources */,
+				86AF000D6201E1A831B4E8A3 /* Card.swift in Sources */,
+				E0EA41F3DEB12A54C299B466 /* CardFanView.swift in Sources */,
+				34A598D8F7FB00B3CBDC123F /* CardView.swift in Sources */,
+				2918C67F7D74748DA8A40D7A /* Constants.swift in Sources */,
+				7AC5FF60B67DB2C6F4B990EC /* ContentView.swift in Sources */,
+				750B01449ADF02C544A29A6E /* CribbageAppApp.swift in Sources */,
+				61CAFA57ED8BC3E51C09A3BE /* Deck.swift in Sources */,
+				F0168D0B15503351FB603832 /* EasyAI.swift in Sources */,
+				175FC45B1729C5D6AE5B04E2 /* GameBoardView.swift in Sources */,
+				054D553F473BF6CAF8A60C19 /* GameEngine.swift in Sources */,
+				E57E7DD23A85BFEA14DF8C66 /* GameOverView.swift in Sources */,
+				716B224CF7DB4209AC1BE672 /* GameState.swift in Sources */,
+				BC92C30CEFE842D0FB0CEF28 /* GameViewModel.swift in Sources */,
+				858341BA1BAEE1A353561116 /* HardAI.swift in Sources */,
+				FA880C8EDFEB8D33AC37F615 /* MainMenuView.swift in Sources */,
+				F8B79F0B63D2EC0605C5B4C4 /* MediumAI.swift in Sources */,
+				A8F365E9FC9BAF1DC847CD3F /* PlayAreaView.swift in Sources */,
+				1F370BAB856EAC380B687378 /* PlayPhase.swift in Sources */,
+				B647D9AF8A70D9076DC9C8B2 /* ScoreBreakdownView.swift in Sources */,
+				785B15D4DE4983A641C004B7 /* Scoring.swift in Sources */,
+				CF42656DF4F6A82D59A6F8E8 /* SettingsView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D52D9936D6FC2462931376AD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 45FD731DCF030801FF50CCF5 /* CribbageApp */;
+			targetProxy = F77D40751A7E946F4E6DB225 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		06EF2988AADEE99F83590B47 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		1AACE08E98FD440B5B5EE555 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		7CAA79D70C566AB1D67280CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cribbage.CribbageApp;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		7DE9F2959235889E5C17D717 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cribbage.CribbageApp;
+				SDKROOT = iphoneos;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		DE95E64F54E98566E165F1A1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cribbage.CribbageAppTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CribbageApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CribbageApp";
+			};
+			name = Release;
+		};
+		DF4DAA8467C99C647458C2CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.cribbage.CribbageAppTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CribbageApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/CribbageApp";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1369EA80CD258DBA59ACCEA4 /* Build configuration list for PBXProject "CribbageApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1AACE08E98FD440B5B5EE555 /* Debug */,
+				06EF2988AADEE99F83590B47 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		29FD3120C3A6B5D8E217DEC0 /* Build configuration list for PBXNativeTarget "CribbageAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DF4DAA8467C99C647458C2CD /* Debug */,
+				DE95E64F54E98566E165F1A1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		BF3EC7737F50F6BE3674386F /* Build configuration list for PBXNativeTarget "CribbageApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7CAA79D70C566AB1D67280CB /* Debug */,
+				7DE9F2959235889E5C17D717 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BD42E3C65A71947C76621891 /* Project object */;
+}
