@@ -75,12 +75,14 @@ final class GameEngine {
 
     // MARK: - Init
 
-    init(playerName: String, aiDifficulty: AIDifficulty) {
+    init(playerName: String, aiDifficulty: AIDifficulty, autoDeal: Bool = true) {
         self.human = PlayerState(name: playerName)
         self.computer = PlayerState(name: "Computer", isDealer: true)
         self.ai = createAI(aiDifficulty)
         self.aiDifficulty = aiDifficulty
-        dealRound()
+        if autoDeal {
+            dealRound()
+        }
     }
 
     // MARK: - Logging
@@ -92,7 +94,7 @@ final class GameEngine {
 
     // MARK: - Deal
 
-    private func dealRound() {
+    func dealRound() {
         deck = Deck.shuffled()
         human.hand = Deck.deal(6, from: &deck)
         computer.hand = Deck.deal(6, from: &deck)

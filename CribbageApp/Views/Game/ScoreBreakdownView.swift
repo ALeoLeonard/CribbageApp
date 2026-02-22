@@ -12,8 +12,8 @@ struct ScoreBreakdownView: View {
                 }
                 CardView(card: breakdown.starter, isSmall: true)
                     .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .strokeBorder(Color.accentColor, lineWidth: 2)
+                        RoundedRectangle(cornerRadius: CribbageTheme.cardCornerRadius)
+                            .strokeBorder(CribbageTheme.gold, lineWidth: 2)
                     )
             }
 
@@ -21,32 +21,45 @@ struct ScoreBreakdownView: View {
             if breakdown.items.isEmpty {
                 Text("No points")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(CribbageTheme.ivory.opacity(0.6))
             } else {
                 VStack(spacing: 4) {
-                    ForEach(breakdown.items) { event in
+                    ForEach(Array(breakdown.items.enumerated()), id: \.element.id) { index, event in
                         HStack {
                             Text(event.reason)
                                 .font(.subheadline)
+                                .foregroundStyle(CribbageTheme.ivory)
                             Spacer()
                             Text("+\(event.points)")
                                 .font(.subheadline.bold())
+                                .foregroundStyle(CribbageTheme.gold)
                         }
+                        .staggeredAppearance(index: index)
                     }
                 }
             }
 
-            Divider()
+            // Divider
+            Rectangle()
+                .fill(CribbageTheme.gold.opacity(0.4))
+                .frame(height: 1)
 
             HStack {
                 Text("Total")
                     .font(.headline)
+                    .foregroundStyle(CribbageTheme.ivory)
                 Spacer()
                 Text("\(breakdown.total)")
                     .font(.headline.bold())
+                    .foregroundStyle(CribbageTheme.gold)
             }
+            .scorePop()
         }
         .padding()
-        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 12))
+        .background(
+            RoundedRectangle(cornerRadius: 12)
+                .fill(CribbageTheme.feltGreenDark.opacity(0.9))
+                .strokeBorder(CribbageTheme.gold.opacity(0.3), lineWidth: 1)
+        )
     }
 }

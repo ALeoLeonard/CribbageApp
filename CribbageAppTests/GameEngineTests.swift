@@ -103,4 +103,50 @@ struct GameEngineTests {
         // One of the players should have won or be very close
         #expect(engine.human.score >= 120 || engine.computer.score >= 120)
     }
+
+    @Test func humanHandPersistsAfterPlayingCard() {
+        let engine = GameEngine(playerName: "Test", aiDifficulty: .easy)
+        engine.discard(cardIndices: [0, 1])
+        guard engine.phase == .play else { return }
+
+        let handBefore = engine.humanPlayHand
+        #expect(handBefore.count == 4, "Should have 4 cards after discard")
+
+        // Wait for human turn then play a card
+        if engine.currentTurn == "human" {
+            engine.playCard(cardIndex: 0)
+            let handAfter = engine.humanPlayHand
+            #expect(handAfter.count == 3, "Should have 3 cards after playing one")
+            // Remaining cards should be the same cards (minus the played one)
+            for card in handAfter {
+                #expect(handBefore.contains(card), "Remaining card \(card.label) should be from original hand")
+            }
+        }
+    }
+
+    @Test func fullPlayPhaseHandCountDecrements() {
+        let engine = GameEngine(playerName: "Test", aiDifficulty: .easy)
+        engine.discard(cardIndices: [0, 1])
+        guard engine.phase == .play else { return }
+
+        var humanCardsPlayed = 0
+        var maxTurns = 50
+        while engine.phase == .play && maxTurns > 0 {
+            maxTurns -= 1
+            if engine.currentTurn == "human" {
+                let before = engine.humanPlayHand.count
+                if PlayPhaseHelper.canPlay(hand: engine.humanPlayHand, runningTotal: engine.runningTotal) {
+                    engine.playCard(cardIndex: 0)
+                    humanCardsPlayed += 1
+                    let after = engine.humanPlayHand.count
+                    #expect(after == before - 1, "Hand should shrink by 1 after play, was \(before) now \(after)")
+                } else {
+                    engine.sayGo()
+                }
+            } else {
+                break // computer auto-plays
+            }
+        }
+        #expect(humanCardsPlayed > 0, "Should have played at least one card")
+    }
 }

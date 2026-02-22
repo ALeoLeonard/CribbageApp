@@ -20,8 +20,8 @@ enum Suit: String, CaseIterable, Codable, Hashable {
 
     var color: Color {
         switch self {
-        case .hearts, .diamonds: .red
-        case .clubs, .spades: .primary
+        case .hearts, .diamonds: CribbageTheme.suitRed
+        case .clubs, .spades: CribbageTheme.suitBlack
         }
     }
 }

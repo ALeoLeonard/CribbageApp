@@ -25,16 +25,21 @@ struct ActionBarView: View {
         VStack(spacing: 8) {
             Text("Select 2 cards for the crib")
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(CribbageTheme.ivory)
 
             Button {
                 viewModel.discard()
             } label: {
                 Label("Send to Crib", systemImage: "arrow.right.circle.fill")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(CribbageTheme.feltGreenDark)
                     .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(CribbageTheme.goldGradient, in: RoundedRectangle(cornerRadius: 16))
+                    .shadow(color: CribbageTheme.gold.opacity(0.3), radius: 4, y: 2)
             }
-            .buttonStyle(.borderedProminent)
             .disabled(viewModel.selectedIndices.count != 2 || viewModel.isProcessing)
+            .opacity(viewModel.selectedIndices.count != 2 || viewModel.isProcessing ? 0.5 : 1)
         }
     }
 
@@ -46,29 +51,43 @@ struct ActionBarView: View {
                 HStack(spacing: 8) {
                     ProgressView()
                         .controlSize(.small)
+                        .tint(CribbageTheme.gold)
                     Text(viewModel.statusMessage ?? "Computer is thinking...")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(CribbageTheme.ivory.opacity(0.7))
                 }
             } else if viewModel.yourTurn {
                 if viewModel.humanCanPlay {
                     Text("Tap a card to play it")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(CribbageTheme.ivory)
                 } else {
                     Button {
                         viewModel.sayGo()
                     } label: {
                         Label("Say Go", systemImage: "hand.raised.fill")
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(CribbageTheme.feltGreenDark)
                             .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background(
+                                LinearGradient(
+                                    colors: [
+                                        Color(red: 0.95, green: 0.75, blue: 0.30),
+                                        Color(red: 0.90, green: 0.60, blue: 0.20)
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                ),
+                                in: RoundedRectangle(cornerRadius: 16)
+                            )
+                            .shadow(color: .orange.opacity(0.3), radius: 4, y: 2)
                     }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.orange)
                 }
             } else {
                 Text("Waiting for computer...")
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(CribbageTheme.ivory.opacity(0.7))
             }
         }
     }
@@ -83,10 +102,15 @@ struct ActionBarView: View {
                 viewModel.acknowledge()
             } label: {
                 Label("Next", systemImage: "arrow.right.circle.fill")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(CribbageTheme.feltGreenDark)
                     .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(CribbageTheme.goldGradient, in: RoundedRectangle(cornerRadius: 16))
+                    .shadow(color: CribbageTheme.gold.opacity(0.3), radius: 4, y: 2)
             }
-            .buttonStyle(.borderedProminent)
             .disabled(viewModel.isProcessing)
+            .opacity(viewModel.isProcessing ? 0.5 : 1)
         }
     }
 
@@ -104,5 +128,6 @@ struct ActionBarView: View {
             }
         }
         .font(.subheadline.weight(.medium))
+        .foregroundStyle(CribbageTheme.ivory)
     }
 }
