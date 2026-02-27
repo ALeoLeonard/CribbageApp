@@ -6,6 +6,7 @@ struct SettingsView: View {
     @AppStorage("hapticsEnabled") var hapticsEnabled = true
     @AppStorage("cardSort") private var cardSortRaw = CardSortPreference.dealt.rawValue
     @AppStorage("hintsEnabled") private var hintsEnabled = true
+    @AppStorage("mugginsEnabled") private var mugginsEnabled = false
 
     var body: some View {
         ScrollView {
@@ -48,6 +49,22 @@ struct SettingsView: View {
                                     .frame(width: 24)
                                 Text("Show Hints")
                                     .foregroundStyle(CribbageTheme.ivory)
+                            }
+                        }
+                        .tint(CribbageTheme.gold)
+
+                        Toggle(isOn: $mugginsEnabled) {
+                            HStack {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundStyle(CribbageTheme.gold)
+                                    .frame(width: 24)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Muggins")
+                                        .foregroundStyle(CribbageTheme.ivory)
+                                    Text("Count your own hand — missed points go to opponent")
+                                        .font(.caption2)
+                                        .foregroundStyle(CribbageTheme.ivory.opacity(0.5))
+                                }
                             }
                         }
                         .tint(CribbageTheme.gold)

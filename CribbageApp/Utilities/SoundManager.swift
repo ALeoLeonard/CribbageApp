@@ -143,12 +143,47 @@ final class SoundManager {
 
     // MARK: - Musical Sounds (kept as sine tones)
 
-    /// Rising two-note chime
+    /// Rising two-note chime (generic)
     func playScore() {
-        playTone(frequency: 880, duration: 0.1, volume: 0.25, decay: 0.7)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
-            self.playTone(frequency: 1100, duration: 0.15, volume: 0.3, decay: 0.6)
+        playScoreChime(points: 2)
+    }
+
+    /// Point-scaled score chime — higher points = higher pitch, more notes
+    func playScoreChime(points: Int) {
+        let baseFreq: Double = 660 + Double(min(points, 12)) * 30
+        playTone(frequency: baseFreq, duration: 0.1, volume: 0.25, decay: 0.7)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.playTone(frequency: baseFreq * 1.25, duration: 0.12, volume: 0.3, decay: 0.6)
         }
+        // Third note for big scores (4+)
+        if points >= 4 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+                self.playTone(frequency: baseFreq * 1.5, duration: 0.15, volume: 0.3, decay: 0.5)
+            }
+        }
+    }
+
+    /// Special 15/31 hit — satisfying "ding"
+    func playFifteenOrThirtyOne() {
+        playTone(frequency: 1320, duration: 0.08, volume: 0.35, decay: 0.4)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
+            self.playTone(frequency: 1760, duration: 0.15, volume: 0.3, decay: 0.3)
+        }
+    }
+
+    /// Round transition fanfare — brief ascending arpeggio
+    func playRoundTransition() {
+        let notes: [(Double, Double)] = [(523, 0.08), (659, 0.08), (784, 0.12)]
+        for (i, note) in notes.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.09) {
+                self.playTone(frequency: note.0, duration: note.1, volume: 0.2, decay: 0.5)
+            }
+        }
+    }
+
+    /// Error / invalid play — low buzz
+    func playInvalidAction() {
+        playTone(frequency: 200, duration: 0.12, volume: 0.15, decay: 0.3)
     }
 
     /// Ascending three-note fanfare

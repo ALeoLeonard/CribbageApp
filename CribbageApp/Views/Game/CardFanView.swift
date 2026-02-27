@@ -6,6 +6,7 @@ struct CardFanView: View {
     let selectable: Bool
     var hintIndices: Set<Int> = []
     var onTap: ((Int) -> Void)?
+    var onInvalidTap: ((Int) -> Void)?
     var visibleCount: Int? = nil // If set, only show this many cards (for deal animation)
     var dealFromDeck: Bool = false // If true, animate cards from above (deck position)
 
@@ -20,16 +21,19 @@ struct CardFanView: View {
                         card: card,
                         isSelected: selectedIndices.contains(index),
                         isHinted: hintIndices.contains(index),
+                        selectable: selectable || onInvalidTap != nil,
                         dealIndex: index,
-                        dealFromDeck: dealFromDeck
+                        dealFromDeck: dealFromDeck,
+                        onTap: {
+                            if selectable {
+                                HapticManager.selection()
+                                onTap?(index)
+                            } else if onInvalidTap != nil {
+                                onInvalidTap?(index)
+                            }
+                        }
                     )
                     .zIndex(selectedIndices.contains(index) ? 10 : Double(index))
-                    .onTapGesture {
-                        if selectable {
-                            HapticManager.selection()
-                            onTap?(index)
-                        }
-                    }
                 }
             }
         }
@@ -37,15 +41,19 @@ struct CardFanView: View {
 }
 
 /// Wraps CardView with a one-shot deal-in animation tied to card identity.
-private struct DealtCardView: View {
+struct DealtCardView: View {
     let card: Card
     let isSelected: Bool
     let isHinted: Bool
+    var selectable: Bool = false
     let dealIndex: Int
     let dealFromDeck: Bool
+    var onTap: (() -> Void)? = nil
 
     @State private var appeared = false
     @State private var hintPulse = false
+    @State private var shakeOffset: CGFloat = 0
+    @State private var pressed = false
 
     var body: some View {
         CardView(card: card, isSelected: isSelected)
@@ -56,9 +64,17 @@ private struct DealtCardView: View {
                     .opacity(isHinted ? 1 : 0)
             )
             .opacity(appeared ? 1 : 0)
-            .offset(y: appeared ? 0 : (dealFromDeck ? -200 : -30))
-            .scaleEffect(appeared ? 1 : (dealFromDeck ? 0.6 : 0.85))
+            .offset(x: shakeOffset, y: appeared ? 0 : (dealFromDeck ? -200 : -30))
+            .scaleEffect(appeared ? (pressed ? 0.92 : 1.0) : (dealFromDeck ? 0.6 : 0.85))
             .rotationEffect(appeared ? .zero : .degrees(dealFromDeck ? -10 : 0))
+            .onTapGesture {
+                guard selectable else { return }
+                withAnimation(.spring(duration: 0.1)) { pressed = true }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    withAnimation(.spring(duration: 0.2, bounce: 0.4)) { pressed = false }
+                    onTap?()
+                }
+            }
             .onAppear {
                 withAnimation(.spring(duration: 0.4, bounce: 0.2).delay(dealFromDeck ? 0 : Double(dealIndex) * 0.08)) {
                     appeared = true
@@ -73,5 +89,19 @@ private struct DealtCardView: View {
                     hintPulse = false
                 }
             }
+    }
+
+    /// Trigger a brief horizontal shake animation (called externally).
+    func shake() {
+        withAnimation(.linear(duration: 0.06)) { shakeOffset = -6 }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.06) {
+            withAnimation(.linear(duration: 0.06)) { shakeOffset = 6 }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) {
+            withAnimation(.linear(duration: 0.06)) { shakeOffset = -4 }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.18) {
+            withAnimation(.spring(duration: 0.15)) { shakeOffset = 0 }
+        }
     }
 }

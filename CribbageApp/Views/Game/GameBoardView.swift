@@ -35,8 +35,22 @@ struct GameBoardView: View {
                         starterCeremonyPhase: viewModel.starterCeremonyPhase
                     )
 
+                    // Scoring callouts during play
+                    if !viewModel.scoringCallouts.isEmpty {
+                        ScoringCalloutContainerView(callouts: viewModel.scoringCallouts)
+                    }
+
                     // Score breakdown during counting phases
-                    if let breakdown = viewModel.scoreBreakdown,
+                    if viewModel.mugginsPending, let hand = viewModel.mugginsHandToCount {
+                        // Muggins: show hand cards but hide score until claimed
+                        MugginsHandView(
+                            hand: hand,
+                            starter: viewModel.starter,
+                            result: viewModel.mugginsResult
+                        )
+                        .padding(.horizontal)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                    } else if let breakdown = viewModel.scoreBreakdown,
                        [.countNonDealer, .countDealer, .countCrib].contains(viewModel.phase) {
                         ScoreBreakdownView(breakdown: breakdown)
                             .padding(.horizontal)
@@ -156,9 +170,21 @@ struct GameBoardView: View {
                             .font(.caption2)
                             .foregroundStyle(CribbageTheme.ivory.opacity(0.6))
                     }
-                    Text("Round \(viewModel.roundNumber)")
-                        .font(.subheadline.weight(.medium))
-                        .foregroundStyle(CribbageTheme.gold)
+                    HStack(spacing: 6) {
+                        Text("Round \(viewModel.roundNumber)")
+                            .font(.subheadline.weight(.medium))
+                            .foregroundStyle(CribbageTheme.gold)
+                        if viewModel.mugginsEnabled && !viewModel.isPassAndPlay {
+                            Text("M")
+                                .font(.system(size: 9, weight: .bold))
+                                .foregroundStyle(CribbageTheme.feltGreenDark)
+                                .padding(.horizontal, 4)
+                                .padding(.vertical, 1)
+                                .background(
+                                    Capsule().fill(CribbageTheme.gold.opacity(0.8))
+                                )
+                        }
+                    }
                 }
             }
             ToolbarItem(placement: .topBarLeading) {
@@ -167,6 +193,8 @@ struct GameBoardView: View {
                     viewModel.selectedIndices = []
                     viewModel.isPassAndPlay = false
                     viewModel.showingHandOver = false
+                    viewModel.mugginsPending = false
+                    viewModel.mugginsResult = nil
                 } label: {
                     Image(systemName: "xmark")
                         .foregroundStyle(CribbageTheme.ivory)
@@ -177,6 +205,8 @@ struct GameBoardView: View {
         .toolbarBackground(.visible, for: .navigationBar)
         .animation(.easeInOut(duration: 0.3), value: viewModel.phase)
         .animation(.easeInOut(duration: 0.3), value: viewModel.dealPhase)
+        .animation(.easeInOut(duration: 0.3), value: viewModel.mugginsPending)
+        .animation(.easeInOut(duration: 0.3), value: viewModel.mugginsResult?.actualScore)
         .overlay {
             if viewModel.showingHandOver {
                 HandOverView(playerName: viewModel.handOverPlayerName) {
@@ -239,11 +269,7 @@ struct GameBoardView: View {
                         .font(.caption.weight(.medium))
                         .foregroundStyle(CribbageTheme.ivory)
                 }
-                Text("\(viewModel.humanScore)")
-                    .font(.title3.bold())
-                    .foregroundStyle(CribbageTheme.gold)
-                    .contentTransition(.numericText())
-                    .animation(.easeOut(duration: 0.3), value: viewModel.humanScore)
+                ScoreLabel(score: viewModel.humanScore, color: CribbageTheme.gold)
             }
 
             Spacer()
@@ -270,11 +296,7 @@ struct GameBoardView: View {
                         .fill(Color(red: 0.94, green: 0.35, blue: 0.35))
                         .frame(width: 8, height: 8)
                 }
-                Text("\(viewModel.opponentScore)")
-                    .font(.title3.bold())
-                    .foregroundStyle(CribbageTheme.gold)
-                    .contentTransition(.numericText())
-                    .animation(.easeOut(duration: 0.3), value: viewModel.opponentScore)
+                ScoreLabel(score: viewModel.opponentScore, color: CribbageTheme.gold)
             }
         }
         .padding(.vertical, 8)
@@ -341,7 +363,8 @@ struct GameBoardView: View {
                     selectedIndices: [],
                     selectable: viewModel.yourTurn && viewModel.humanCanPlay && !viewModel.isProcessing,
                     hintIndices: viewModel.hintIndices,
-                    onTap: { viewModel.playCard($0) }
+                    onTap: { viewModel.playCard($0) },
+                    onInvalidTap: { _ in viewModel.invalidPlayAttempt() }
                 )
             } else {
                 CardFanView(
@@ -369,5 +392,37 @@ struct GameBoardView: View {
                     .foregroundStyle(CribbageTheme.gold)
             }
         }
+    }
+}
+
+// MARK: - Score Label with Glow
+
+/// Animated score label that pulses a glow when the value changes.
+private struct ScoreLabel: View {
+    let score: Int
+    let color: Color
+
+    @State private var glowing = false
+
+    var body: some View {
+        Text("\(score)")
+            .font(.title3.bold())
+            .foregroundStyle(color)
+            .contentTransition(.numericText())
+            .animation(.easeOut(duration: 0.3), value: score)
+            .background(
+                Circle()
+                    .fill(color.opacity(glowing ? 0.4 : 0))
+                    .frame(width: 40, height: 40)
+                    .blur(radius: 8)
+            )
+            .onChange(of: score) {
+                withAnimation(.easeOut(duration: 0.15)) {
+                    glowing = true
+                }
+                withAnimation(.easeOut(duration: 0.4).delay(0.15)) {
+                    glowing = false
+                }
+            }
     }
 }

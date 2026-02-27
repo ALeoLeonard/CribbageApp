@@ -21,6 +21,7 @@
 		5225479A4E6251E954B5B385 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5AD574A3AC4ED85160792A /* DeckView.swift */; };
 		61CAFA57ED8BC3E51C09A3BE /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587E8094E6027D8EAFE30202 /* Deck.swift */; };
 		637854AD0F7ECB3B5E9650CD /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E03452F0CFE95B5DB25883 /* HapticManager.swift */; };
+		6A4D5A1395F5E500F0E6DE40 /* ScoringCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF8DB0F5972BAFF91570B4 /* ScoringCalloutView.swift */; };
 		6BFAAD834E5294B099F07943 /* AIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74F6CAEA289BE054592F85E /* AIProtocol.swift */; };
 		716B224CF7DB4209AC1BE672 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C74977A19BC49777145619 /* GameState.swift */; };
 		73EED096B7F4570C7DC6FCA1 /* HowToPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B79D876241777F04510143 /* HowToPlayView.swift */; };
@@ -104,6 +105,7 @@
 		A3B61DE52168D6A022332897 /* TutorialOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialOverlayView.swift; sourceTree = "<group>"; };
 		A5843180EF1B46026B3721C9 /* CribbageBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CribbageBoardView.swift; sourceTree = "<group>"; };
 		AC166BD84563EF94C851CB97 /* ScoringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringTests.swift; sourceTree = "<group>"; };
+		AFBF8DB0F5972BAFF91570B4 /* ScoringCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringCalloutView.swift; sourceTree = "<group>"; };
 		B1E986B7D6BA95868018D7D2 /* PlayPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPhase.swift; sourceTree = "<group>"; };
 		B5A4D131C9A603AE0547B325 /* CardSizeEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSizeEnvironment.swift; sourceTree = "<group>"; };
 		CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				23A20848A0B39788EB0300CC /* HandOverView.swift */,
 				3C61206A93B9376985756EB8 /* PlayAreaView.swift */,
 				57E6C2B9534FF9832B484A4D /* ScoreBreakdownView.swift */,
+				AFBF8DB0F5972BAFF91570B4 /* ScoringCalloutView.swift */,
 				A3B61DE52168D6A022332897 /* TutorialOverlayView.swift */,
 			);
 			path = Game;
@@ -382,6 +385,7 @@
 				1F370BAB856EAC380B687378 /* PlayPhase.swift in Sources */,
 				B647D9AF8A70D9076DC9C8B2 /* ScoreBreakdownView.swift in Sources */,
 				785B15D4DE4983A641C004B7 /* Scoring.swift in Sources */,
+				6A4D5A1395F5E500F0E6DE40 /* ScoringCalloutView.swift in Sources */,
 				9C8A2EB70B44D98BFC487BCE /* ServerModels.swift in Sources */,
 				CF42656DF4F6A82D59A6F8E8 /* SettingsView.swift in Sources */,
 				96451395D3A6BBB80C172011 /* SoundManager.swift in Sources */,

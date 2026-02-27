@@ -59,25 +59,25 @@ Ship a polished single-player cribbage game that can compete with Cribbage JD (4
 ## Active Epics
 
 ### epic-app-polish: Complete UI & Settings
-Status: draft | Tickets: 0/5
-- [ ] `ticket-complete-settings-view` [M] [p1-high] -- Wire up full settings (sound, haptics, rules, about)
+Status: active | Tickets: 3/5
+- [x] `ticket-complete-settings-view` [M] [p1-high] -- Wire up full settings (sound, haptics, rules, about)
 - [ ] `ticket-wire-theme-picker` [M] [p1-high] -- Connect ThemePickerView to ThemeManager unlock flow
-- [ ] `ticket-enhanced-stats` [M] [p2-medium] -- Add skunk tracking, pegging averages, hand history
-- [ ] `ticket-card-sort-toggle` [S] [p2-medium] -- Sort hand by rank or suit option
+- [x] `ticket-enhanced-stats` [M] [p2-medium] -- Add skunk tracking, pegging averages, hand history
+- [x] `ticket-card-sort-toggle` [S] [p2-medium] -- Sort hand by rank or suit option
 - [ ] `ticket-icloud-sync` [M] [p1-high] -- Sync stats + theme unlocks via NSUbiquitousKeyValueStore
 
 ### epic-tutorial: Onboarding & Learning
-Status: draft | Tickets: 0/4
-- [ ] `ticket-first-launch-tutorial` [L] [p0-critical] -- Interactive guided first game with tooltip overlays
-- [ ] `ticket-how-to-play-screen` [M] [p1-high] -- Static rules reference accessible from menu
-- [ ] `ticket-hint-system` [M] [p1-high] -- Optional hints during discard/play powered by HardAI
+Status: active | Tickets: 3/4
+- [x] `ticket-first-launch-tutorial` [L] [p0-critical] -- Interactive guided first game with tooltip overlays
+- [x] `ticket-how-to-play-screen` [M] [p1-high] -- Static rules reference accessible from menu
+- [x] `ticket-hint-system` [M] [p1-high] -- Optional hints during discard/play powered by HardAI
 - [ ] `ticket-scoring-practice` [M] [p2-medium] -- Practice mode to learn hand counting
 
 ### epic-game-rules: Missing Cribbage Rules & Modes
-Status: draft | Tickets: 0/4
-- [ ] `ticket-skunk-tracking` [S] [p1-high] -- Track skunk (31+ margin) and double-skunk (61+ margin)
-- [ ] `ticket-muggins-rule` [M] [p1-high] -- Optional muggins with manual counting mode
-- [ ] `ticket-pass-and-play` [L] [p1-high] -- Two-human local multiplayer with hand-over screen
+Status: active | Tickets: 3/4
+- [x] `ticket-skunk-tracking` [S] [p1-high] -- Track skunk (31+ margin) and double-skunk (61+ margin)
+- [x] `ticket-muggins-rule` [M] [p1-high] -- Optional muggins with manual counting mode
+- [x] `ticket-pass-and-play` [L] [p1-high] -- Two-human local multiplayer with hand-over screen
 - [ ] `ticket-customizable-rules` [S] [p2-medium] -- Settings toggles for muggins, free cut, nobs
 
 ### epic-monetization: StoreKit & Ads
@@ -104,6 +104,14 @@ Status: draft | Tickets: 0/5
 - [ ] `ticket-privacy-policy` [S] [p1-high] -- Privacy policy page (required for App Store)
 
 ---
+
+### epic-juice-polish: Duolingo-Style Sensory Polish
+Status: active | Tickets: 3/5
+- [x] `ticket-scoring-celebrations` [M] [p1-high] -- Escalating haptic combos, sparkle VFX, callout text for 15s/31/pairs/runs during pegging
+- [x] `ticket-peg-animation` [M] [p1-high] -- Animate peg movement along cribbage board track on score change
+- [ ] `ticket-score-anticipation` [M] [p2-medium] -- Tension build before starter reveal, drum-roll haptic for big hand counts
+- [ ] `ticket-streak-celebrations` [S] [p2-medium] -- Progressive celebrations for win streaks (3/5/10), milestone haptic patterns
+- [x] `ticket-micro-interactions` [M] [p2-medium] -- Card hover/press haptics, round transition fanfare, invalid play shake, combo escalation sound
 
 ## Post-MVP Epics
 
@@ -230,24 +238,23 @@ ticket-analytics-setup (parallel) ───────────────�
 
 ## Recommended Sprint Sequence
 
-### Sprint 1 (Week 1-2): Foundation Polish
-- ticket-complete-settings-view [M]
-- ticket-skunk-tracking [S]
-- ticket-card-sort-toggle [S]
-- ticket-enhanced-stats [M]
-- ticket-analytics-setup [M]
+### Sprint 1 (Week 1-2): Foundation Polish [DONE]
+- [x] ticket-complete-settings-view [M]
+- [x] ticket-skunk-tracking [S]
+- [x] ticket-card-sort-toggle [S]
+- [x] ticket-enhanced-stats [M]
 
-### Sprint 2 (Week 3-4): Core Missing Features
-- ticket-first-launch-tutorial [L]
-- ticket-muggins-rule [M]
-- ticket-pass-and-play [L]
-- ticket-how-to-play-screen [M]
+### Sprint 2 (Week 3-4): Core Missing Features [DONE]
+- [x] ticket-first-launch-tutorial [L]
+- [x] ticket-hint-system [M]
+- [x] ticket-pass-and-play [L]
+- [x] ticket-how-to-play-screen [M]
 
-### Sprint 3 (Week 5-6): Monetization & Platform
-- ticket-storekit-manager [L]
-- ticket-wire-theme-picker [M]
-- ticket-game-center-auth [S]
-- ticket-hint-system [M]
+### Sprint 3 (Week 5-6): Juice & Game Rules [DONE]
+- [x] ticket-scoring-celebrations [M] -- Escalating haptics, sparkle VFX, callouts for pegging combos
+- [x] ticket-peg-animation [M] -- Animate peg movement with spring physics and trail glow
+- [x] ticket-muggins-rule [M] -- Optional muggins with manual counting and stepper UI
+- [x] ticket-micro-interactions [M] -- Card press-down haptics, score glow, invalid play shake, round transition fanfare
 
 ### Sprint 4 (Week 7-8): Monetization Wiring & Game Center
 - ticket-premium-gate [M]

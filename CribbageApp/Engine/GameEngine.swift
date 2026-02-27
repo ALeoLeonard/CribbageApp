@@ -148,6 +148,18 @@ final class GameEngine {
         player.score += points
     }
 
+    /// Award bonus points (e.g. muggins) to a player. Returns true if game ended.
+    @discardableResult
+    func awardBonus(_ points: Int, toHuman: Bool) -> Bool {
+        guard points > 0 else { return false }
+        if toHuman {
+            addScore(&human, points)
+        } else {
+            addScore(&computer, points)
+        }
+        return checkWinner()
+    }
+
     private func checkWinner() -> Bool {
         if human.score >= Constants.winningScore {
             winner = human.name
@@ -531,7 +543,9 @@ final class GameEngine {
     // MARK: - Acknowledge (Counting Phases)
 
     /// Advance through counting phases.
-    func acknowledge() {
+    /// - Parameter mugginsClaimedScore: If provided (muggins mode), award only this amount
+    ///   to the scoring player. The caller is responsible for awarding muggins bonus to the opponent.
+    func acknowledge(mugginsClaimedScore: Int? = nil) {
         actionLog = []
 
         switch phase {
@@ -539,14 +553,15 @@ final class GameEngine {
             guard let starter else { return }
             let hand = isHumanDealer ? computer.hand : human.hand
             let (score, events) = Scoring.calculateScore(hand: hand, starter: starter)
+            let awarded = mugginsClaimedScore.map { min($0, score) } ?? score
             var taggedEvents = events
             let playerName = nonDealer.name
             for i in taggedEvents.indices { taggedEvents[i].player = playerName }
 
             if isHumanDealer {
-                addScore(&computer, score)
+                addScore(&computer, awarded)
             } else {
-                addScore(&human, score)
+                addScore(&human, awarded)
                 handScores.append(score)
                 highestHandScore = max(highestHandScore, score)
             }
@@ -555,7 +570,7 @@ final class GameEngine {
             logAction(LastAction(
                 actor: playerName, action: "score",
                 scoreEvents: taggedEvents,
-                message: "\(playerName) scores \(score) in hand"
+                message: "\(playerName) scores \(awarded) in hand"
             ))
             if checkWinner() { return }
             phase = .countDealer
@@ -564,23 +579,24 @@ final class GameEngine {
             guard let starter else { return }
             let hand = isHumanDealer ? human.hand : computer.hand
             let (score, events) = Scoring.calculateScore(hand: hand, starter: starter)
+            let awarded = mugginsClaimedScore.map { min($0, score) } ?? score
             var taggedEvents = events
             let playerName = dealer.name
             for i in taggedEvents.indices { taggedEvents[i].player = playerName }
 
             if isHumanDealer {
-                addScore(&human, score)
+                addScore(&human, awarded)
                 handScores.append(score)
                 highestHandScore = max(highestHandScore, score)
             } else {
-                addScore(&computer, score)
+                addScore(&computer, awarded)
             }
 
             scoreBreakdown = ScoreBreakdown(hand: hand, starter: starter, items: taggedEvents, total: score)
             logAction(LastAction(
                 actor: playerName, action: "score",
                 scoreEvents: taggedEvents,
-                message: "\(playerName) scores \(score) in hand"
+                message: "\(playerName) scores \(awarded) in hand"
             ))
             if checkWinner() { return }
             phase = .countCrib
@@ -588,22 +604,23 @@ final class GameEngine {
         case .countCrib:
             guard let starter else { return }
             let (score, events) = Scoring.calculateScore(hand: crib, starter: starter, isCrib: true)
+            let awarded = mugginsClaimedScore.map { min($0, score) } ?? score
             var taggedEvents = events
             let playerName = dealer.name
             for i in taggedEvents.indices { taggedEvents[i].player = playerName }
 
             if isHumanDealer {
-                addScore(&human, score)
+                addScore(&human, awarded)
                 cribScores.append(score)
             } else {
-                addScore(&computer, score)
+                addScore(&computer, awarded)
             }
 
             scoreBreakdown = ScoreBreakdown(hand: crib, starter: starter, items: taggedEvents, total: score)
             logAction(LastAction(
                 actor: playerName, action: "score",
                 scoreEvents: taggedEvents,
-                message: "\(playerName) scores \(score) in crib"
+                message: "\(playerName) scores \(awarded) in crib"
             ))
             if checkWinner() { return }
 

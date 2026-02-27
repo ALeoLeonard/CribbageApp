@@ -233,15 +233,33 @@ struct CribbageBoardView: View {
         let clampedScore = min(score, 121)
         let pos = pegPosition(score: clampedScore, trackW: trackW)
 
-        return Circle()
-            .fill(color)
-            .frame(
-                width: pegRadius * 2 * (pegPulse ? 1.15 : 1.0),
-                height: pegRadius * 2 * (pegPulse ? 1.15 : 1.0)
-            )
-            .shadow(color: glowColor.opacity(pegPulse ? 0.7 : 0.3), radius: pegPulse ? 6 : 3)
-            .position(x: pos.x, y: pos.y + yOffset)
-            .animation(.easeOut(duration: 0.7), value: score)
+        return ZStack {
+            // Trail glow that follows the peg
+            Circle()
+                .fill(glowColor.opacity(0.2))
+                .frame(width: pegRadius * 4, height: pegRadius * 4)
+                .blur(radius: 4)
+                .position(x: pos.x, y: pos.y + yOffset)
+                .animation(.spring(duration: 0.8, bounce: 0.2), value: score)
+
+            // Main peg
+            Circle()
+                .fill(
+                    RadialGradient(
+                        colors: [color, color.opacity(0.8)],
+                        center: .center,
+                        startRadius: 0,
+                        endRadius: pegRadius
+                    )
+                )
+                .frame(
+                    width: pegRadius * 2 * (pegPulse ? 1.15 : 1.0),
+                    height: pegRadius * 2 * (pegPulse ? 1.15 : 1.0)
+                )
+                .shadow(color: glowColor.opacity(pegPulse ? 0.8 : 0.3), radius: pegPulse ? 6 : 3)
+                .position(x: pos.x, y: pos.y + yOffset)
+                .animation(.spring(duration: 0.6, bounce: 0.3), value: score)
+        }
     }
 
     private func pegPosition(score: Int, trackW: CGFloat) -> CGPoint {

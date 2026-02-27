@@ -87,6 +87,16 @@ struct PlayerState {
     var isDealer: Bool = false
 }
 
+// MARK: - Muggins Result
+
+struct MugginsResult {
+    let claimedScore: Int
+    let actualScore: Int
+    var mugginsPoints: Int { max(0, actualScore - claimedScore) }
+    var isPerfect: Bool { claimedScore == actualScore }
+    var overClaimed: Bool { claimedScore > actualScore }
+}
+
 // MARK: - Game Stats
 
 struct GameStatsData {

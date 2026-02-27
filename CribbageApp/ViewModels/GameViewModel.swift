@@ -63,6 +63,14 @@ final class GameViewModel {
     var tutorialStep: TutorialStep? = nil
     var tutorialActive: Bool = false
 
+    // Scoring callouts
+    var scoringCallouts: [ScoringCallout] = []
+
+    // Muggins state
+    var mugginsPending: Bool = false
+    var mugginsClaimedScore: Int = 0
+    var mugginsResult: MugginsResult? = nil
+
     // Ceremony state
     var dealPhase: DealPhase = .idle
     var starterCeremonyPhase: StarterCeremonyPhase = .idle
@@ -81,6 +89,8 @@ final class GameViewModel {
     @AppStorage("player2Name") var player2NameStored = "Player 2"
     @ObservationIgnored
     @AppStorage("tutorialCompleted") var tutorialCompleted = false
+    @ObservationIgnored
+    @AppStorage("mugginsEnabled") var mugginsEnabled = false
 
     private let stats = StatsManager.shared
     private let sound = SoundManager.shared
@@ -417,9 +427,11 @@ final class GameViewModel {
             }
 
             let log = engine.actionLog
-            if log.contains(where: { !$0.scoreEvents.isEmpty }) {
-                sound.playScore()
+            // Celebrate scoring with enhanced effects
+            if let firstAction = log.first, !firstAction.scoreEvents.isEmpty {
+                celebrateScoring(firstAction.scoreEvents)
             }
+            celebrateFifteenOrThirtyOne(engine.runningTotal)
 
             checkGameOver()
             if engine.phase == .gameOver { return }
@@ -449,9 +461,11 @@ final class GameViewModel {
             engine.playCard(cardIndex: engineIndex)
             let log = engine.actionLog
 
-            if log.contains(where: { !$0.scoreEvents.isEmpty }) {
-                sound.playScore()
+            // Enhanced scoring celebration for human play
+            if let firstAction = log.first, !firstAction.scoreEvents.isEmpty {
+                celebrateScoring(firstAction.scoreEvents)
             }
+            celebrateFifteenOrThirtyOne(engine.runningTotal)
 
             checkGameOver()
 
@@ -519,6 +533,19 @@ final class GameViewModel {
             return
         }
         guard let engine, !isProcessing else { return }
+
+        // If muggins result is showing, dismiss it and continue
+        if mugginsResult != nil {
+            dismissMugginsResult()
+            return
+        }
+
+        // If muggins applies to this phase, start the claim flow instead of advancing
+        if mugginsAppliesCurrentPhase && !mugginsPending {
+            beginMugginsClaim()
+            return
+        }
+
         HapticManager.lightImpact()
 
         // Record hand/crib scores before advancing (skip in pass-and-play)
@@ -545,6 +572,8 @@ final class GameViewModel {
             if isPassAndPlay {
                 passAndPlayPlayer = 1
             }
+            sound.playRoundTransition()
+            HapticManager.success()
             startDealCeremony()
         }
     }
@@ -555,6 +584,8 @@ final class GameViewModel {
         isProcessing = true
         statusMessage = nil
         starterCeremonyPhase = .idle
+        mugginsPending = false
+        mugginsResult = nil
         if isPassAndPlay {
             passAndPlayPlayer = 1
             showingHandOver = false
@@ -654,6 +685,122 @@ final class GameViewModel {
         hintMessage = nil
     }
 
+    // MARK: - Muggins
+
+    /// Whether muggins applies to the current counting phase (human's hand/crib only).
+    var mugginsAppliesCurrentPhase: Bool {
+        guard mugginsEnabled, !isPassAndPlay, let engine else { return false }
+        switch engine.phase {
+        case .countNonDealer:
+            return !engine.isHumanDealer // human is non-dealer
+        case .countDealer:
+            return engine.isHumanDealer
+        case .countCrib:
+            return engine.isHumanDealer
+        default:
+            return false
+        }
+    }
+
+    /// The hand being counted in the current muggins phase (for display before claiming).
+    var mugginsHandToCount: [Card]? {
+        guard mugginsPending, let engine else { return nil }
+        switch engine.phase {
+        case .countNonDealer:
+            return engine.isHumanDealer ? engine.computer.hand : engine.human.hand
+        case .countDealer:
+            return engine.isHumanDealer ? engine.human.hand : engine.computer.hand
+        case .countCrib:
+            return engine.crib
+        default:
+            return nil
+        }
+    }
+
+    /// Start muggins claim flow — show the hand and ask player to count.
+    func beginMugginsClaim() {
+        mugginsPending = true
+        mugginsClaimedScore = 0
+        mugginsResult = nil
+    }
+
+    /// Submit the muggins claim. Calculates real score, awards points, shows result.
+    func submitMugginsClaim() {
+        guard let engine, mugginsPending else { return }
+        guard let starter = engine.starter else { return }
+
+        // Calculate the real score
+        let hand: [Card]
+        let isCrib: Bool
+        switch engine.phase {
+        case .countNonDealer:
+            hand = engine.isHumanDealer ? engine.computer.hand : engine.human.hand
+            isCrib = false
+        case .countDealer:
+            hand = engine.isHumanDealer ? engine.human.hand : engine.computer.hand
+            isCrib = false
+        case .countCrib:
+            hand = engine.crib
+            isCrib = true
+        default:
+            return
+        }
+
+        let (actualScore, _) = Scoring.calculateScore(hand: hand, starter: starter, isCrib: isCrib)
+        let claimed = min(max(mugginsClaimedScore, 0), 29) // cap at max possible hand
+        let result = MugginsResult(claimedScore: claimed, actualScore: actualScore)
+        mugginsResult = result
+
+        // Sound + haptic feedback
+        if result.isPerfect {
+            sound.playScoreChime(points: actualScore)
+            HapticManager.success()
+        } else if result.mugginsPoints > 0 {
+            sound.playInvalidAction()
+            HapticManager.invalidAction()
+        } else {
+            // Overclaimed — just award actual
+            sound.playScoreChime(points: actualScore)
+            HapticManager.lightImpact()
+        }
+
+        // Record stats
+        if !isPassAndPlay {
+            if engine.phase == .countCrib {
+                stats.recordCribScore(actualScore)
+            } else {
+                stats.recordHandScore(actualScore)
+            }
+        }
+
+        // Award points via engine: claimed to scorer, muggins to opponent
+        let wasCountCrib = engine.phase == .countCrib
+        engine.acknowledge(mugginsClaimedScore: claimed)
+
+        // Award muggins bonus to opponent
+        if result.mugginsPoints > 0 {
+            engine.awardBonus(result.mugginsPoints, toHuman: false)
+        }
+
+        checkGameOver()
+
+        // If we just finished counting crib, handle new round
+        if wasCountCrib && engine.phase == .discard {
+            mugginsPending = false
+            isProcessing = true
+            starterCeremonyPhase = .idle
+            sound.playRoundTransition()
+            HapticManager.success()
+            startDealCeremony()
+        }
+    }
+
+    /// Dismiss muggins result and continue to next phase.
+    func dismissMugginsResult() {
+        mugginsPending = false
+        mugginsResult = nil
+    }
+
     // MARK: - Card Sorting
 
     private func sortedHand(_ hand: [Card]) -> [Card] {
@@ -669,6 +816,62 @@ final class GameViewModel {
                 }
                 return $0.suit.rawValue < $1.suit.rawValue
             }
+        }
+    }
+
+    // MARK: - Scoring Celebrations
+
+    /// Fire scoring callouts, sound, and haptics for play-phase score events.
+    private func celebrateScoring(_ events: [ScoreEvent]) {
+        guard !events.isEmpty else { return }
+        let totalPoints = events.reduce(0) { $0 + $1.points }
+        guard totalPoints > 0 else { return }
+
+        // Enhanced sound — pitch scales with points
+        sound.playScoreChime(points: totalPoints)
+
+        // Escalating haptic
+        HapticManager.scoringImpact(points: totalPoints)
+
+        // Add callout text for each event
+        for event in events where event.points > 0 {
+            let callout = ScoringCallout(text: calloutText(for: event), points: event.points)
+            scoringCallouts.append(callout)
+        }
+
+        // Auto-clear callouts after delay
+        Task {
+            try? await Task.sleep(for: .milliseconds(1800))
+            scoringCallouts.removeAll()
+        }
+    }
+
+    private func calloutText(for event: ScoreEvent) -> String {
+        let reason = event.reason.lowercased()
+        if reason.contains("15") { return "15 for \(event.points)!" }
+        if reason.contains("pair") { return "Pair!" }
+        if reason.contains("three of") || reason.contains("royal pair") { return "Three of a Kind!" }
+        if reason.contains("four of") || reason.contains("double royal") { return "Four of a Kind!" }
+        if reason.contains("run") { return "Run of \(event.reason.filter(\.isNumber))!" }
+        if reason.contains("31") { return "31 for 2!" }
+        if reason.contains("go") || reason.contains("last card") { return "Go!" }
+        if reason.contains("his heels") { return "His Heels!" }
+        if reason.contains("nobs") || reason.contains("his nobs") { return "His Nobs!" }
+        if reason.contains("flush") { return "Flush!" }
+        return "+\(event.points)"
+    }
+
+    /// Invalid play attempt — card can't be played (exceeds 31 or not your turn)
+    func invalidPlayAttempt() {
+        HapticManager.invalidAction()
+        sound.playInvalidAction()
+    }
+
+    /// Fire 15/31 special celebration.
+    private func celebrateFifteenOrThirtyOne(_ total: Int) {
+        if total == 15 || total == 31 {
+            sound.playFifteenOrThirtyOne()
+            HapticManager.fifteenThirtyOne()
         }
     }
 
@@ -832,10 +1035,10 @@ final class GameViewModel {
                 HapticManager.lightImpact()
                 sound.playCardPlace()
 
-                // Score sound if there were scoring events
+                // Enhanced scoring celebrations for computer plays
                 if !action.scoreEvents.isEmpty {
                     try? await Task.sleep(for: .milliseconds(200))
-                    sound.playScore()
+                    celebrateScoring(action.scoreEvents)
                 }
             }
             try? await Task.sleep(for: .milliseconds(500))

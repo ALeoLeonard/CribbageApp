@@ -36,4 +36,38 @@ enum HapticManager {
         guard isEnabled else { return }
         UISelectionFeedbackGenerator().selectionChanged()
     }
+
+    /// Escalating haptic based on point value — bigger scores feel bigger
+    static func scoringImpact(points: Int) {
+        guard isEnabled else { return }
+        switch points {
+        case 1:
+            UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        case 2:
+            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        case 3...5:
+            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        default:
+            // Big scores: double tap
+            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
+                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+            }
+        }
+    }
+
+    /// 15 or 31 — crisp double-tap
+    static func fifteenThirtyOne() {
+        guard isEnabled else { return }
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred(intensity: 0.8)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.06) {
+            UIImpactFeedbackGenerator(style: .rigid).impactOccurred(intensity: 1.0)
+        }
+    }
+
+    /// Invalid action shake
+    static func invalidAction() {
+        guard isEnabled else { return }
+        UINotificationFeedbackGenerator().notificationOccurred(.warning)
+    }
 }
