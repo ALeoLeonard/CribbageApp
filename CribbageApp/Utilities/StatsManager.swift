@@ -58,6 +58,38 @@ final class StatsManager {
         set { defaults.set(newValue, forKey: "stats.winsPerDifficulty") }
     }
 
+    // Skunk tracking
+    var skunksGiven: Int {
+        get { defaults.integer(forKey: "stats.skunksGiven") }
+        set { defaults.set(newValue, forKey: "stats.skunksGiven") }
+    }
+
+    var skunksReceived: Int {
+        get { defaults.integer(forKey: "stats.skunksReceived") }
+        set { defaults.set(newValue, forKey: "stats.skunksReceived") }
+    }
+
+    var doubleSkunksGiven: Int {
+        get { defaults.integer(forKey: "stats.doubleSkunksGiven") }
+        set { defaults.set(newValue, forKey: "stats.doubleSkunksGiven") }
+    }
+
+    var doubleSkunksReceived: Int {
+        get { defaults.integer(forKey: "stats.doubleSkunksReceived") }
+        set { defaults.set(newValue, forKey: "stats.doubleSkunksReceived") }
+    }
+
+    // Pegging tracking
+    var totalPeggingPoints: Int {
+        get { defaults.integer(forKey: "stats.totalPeggingPoints") }
+        set { defaults.set(newValue, forKey: "stats.totalPeggingPoints") }
+    }
+
+    var totalPeggingRounds: Int {
+        get { defaults.integer(forKey: "stats.totalPeggingRounds") }
+        set { defaults.set(newValue, forKey: "stats.totalPeggingRounds") }
+    }
+
     // MARK: - Computed
 
     var winRate: Double {
@@ -68,6 +100,11 @@ final class StatsManager {
     var averageHandScore: Double {
         guard totalHandsCounted > 0 else { return 0 }
         return Double(totalHandPoints) / Double(totalHandsCounted)
+    }
+
+    var averagePeggingScore: Double {
+        guard totalPeggingRounds > 0 else { return 0 }
+        return Double(totalPeggingPoints) / Double(totalPeggingRounds)
     }
 
     // MARK: - Actions
@@ -87,6 +124,34 @@ final class StatsManager {
         }
     }
 
+    /// Record skunk result at end of game.
+    /// - Parameters:
+    ///   - won: Whether the human won
+    ///   - winnerScore: The winner's final score
+    ///   - loserScore: The loser's final score
+    func recordSkunkResult(won: Bool, loserScore: Int) {
+        if loserScore < 61 {
+            // Double skunk
+            if won {
+                doubleSkunksGiven += 1
+            } else {
+                doubleSkunksReceived += 1
+            }
+        } else if loserScore < 91 {
+            // Skunk
+            if won {
+                skunksGiven += 1
+            } else {
+                skunksReceived += 1
+            }
+        }
+    }
+
+    func recordPeggingPoints(_ points: Int) {
+        totalPeggingPoints += points
+        totalPeggingRounds += 1
+    }
+
     func recordHandScore(_ score: Int) {
         totalHandPoints += score
         totalHandsCounted += 1
@@ -103,7 +168,10 @@ final class StatsManager {
             "stats.currentWinStreak", "stats.bestWinStreak",
             "stats.highestHandScore", "stats.highestCribScore",
             "stats.totalHandPoints", "stats.totalHandsCounted",
-            "stats.winsPerDifficulty"
+            "stats.winsPerDifficulty",
+            "stats.skunksGiven", "stats.skunksReceived",
+            "stats.doubleSkunksGiven", "stats.doubleSkunksReceived",
+            "stats.totalPeggingPoints", "stats.totalPeggingRounds"
         ]
         for key in keys {
             defaults.removeObject(forKey: key)

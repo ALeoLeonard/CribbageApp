@@ -13,6 +13,9 @@ struct StatsView: View {
                 // Records
                 recordsCard
 
+                // Skunk stats
+                skunkCard
+
                 // Per-difficulty breakdown
                 difficultyCard
 
@@ -86,11 +89,41 @@ struct StatsView: View {
                 statRow(icon: "hand.raised.fill", label: "Best Hand", value: "\(stats.highestHandScore)")
                 statRow(icon: "rectangle.stack.fill", label: "Best Crib", value: "\(stats.highestCribScore)")
                 statRow(icon: "chart.bar.fill", label: "Avg Hand", value: avgHandText)
+                statRow(icon: "figure.walk", label: "Avg Pegging", value: avgPeggingText)
             }
         }
         .padding()
         .background(statsCardBackground)
         .padding(.horizontal)
+    }
+
+    // MARK: - Skunk Card
+
+    private var skunkCard: some View {
+        let totalSkunks = stats.skunksGiven + stats.doubleSkunksGiven
+        let totalSkunked = stats.skunksReceived + stats.doubleSkunksReceived
+        guard totalSkunks > 0 || totalSkunked > 0 || stats.totalGamesPlayed > 5 else {
+            return AnyView(EmptyView())
+        }
+
+        return AnyView(
+            VStack(spacing: 12) {
+                Text("Skunks")
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(CribbageTheme.gold)
+
+                VStack(spacing: 8) {
+                    statRow(icon: "hare.fill", label: "Skunks Given", value: "\(stats.skunksGiven)")
+                    statRow(icon: "hare.fill", label: "Double Skunks Given", value: "\(stats.doubleSkunksGiven)")
+                    Divider().overlay(CribbageTheme.gold.opacity(0.2))
+                    statRow(icon: "tortoise.fill", label: "Skunks Received", value: "\(stats.skunksReceived)")
+                    statRow(icon: "tortoise.fill", label: "Double Skunks Received", value: "\(stats.doubleSkunksReceived)")
+                }
+            }
+            .padding()
+            .background(statsCardBackground)
+            .padding(.horizontal)
+        )
     }
 
     // MARK: - Difficulty Card
@@ -166,6 +199,12 @@ struct StatsView: View {
     private var avgHandText: String {
         stats.totalHandsCounted > 0
             ? String(format: "%.1f", stats.averageHandScore)
+            : "—"
+    }
+
+    private var avgPeggingText: String {
+        stats.totalPeggingRounds > 0
+            ? String(format: "%.1f", stats.averagePeggingScore)
             : "—"
     }
 }

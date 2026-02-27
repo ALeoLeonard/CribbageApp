@@ -36,6 +36,7 @@ final class GameEngine {
     var handScores: [Int] = []
     var cribScores: [Int] = []
     var highestHandScore: Int = 0
+    var humanPeggingPoints: Int = 0 // Points scored during play phases
 
     // MARK: - Computed
 
@@ -48,6 +49,17 @@ final class GameEngine {
     }
 
     var isHumanDealer: Bool { human.isDealer }
+
+    /// Skunk result for the finished game.
+    var skunkResult: SkunkResult {
+        guard phase == .gameOver else { return .none }
+        let winnerScore = max(human.score, computer.score)
+        let loserScore = min(human.score, computer.score)
+        guard winnerScore >= Constants.winningScore else { return .none }
+        if loserScore < 61 { return .doubleSkunk }
+        if loserScore < 91 { return .skunk }
+        return .none
+    }
 
     /// Whether it's the human's turn to act.
     var yourTurn: Bool {
@@ -202,6 +214,7 @@ final class GameEngine {
         let totalPts = events.reduce(0) { $0 + $1.points }
         if totalPts > 0 {
             addScore(&human, totalPts)
+            humanPeggingPoints += totalPts
             for i in events.indices { events[i].player = human.name }
         }
 
@@ -510,6 +523,7 @@ final class GameEngine {
         handScores = []
         cribScores = []
         highestHandScore = 0
+        humanPeggingPoints = 0
         actionLog = []
         lastAction = nil
         scoreBreakdown = nil

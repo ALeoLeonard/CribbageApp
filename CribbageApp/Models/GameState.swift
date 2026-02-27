@@ -1,8 +1,32 @@
 import Foundation
 
+// MARK: - Skunk Result
+
+enum SkunkResult: String {
+    case none
+    case skunk       // Loser < 91 points
+    case doubleSkunk // Loser < 61 points
+
+    var label: String {
+        switch self {
+        case .none: return ""
+        case .skunk: return "Skunk!"
+        case .doubleSkunk: return "Double Skunk!"
+        }
+    }
+}
+
+// MARK: - Card Sort Preference
+
+enum CardSortPreference: String, CaseIterable {
+    case dealt = "As Dealt"
+    case byRank = "By Rank"
+    case bySuit = "By Suit"
+}
+
 // MARK: - Game Phase
 
-enum GamePhase: String {
+enum GamePhase: String, Codable {
     case discard
     case play
     case countNonDealer = "count_non_dealer"

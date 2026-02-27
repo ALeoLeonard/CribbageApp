@@ -58,13 +58,25 @@ final class GameViewModel {
     @AppStorage("playerName") var playerName = "Player"
     @ObservationIgnored
     @AppStorage("difficulty") var difficultyRaw = AIDifficulty.easy.rawValue
+    @ObservationIgnored
+    @AppStorage("cardSort") var cardSortRaw = CardSortPreference.dealt.rawValue
 
     private let stats = StatsManager.shared
     private let sound = SoundManager.shared
 
+    // Multiplayer
+    var multiplayerVM: MultiplayerViewModel?
+    var isMultiplayer: Bool { multiplayerVM != nil }
+    var chatMessages: [ChatMessage] { multiplayerVM?.chatMessages ?? [] }
+
     var difficulty: AIDifficulty {
         get { AIDifficulty(rawValue: difficultyRaw) ?? .easy }
         set { difficultyRaw = newValue.rawValue }
+    }
+
+    var cardSort: CardSortPreference {
+        get { CardSortPreference(rawValue: cardSortRaw) ?? .dealt }
+        set { cardSortRaw = newValue.rawValue }
     }
 
     private var pacing: PacingConfig {
@@ -73,32 +85,108 @@ final class GameViewModel {
 
     // MARK: - Game State Accessors
 
-    var phase: GamePhase { engine?.phase ?? .discard }
-    var humanHand: [Card] {
-        guard let engine else { return [] }
-        return engine.phase == .play ? engine.humanPlayHand : engine.human.hand
+    var phase: GamePhase {
+        if let mp = multiplayerVM { return mp.phase }
+        return engine?.phase ?? .discard
     }
-    var humanScore: Int { engine?.human.score ?? 0 }
-    var humanName: String { engine?.human.name ?? playerName }
-    var humanIsDealer: Bool { engine?.human.isDealer ?? false }
+    var humanHand: [Card] {
+        if let mp = multiplayerVM { return mp.humanHand }
+        guard let engine else { return [] }
+        let hand = engine.phase == .play ? engine.humanPlayHand : engine.human.hand
+        return sortedHand(hand)
+    }
 
-    var opponentScore: Int { engine?.computer.score ?? 0 }
-    var opponentName: String { engine?.computer.name ?? "Computer" }
-    var opponentHandCount: Int { engine?.opponentHandCount ?? 0 }
-    var opponentIsDealer: Bool { engine?.computer.isDealer ?? false }
+    var skunkResult: SkunkResult {
+        return engine?.skunkResult ?? .none
+    }
+    var humanScore: Int {
+        if let mp = multiplayerVM { return mp.humanScore }
+        return engine?.human.score ?? 0
+    }
+    var humanName: String {
+        if let mp = multiplayerVM { return mp.humanName }
+        return engine?.human.name ?? playerName
+    }
+    var humanIsDealer: Bool {
+        if let mp = multiplayerVM { return mp.humanIsDealer }
+        return engine?.human.isDealer ?? false
+    }
 
-    var starter: Card? { engine?.starter }
-    var playPile: [Card] { engine?.playPile ?? [] }
-    var runningTotal: Int { engine?.runningTotal ?? 0 }
-    var cribCount: Int { engine?.crib.count ?? 0 }
-    var roundNumber: Int { engine?.roundNumber ?? 1 }
-    var winner: String? { engine?.winner }
-    var scoreBreakdown: ScoreBreakdown? { engine?.scoreBreakdown }
-    var lastAction: LastAction? { engine?.lastAction }
-    var actionLog: [LastAction] { engine?.actionLog ?? [] }
+    var opponentScore: Int {
+        if let mp = multiplayerVM { return mp.opponentScore }
+        return engine?.computer.score ?? 0
+    }
+    var opponentName: String {
+        if let mp = multiplayerVM { return mp.opponentName }
+        return engine?.computer.name ?? "Computer"
+    }
+    var opponentHandCount: Int {
+        if let mp = multiplayerVM { return mp.opponentHandCount }
+        return engine?.opponentHandCount ?? 0
+    }
+    var opponentIsDealer: Bool {
+        if let mp = multiplayerVM { return mp.opponentIsDealer }
+        return engine?.computer.isDealer ?? false
+    }
 
-    var yourTurn: Bool { engine?.yourTurn ?? false }
-    var humanCanPlay: Bool { engine?.humanCanPlay ?? false }
+    var starter: Card? {
+        if let mp = multiplayerVM { return mp.starter }
+        return engine?.starter
+    }
+    var playPile: [Card] {
+        if let mp = multiplayerVM { return mp.playPile }
+        return engine?.playPile ?? []
+    }
+    var runningTotal: Int {
+        if let mp = multiplayerVM { return mp.runningTotal }
+        return engine?.runningTotal ?? 0
+    }
+    var cribCount: Int {
+        if let mp = multiplayerVM { return mp.cribCount }
+        return engine?.crib.count ?? 0
+    }
+    var roundNumber: Int {
+        if let mp = multiplayerVM { return mp.roundNumber }
+        return engine?.roundNumber ?? 1
+    }
+    var winner: String? {
+        if let mp = multiplayerVM { return mp.winner }
+        return engine?.winner
+    }
+    var scoreBreakdown: ScoreBreakdown? {
+        if let mp = multiplayerVM { return mp.scoreBreakdown }
+        return engine?.scoreBreakdown
+    }
+    var lastAction: LastAction? {
+        if let mp = multiplayerVM { return mp.lastAction }
+        return engine?.lastAction
+    }
+    var actionLog: [LastAction] {
+        // Multiplayer doesn't have a local action log
+        return engine?.actionLog ?? []
+    }
+
+    var yourTurn: Bool {
+        if let mp = multiplayerVM { return mp.yourTurn }
+        return engine?.yourTurn ?? false
+    }
+    var humanCanPlay: Bool {
+        if let mp = multiplayerVM { return mp.humanCanPlay }
+        return engine?.humanCanPlay ?? false
+    }
+
+    var countPhasePlayerName: String {
+        if let mp = multiplayerVM { return mp.countPhasePlayerName }
+        guard let engine else { return "" }
+        switch engine.phase {
+        case .countNonDealer:
+            return engine.nonDealer.name
+        case .countDealer, .countCrib:
+            return engine.dealer.name
+        default:
+            return ""
+        }
+    }
 
     /// Whether we're in a deal ceremony (shuffling or dealing cards)
     var isDealCeremony: Bool {
@@ -133,6 +221,14 @@ final class GameViewModel {
     }
 
     func discard() {
+        if let mp = multiplayerVM {
+            guard selectedIndices.count == 2 else { return }
+            mp.discard(selectedIndices)
+            selectedIndices = []
+            HapticManager.mediumImpact()
+            sound.playCardPlace()
+            return
+        }
         guard let engine, selectedIndices.count == 2, !isProcessing else { return }
         isProcessing = true
         HapticManager.mediumImpact()
@@ -163,6 +259,12 @@ final class GameViewModel {
     }
 
     func playCard(_ index: Int) {
+        if let mp = multiplayerVM {
+            mp.playCard(index)
+            HapticManager.mediumImpact()
+            sound.playCardSlide()
+            return
+        }
         guard let engine, !isProcessing else { return }
         isProcessing = true
         HapticManager.mediumImpact()
@@ -196,6 +298,11 @@ final class GameViewModel {
     }
 
     func sayGo() {
+        if let mp = multiplayerVM {
+            mp.sayGo()
+            sound.playGo()
+            return
+        }
         guard let engine, !isProcessing else { return }
         isProcessing = true
         sound.playGo()
@@ -214,6 +321,11 @@ final class GameViewModel {
     }
 
     func acknowledge() {
+        if let mp = multiplayerVM {
+            mp.acknowledge()
+            HapticManager.lightImpact()
+            return
+        }
         guard let engine, !isProcessing else { return }
         HapticManager.lightImpact()
 
@@ -254,16 +366,43 @@ final class GameViewModel {
         startDealCeremonyVisualOnly()
     }
 
+    func sendChat(_ text: String) {
+        multiplayerVM?.sendChat(text)
+    }
+
     // MARK: - Game Over
 
     private func checkGameOver() {
         guard let engine, engine.phase == .gameOver, let winner = engine.winner else { return }
         let won = winner == engine.human.name
         stats.recordGameResult(won: won, difficulty: engine.aiDifficulty)
+        let loserScore = won ? engine.computer.score : engine.human.score
+        stats.recordSkunkResult(won: won, loserScore: loserScore)
+        if engine.humanPeggingPoints > 0 {
+            stats.recordPeggingPoints(engine.humanPeggingPoints)
+        }
         if won {
             sound.playWin()
         } else {
             sound.playLose()
+        }
+    }
+
+    // MARK: - Card Sorting
+
+    private func sortedHand(_ hand: [Card]) -> [Card] {
+        switch cardSort {
+        case .dealt:
+            return hand
+        case .byRank:
+            return hand.sorted { $0.rank.order < $1.rank.order }
+        case .bySuit:
+            return hand.sorted {
+                if $0.suit.rawValue == $1.suit.rawValue {
+                    return $0.rank.order < $1.rank.order
+                }
+                return $0.suit.rawValue < $1.suit.rawValue
+            }
         }
     }
 

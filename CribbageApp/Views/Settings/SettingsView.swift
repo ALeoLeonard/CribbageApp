@@ -3,6 +3,8 @@ import SwiftUI
 struct SettingsView: View {
     @AppStorage("playerName") private var playerName = "Player"
     @AppStorage("soundEnabled") private var soundEnabled = true
+    @AppStorage("hapticsEnabled") var hapticsEnabled = true
+    @AppStorage("cardSort") private var cardSortRaw = CardSortPreference.dealt.rawValue
 
     var body: some View {
         ScrollView {
@@ -18,18 +20,53 @@ struct SettingsView: View {
                     }
                 }
 
-                // Audio section
-                settingsCard(title: "Audio") {
-                    Toggle(isOn: $soundEnabled) {
+                // Gameplay section
+                settingsCard(title: "Gameplay") {
+                    VStack(spacing: 12) {
+                        // Card sort
                         HStack {
-                            Image(systemName: soundEnabled ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                            Image(systemName: "arrow.up.arrow.down")
                                 .foregroundStyle(CribbageTheme.gold)
                                 .frame(width: 24)
-                            Text("Sound Effects")
+                            Text("Card Sort")
                                 .foregroundStyle(CribbageTheme.ivory)
+                            Spacer()
+                            Picker("", selection: $cardSortRaw) {
+                                ForEach(CardSortPreference.allCases, id: \.rawValue) { pref in
+                                    Text(pref.rawValue).tag(pref.rawValue)
+                                }
+                            }
+                            .pickerStyle(.menu)
+                            .tint(CribbageTheme.gold)
                         }
                     }
-                    .tint(CribbageTheme.gold)
+                }
+
+                // Audio & Feedback section
+                settingsCard(title: "Audio & Feedback") {
+                    VStack(spacing: 12) {
+                        Toggle(isOn: $soundEnabled) {
+                            HStack {
+                                Image(systemName: soundEnabled ? "speaker.wave.2.fill" : "speaker.slash.fill")
+                                    .foregroundStyle(CribbageTheme.gold)
+                                    .frame(width: 24)
+                                Text("Sound Effects")
+                                    .foregroundStyle(CribbageTheme.ivory)
+                            }
+                        }
+                        .tint(CribbageTheme.gold)
+
+                        Toggle(isOn: $hapticsEnabled) {
+                            HStack {
+                                Image(systemName: hapticsEnabled ? "iphone.radiowaves.left.and.right" : "iphone.slash")
+                                    .foregroundStyle(CribbageTheme.gold)
+                                    .frame(width: 24)
+                                Text("Haptic Feedback")
+                                    .foregroundStyle(CribbageTheme.ivory)
+                            }
+                        }
+                        .tint(CribbageTheme.gold)
+                    }
                 }
 
                 // Customize section
@@ -41,7 +78,7 @@ struct SettingsView: View {
                             Image(systemName: "paintpalette.fill")
                                 .foregroundStyle(CribbageTheme.gold)
                                 .frame(width: 24)
-                            Text("Customize")
+                            Text("Customize Themes")
                                 .foregroundStyle(CribbageTheme.ivory)
                             Spacer()
                             Image(systemName: "chevron.right")
@@ -51,10 +88,27 @@ struct SettingsView: View {
                     }
                 }
 
+                // Support section
+                settingsCard(title: "Support") {
+                    VStack(spacing: 12) {
+                        if let url = URL(string: "https://apps.apple.com/app/id0") { // placeholder
+                            Link(destination: url) {
+                                settingsRow(icon: "star.fill", label: "Rate on App Store")
+                            }
+                        }
+
+                        if let url = URL(string: "https://example.com/privacy") { // placeholder
+                            Link(destination: url) {
+                                settingsRow(icon: "hand.raised.fill", label: "Privacy Policy")
+                            }
+                        }
+                    }
+                }
+
                 // About section
                 settingsCard(title: "About") {
                     VStack(spacing: 8) {
-                        aboutRow(label: "Version", value: "1.0.0")
+                        aboutRow(label: "Version", value: appVersion)
                         aboutRow(label: "Game", value: "Cribbage")
                         aboutRow(label: "Target Score", value: "121")
                     }
@@ -72,6 +126,12 @@ struct SettingsView: View {
 
     // MARK: - Helpers
 
+    private var appVersion: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
+        return "\(version) (\(build))"
+    }
+
     private func settingsCard(title: String, @ViewBuilder content: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)
@@ -88,6 +148,20 @@ struct SettingsView: View {
                 .strokeBorder(CribbageTheme.gold.opacity(0.2), lineWidth: 1)
         )
         .padding(.horizontal)
+    }
+
+    private func settingsRow(icon: String, label: String) -> some View {
+        HStack {
+            Image(systemName: icon)
+                .foregroundStyle(CribbageTheme.gold)
+                .frame(width: 24)
+            Text(label)
+                .foregroundStyle(CribbageTheme.ivory)
+            Spacer()
+            Image(systemName: "chevron.right")
+                .font(.caption)
+                .foregroundStyle(CribbageTheme.ivory.opacity(0.5))
+        }
     }
 
     private func aboutRow(label: String, value: String) -> some View {

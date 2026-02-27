@@ -5,15 +5,16 @@ struct CribbageBoardView: View {
     let opponentScore: Int
 
     @Environment(ThemeManager.self) private var themeManager
+    @Environment(\.cardScale) private var cardScale
 
-    // Layout constants
-    private let boardHeight: CGFloat = 80
+    // Layout constants (scaled for iPad)
+    private var boardHeight: CGFloat { 80 * cardScale }
     private let hPad: CGFloat = 16
-    private let topRowY: CGFloat = 24
-    private let bottomRowY: CGFloat = 56
-    private let holeRadius: CGFloat = 2.2
-    private let majorHoleRadius: CGFloat = 3.0
-    private let pegRadius: CGFloat = 5.5
+    private var topRowY: CGFloat { 24 * cardScale }
+    private var bottomRowY: CGFloat { 56 * cardScale }
+    private var holeRadius: CGFloat { 2.2 * cardScale }
+    private var majorHoleRadius: CGFloat { 3.0 * cardScale }
+    private var pegRadius: CGFloat { 5.5 * cardScale }
     private let holesPerRow = 60
 
     @State private var pegPulse = false
@@ -80,6 +81,10 @@ struct CribbageBoardView: View {
                         )
                         .position(x: x, y: bottomRowY)
                 }
+
+                // Skunk lines at 61 and 91
+                skunkLine(at: 61, trackW: trackW, label: "S")
+                skunkLine(at: 91, trackW: trackW, label: "S")
 
                 // Milestone labels
                 milestoneLabels(trackW: trackW)
@@ -189,6 +194,30 @@ struct CribbageBoardView: View {
                     x: hPad + trackW - trackW * 60 / CGFloat(holesPerRow),
                     y: bottomRowY + 12
                 )
+        }
+    }
+
+    // MARK: - Skunk Lines
+
+    private func skunkLine(at score: Int, trackW: CGFloat, label: String) -> some View {
+        let pos = pegPositionForSkunk(score: score, trackW: trackW)
+        return Group {
+            // Vertical tick mark
+            Rectangle()
+                .fill(.red.opacity(0.35))
+                .frame(width: 1.5, height: 18 * cardScale)
+                .position(x: pos.x, y: pos.y)
+        }
+    }
+
+    private func pegPositionForSkunk(score: Int, trackW: CGFloat) -> CGPoint {
+        if score <= holesPerRow {
+            let x = hPad + trackW * CGFloat(score) / CGFloat(holesPerRow)
+            return CGPoint(x: x, y: topRowY)
+        } else {
+            let bottomHole = score - holesPerRow
+            let x = hPad + trackW - trackW * CGFloat(bottomHole) / CGFloat(holesPerRow)
+            return CGPoint(x: x, y: bottomRowY)
         }
     }
 

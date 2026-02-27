@@ -45,6 +45,21 @@ struct GameOverView: View {
                     .font(.system(size: 34, weight: .bold, design: .serif))
                     .foregroundStyle(playerWon ? CribbageTheme.gold : CribbageTheme.ivory)
 
+                // Skunk badge
+                if viewModel.skunkResult != .none {
+                    Text(viewModel.skunkResult.label)
+                        .font(.system(size: 18, weight: .bold, design: .serif))
+                        .foregroundStyle(playerWon ? CribbageTheme.gold : .red)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 6)
+                        .background(
+                            Capsule()
+                                .fill(playerWon ? CribbageTheme.gold.opacity(0.15) : .red.opacity(0.15))
+                                .strokeBorder(playerWon ? CribbageTheme.gold.opacity(0.4) : .red.opacity(0.4), lineWidth: 1)
+                        )
+                        .transition(.scale.combined(with: .opacity))
+                }
+
                 // Final scores
                 VStack(spacing: 8) {
                     scoreRow(name: viewModel.humanName, score: viewModel.humanScore, highlight: playerWon)
