@@ -321,16 +321,9 @@ final class GameEngine {
 
     private func handleGo(whoSaidGo: String) {
         if let lastGo = lastGoBy, lastGo != whoSaidGo {
-            // Both said go — last card point, reset
-            if whoSaidGo == "computer" {
-                addScore(&human, 1)
-                logAction(LastAction(
-                    actor: human.name,
-                    action: "score",
-                    scoreEvents: [ScoreEvent(player: human.name, points: 1, reason: "Go (last card)")],
-                    message: "\(human.name) scores 1 for Go"
-                ))
-            } else {
+            // Both said Go — the Go point goes to the opponent of the first
+            // Go-sayer, because that player was the last to play a card.
+            if lastGo == "human" {
                 addScore(&computer, 1)
                 logAction(LastAction(
                     actor: computer.name,
@@ -338,7 +331,16 @@ final class GameEngine {
                     scoreEvents: [ScoreEvent(player: computer.name, points: 1, reason: "Go (last card)")],
                     message: "\(computer.name) scores 1 for Go"
                 ))
+            } else {
+                addScore(&human, 1)
+                logAction(LastAction(
+                    actor: human.name,
+                    action: "score",
+                    scoreEvents: [ScoreEvent(player: human.name, points: 1, reason: "Go (last card)")],
+                    message: "\(human.name) scores 1 for Go"
+                ))
             }
+
             playPile = []
             runningTotal = 0
             lastGoBy = nil
@@ -350,8 +352,8 @@ final class GameEngine {
                 return
             }
 
-            // The person who said the first Go gets to lead
-            if whoSaidGo == "human" {
+            // The first Go-sayer leads the new pile
+            if lastGo == "human" {
                 currentTurn = "human"
             } else {
                 currentTurn = "computer"
@@ -388,6 +390,7 @@ final class GameEngine {
         computerPlayHand.remove(at: cardIndex)
         playPile.append(card)
         runningTotal += card.value
+        lastGoBy = nil // Playing a card resets Go tracking
 
         var events = Scoring.calculatePlayScore(playPile: playPile, runningTotal: runningTotal)
         let totalPts = events.reduce(0) { $0 + $1.points }
@@ -418,7 +421,6 @@ final class GameEngine {
         }
 
         currentTurn = "human"
-        lastGoBy = nil
     }
 
     /// Player 2 says Go (pass-and-play only).
@@ -468,6 +470,7 @@ final class GameEngine {
             let card = computerPlayHand.remove(at: idx)
             playPile.append(card)
             runningTotal += card.value
+            lastGoBy = nil // Playing a card resets Go tracking
 
             var events = Scoring.calculatePlayScore(playPile: playPile, runningTotal: runningTotal)
             let totalPts = events.reduce(0) { $0 + $1.points }
