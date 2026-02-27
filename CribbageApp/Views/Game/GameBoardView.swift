@@ -3,6 +3,12 @@ import SwiftUI
 struct GameBoardView: View {
     @Environment(GameViewModel.self) private var viewModel
     @Environment(ThemeManager.self) private var themeManager
+    @Environment(\.horizontalSizeClass) private var sizeClass
+    @Environment(\.verticalSizeClass) private var verticalSizeClass
+
+    private var isIPadLandscape: Bool {
+        sizeClass == .regular && verticalSizeClass == .regular
+    }
 
     var body: some View {
         if let winner = viewModel.winner {
@@ -12,29 +18,10 @@ struct GameBoardView: View {
         }
     }
 
-    private var gameBoard: some View {
-        VStack(spacing: 0) {
-            // Score bar
-            scoreBar
-                .padding(.horizontal, 12)
-                .padding(.top, 4)
+    // MARK: - Center Content
 
-            // Cribbage board
-            CribbageBoardView(
-                playerScore: viewModel.humanScore,
-                opponentScore: viewModel.opponentScore
-            )
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-
-            // Opponent area
-            opponentArea
-                .padding(.horizontal)
-                .padding(.bottom, 4)
-
-            Spacer()
-
-            // Center: deck during ceremony, or play area during gameplay
+    private var centerContent: some View {
+        Group {
             if viewModel.isDealCeremony {
                 dealCeremonyView
                     .transition(.opacity)
@@ -74,6 +61,34 @@ struct GameBoardView: View {
                     }
                 }
             }
+        }
+    }
+
+    // MARK: - Portrait Layout (iPhone)
+
+    private var portraitLayout: some View {
+        VStack(spacing: 0) {
+            // Score bar
+            scoreBar
+                .padding(.horizontal, 12)
+                .padding(.top, 4)
+
+            // Cribbage board
+            CribbageBoardView(
+                playerScore: viewModel.humanScore,
+                opponentScore: viewModel.opponentScore
+            )
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
+
+            // Opponent area
+            opponentArea
+                .padding(.horizontal)
+                .padding(.bottom, 4)
+
+            Spacer()
+
+            centerContent
 
             Spacer()
 
@@ -98,18 +113,60 @@ struct GameBoardView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 4)
         }
+    }
+
+    private var gameBoard: some View {
+        Group {
+            if isIPadLandscape {
+                AdaptiveGameLayout {
+                    scoreBar
+                } board: {
+                    CribbageBoardView(playerScore: viewModel.humanScore, opponentScore: viewModel.opponentScore)
+                } opponent: {
+                    opponentArea
+                } center: {
+                    centerContent
+                } actions: {
+                    ActionBarView()
+                } hand: {
+                    ZStack {
+                        if viewModel.yourTurn && viewModel.phase == .play {
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(CribbageTheme.gold.opacity(0.12))
+                                .blur(radius: 14)
+                                .frame(height: 130)
+                        }
+                        playerHand
+                    }
+                } playerInfo: {
+                    playerInfo
+                }
+            } else {
+                portraitLayout
+            }
+        }
+        .environment(\.cardScale, sizeClass == .regular ? 1.3 : 1.0)
         .feltBackground()
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Text("Round \(viewModel.roundNumber)")
-                    .font(.subheadline.weight(.medium))
-                    .foregroundStyle(CribbageTheme.gold)
+                VStack(spacing: 0) {
+                    if viewModel.isPassAndPlay {
+                        Text("Pass & Play")
+                            .font(.caption2)
+                            .foregroundStyle(CribbageTheme.ivory.opacity(0.6))
+                    }
+                    Text("Round \(viewModel.roundNumber)")
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(CribbageTheme.gold)
+                }
             }
             ToolbarItem(placement: .topBarLeading) {
                 Button {
                     viewModel.engine = nil
                     viewModel.selectedIndices = []
+                    viewModel.isPassAndPlay = false
+                    viewModel.showingHandOver = false
                 } label: {
                     Image(systemName: "xmark")
                         .foregroundStyle(CribbageTheme.ivory)
@@ -120,6 +177,29 @@ struct GameBoardView: View {
         .toolbarBackground(.visible, for: .navigationBar)
         .animation(.easeInOut(duration: 0.3), value: viewModel.phase)
         .animation(.easeInOut(duration: 0.3), value: viewModel.dealPhase)
+        .overlay {
+            if viewModel.showingHandOver {
+                HandOverView(playerName: viewModel.handOverPlayerName) {
+                    viewModel.handOverReady()
+                }
+                .transition(.opacity)
+            }
+        }
+        .overlay {
+            if let step = viewModel.tutorialStep, viewModel.tutorialActive {
+                TutorialOverlayView(
+                    step: step,
+                    onNext: { viewModel.advanceTutorial() },
+                    onSkip: { viewModel.skipTutorial() }
+                )
+                .transition(.opacity)
+            }
+        }
+        .animation(.easeInOut(duration: 0.2), value: viewModel.showingHandOver)
+        .animation(.easeInOut(duration: 0.25), value: viewModel.tutorialStep)
+        .onChange(of: viewModel.phase) {
+            viewModel.tutorialCheckPhase()
+        }
     }
 
     // MARK: - Deal Ceremony View
@@ -252,6 +332,7 @@ struct GameBoardView: View {
                     cards: viewModel.humanHand,
                     selectedIndices: viewModel.selectedIndices,
                     selectable: viewModel.dealPhase == .ready,
+                    hintIndices: viewModel.hintIndices,
                     onTap: { viewModel.toggleSelect($0) }
                 )
             } else if viewModel.phase == .play {
@@ -259,6 +340,7 @@ struct GameBoardView: View {
                     cards: viewModel.humanHand,
                     selectedIndices: [],
                     selectable: viewModel.yourTurn && viewModel.humanCanPlay && !viewModel.isProcessing,
+                    hintIndices: viewModel.hintIndices,
                     onTap: { viewModel.playCard($0) }
                 )
             } else {

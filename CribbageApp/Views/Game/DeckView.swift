@@ -10,12 +10,13 @@ struct DeckView: View {
     var isSmall: Bool = false
 
     @Environment(ThemeManager.self) private var themeManager
+    @Environment(\.cardScale) private var cardScale
 
     private var width: CGFloat {
-        isSmall ? CribbageTheme.cardSmallWidth : CribbageTheme.cardWidth
+        isSmall ? CribbageTheme.cardSmallWidth(scale: cardScale) : CribbageTheme.cardWidth(scale: cardScale)
     }
     private var height: CGFloat {
-        isSmall ? CribbageTheme.cardSmallHeight : CribbageTheme.cardHeight
+        isSmall ? CribbageTheme.cardSmallHeight(scale: cardScale) : CribbageTheme.cardHeight(scale: cardScale)
     }
     private let cornerRadius = CribbageTheme.cardCornerRadius
 

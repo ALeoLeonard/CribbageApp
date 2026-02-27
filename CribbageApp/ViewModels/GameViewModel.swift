@@ -48,6 +48,21 @@ final class GameViewModel {
     var isProcessing = false
     var statusMessage: String?
 
+    // Hint state
+    var hintIndices: Set<Int> = []
+    var hintMessage: String?
+    private let hintAI = HardAI()
+
+    // Pass-and-play state
+    var isPassAndPlay: Bool = false
+    var passAndPlayPlayer: Int = 1 // 1 or 2
+    var showingHandOver: Bool = false
+    var handOverPlayerName: String = "" // Name shown on handover screen
+
+    // Tutorial state
+    var tutorialStep: TutorialStep? = nil
+    var tutorialActive: Bool = false
+
     // Ceremony state
     var dealPhase: DealPhase = .idle
     var starterCeremonyPhase: StarterCeremonyPhase = .idle
@@ -60,6 +75,12 @@ final class GameViewModel {
     @AppStorage("difficulty") var difficultyRaw = AIDifficulty.easy.rawValue
     @ObservationIgnored
     @AppStorage("cardSort") var cardSortRaw = CardSortPreference.dealt.rawValue
+    @ObservationIgnored
+    @AppStorage("hintsEnabled") var hintsEnabled = true
+    @ObservationIgnored
+    @AppStorage("player2Name") var player2NameStored = "Player 2"
+    @ObservationIgnored
+    @AppStorage("tutorialCompleted") var tutorialCompleted = false
 
     private let stats = StatsManager.shared
     private let sound = SoundManager.shared
@@ -92,6 +113,10 @@ final class GameViewModel {
     var humanHand: [Card] {
         if let mp = multiplayerVM { return mp.humanHand }
         guard let engine else { return [] }
+        if isPassAndPlay && passAndPlayPlayer == 2 {
+            let hand = engine.phase == .play ? engine.computerPlayHand : engine.computer.hand
+            return sortedHand(hand)
+        }
         let hand = engine.phase == .play ? engine.humanPlayHand : engine.human.hand
         return sortedHand(hand)
     }
@@ -122,6 +147,11 @@ final class GameViewModel {
     }
     var opponentHandCount: Int {
         if let mp = multiplayerVM { return mp.opponentHandCount }
+        if isPassAndPlay, let engine {
+            if passAndPlayPlayer == 2 {
+                return engine.phase == .play ? engine.humanPlayHand.count : engine.human.hand.count
+            }
+        }
         return engine?.opponentHandCount ?? 0
     }
     var opponentIsDealer: Bool {
@@ -168,10 +198,25 @@ final class GameViewModel {
 
     var yourTurn: Bool {
         if let mp = multiplayerVM { return mp.yourTurn }
+        if isPassAndPlay, let engine {
+            switch engine.phase {
+            case .play:
+                return passAndPlayPlayer == 1 ? engine.currentTurn == "human" : engine.currentTurn == "computer"
+            case .discard:
+                return true
+            case .countNonDealer, .countDealer, .countCrib:
+                return true
+            case .gameOver:
+                return false
+            }
+        }
         return engine?.yourTurn ?? false
     }
     var humanCanPlay: Bool {
         if let mp = multiplayerVM { return mp.humanCanPlay }
+        if isPassAndPlay && passAndPlayPlayer == 2 {
+            return engine?.player2CanPlay ?? false
+        }
         return engine?.humanCanPlay ?? false
     }
 
@@ -202,11 +247,42 @@ final class GameViewModel {
             aiDifficulty: difficulty,
             autoDeal: false
         )
+        isPassAndPlay = false
         selectedIndices = []
         isProcessing = true
         statusMessage = nil
         starterCeremonyPhase = .idle
         startDealCeremony()
+    }
+
+    func newPassAndPlayGame() {
+        let name1 = playerName.trimmingCharacters(in: .whitespaces)
+        let name2 = player2NameStored.trimmingCharacters(in: .whitespaces)
+        engine = GameEngine(
+            player1Name: name1.isEmpty ? "Player 1" : name1,
+            player2Name: name2.isEmpty ? "Player 2" : name2,
+            autoDeal: false
+        )
+        isPassAndPlay = true
+        passAndPlayPlayer = 1
+        showingHandOver = false
+        handOverPlayerName = ""
+        selectedIndices = []
+        isProcessing = true
+        statusMessage = nil
+        starterCeremonyPhase = .idle
+        startDealCeremony()
+    }
+
+    func handOverReady() {
+        guard let engine else { return }
+        // Determine which player should be active based on engine state
+        if engine.phase == .discard && engine.waitingForPlayer2Discard {
+            passAndPlayPlayer = 2
+        } else if engine.phase == .play {
+            passAndPlayPlayer = engine.currentTurn == "human" ? 1 : 2
+        }
+        showingHandOver = false
     }
 
     func toggleSelect(_ index: Int) {
@@ -220,7 +296,18 @@ final class GameViewModel {
         sound.playCardFlip()
     }
 
+    /// Map display indices (into the sorted hand) back to engine indices (into the unsorted hand).
+    private func mapDisplayToEngineIndices(_ displayIndices: Set<Int>, hand: [Card]) -> [Int] {
+        let sorted = sortedHand(hand)
+        return displayIndices.compactMap { displayIdx -> Int? in
+            guard displayIdx < sorted.count else { return nil }
+            let card = sorted[displayIdx]
+            return hand.firstIndex(where: { $0.id == card.id })
+        }
+    }
+
     func discard() {
+        clearHint()
         if let mp = multiplayerVM {
             guard selectedIndices.count == 2 else { return }
             mp.discard(selectedIndices)
@@ -230,13 +317,47 @@ final class GameViewModel {
             return
         }
         guard let engine, selectedIndices.count == 2, !isProcessing else { return }
-        isProcessing = true
         HapticManager.mediumImpact()
         sound.playCardPlace()
-        let indices = Array(selectedIndices).sorted()
+
+        if isPassAndPlay {
+            if passAndPlayPlayer == 1 {
+                let engineIndices = mapDisplayToEngineIndices(selectedIndices, hand: engine.human.hand)
+                guard engineIndices.count == 2 else { return }
+                selectedIndices = []
+                engine.discard(cardIndices: engineIndices.sorted())
+                // Show handover for player 2
+                handOverPlayerName = engine.computer.name
+                showingHandOver = true
+            } else {
+                let engineIndices = mapDisplayToEngineIndices(selectedIndices, hand: engine.computer.hand)
+                guard engineIndices.count == 2 else { return }
+                selectedIndices = []
+                engine.discardPlayer2(cardIndices: engineIndices.sorted())
+                checkGameOver()
+                if engine.phase == .gameOver { return }
+                // Starter ceremony, then handover for first player
+                isProcessing = true
+                startStarterCeremony {
+                    self.isProcessing = false
+                    self.passAndPlayPlayer = engine.currentTurn == "human" ? 1 : 2
+                    self.handOverPlayerName = self.passAndPlayPlayer == 1 ? engine.human.name : engine.computer.name
+                    self.showingHandOver = true
+                }
+            }
+            return
+        }
+
+        // Single-player flow
+        isProcessing = true
+        let engineIndices = mapDisplayToEngineIndices(selectedIndices, hand: engine.human.hand)
+        guard engineIndices.count == 2 else {
+            isProcessing = false
+            return
+        }
         selectedIndices = []
 
-        engine.discard(cardIndices: indices)
+        engine.discard(cardIndices: engineIndices.sorted())
         let log = engine.actionLog
 
         checkGameOver()
@@ -258,7 +379,23 @@ final class GameViewModel {
         }
     }
 
+    /// Map a single display index to an engine index for the active player's hand.
+    private func mapPlayIndex(_ displayIndex: Int) -> Int? {
+        guard let engine else { return nil }
+        let hand: [Card]
+        if isPassAndPlay && passAndPlayPlayer == 2 {
+            hand = engine.computerPlayHand
+        } else {
+            hand = engine.humanPlayHand
+        }
+        let sorted = sortedHand(hand)
+        guard displayIndex < sorted.count else { return nil }
+        let card = sorted[displayIndex]
+        return hand.firstIndex(where: { $0.id == card.id })
+    }
+
     func playCard(_ index: Int) {
+        clearHint()
         if let mp = multiplayerVM {
             mp.playCard(index)
             HapticManager.mediumImpact()
@@ -266,10 +403,42 @@ final class GameViewModel {
             return
         }
         guard let engine, !isProcessing else { return }
+
+        if isPassAndPlay {
+            guard let engineIndex = mapPlayIndex(index) else { return }
+            HapticManager.mediumImpact()
+            sound.playCardSlide()
+            sound.playCardPlace()
+
+            if passAndPlayPlayer == 1 {
+                engine.playCard(cardIndex: engineIndex)
+            } else {
+                engine.player2PlayCard(cardIndex: engineIndex)
+            }
+
+            let log = engine.actionLog
+            if log.contains(where: { !$0.scoreEvents.isEmpty }) {
+                sound.playScore()
+            }
+
+            checkGameOver()
+            if engine.phase == .gameOver { return }
+            if engine.phase != .play { return }
+
+            // Check if turn changed — need handover
+            let expectedTurn = passAndPlayPlayer == 1 ? "human" : "computer"
+            if engine.currentTurn != expectedTurn {
+                let nextPlayer = engine.currentTurn == "human" ? 1 : 2
+                handOverPlayerName = nextPlayer == 1 ? engine.human.name : engine.computer.name
+                showingHandOver = true
+            }
+            return
+        }
+
+        // Single-player flow
+        guard let engineIndex = mapPlayIndex(index) else { return }
         isProcessing = true
         HapticManager.mediumImpact()
-
-        // Anticipation: play slide sound slightly before card appears
         sound.playCardSlide()
 
         Task {
@@ -277,10 +446,9 @@ final class GameViewModel {
             sound.playCardPlace()
             HapticManager.lightImpact()
 
-            engine.playCard(cardIndex: index)
+            engine.playCard(cardIndex: engineIndex)
             let log = engine.actionLog
 
-            // Check for scoring in the play
             if log.contains(where: { !$0.scoreEvents.isEmpty }) {
                 sound.playScore()
             }
@@ -304,6 +472,30 @@ final class GameViewModel {
             return
         }
         guard let engine, !isProcessing else { return }
+
+        if isPassAndPlay {
+            sound.playGo()
+            if passAndPlayPlayer == 1 {
+                engine.sayGo()
+            } else {
+                engine.player2SayGo()
+            }
+
+            checkGameOver()
+            if engine.phase == .gameOver { return }
+            if engine.phase != .play { return }
+
+            // Check if turn changed
+            let expectedTurn = passAndPlayPlayer == 1 ? "human" : "computer"
+            if engine.currentTurn != expectedTurn {
+                let nextPlayer = engine.currentTurn == "human" ? 1 : 2
+                handOverPlayerName = nextPlayer == 1 ? engine.human.name : engine.computer.name
+                showingHandOver = true
+            }
+            return
+        }
+
+        // Single-player flow
         isProcessing = true
         sound.playGo()
 
@@ -329,16 +521,16 @@ final class GameViewModel {
         guard let engine, !isProcessing else { return }
         HapticManager.lightImpact()
 
-        // Record hand/crib scores before advancing
-        if let breakdown = engine.scoreBreakdown {
+        // Record hand/crib scores before advancing (skip in pass-and-play)
+        if !isPassAndPlay, let breakdown = engine.scoreBreakdown {
             if engine.phase == .countCrib {
                 stats.recordCribScore(breakdown.total)
             } else {
                 stats.recordHandScore(breakdown.total)
             }
-            if breakdown.total > 0 {
-                sound.playScore()
-            }
+        }
+        if let breakdown = engine.scoreBreakdown, breakdown.total > 0 {
+            sound.playScore()
         }
 
         let wasCountCrib = engine.phase == .countCrib
@@ -350,6 +542,9 @@ final class GameViewModel {
         if wasCountCrib && engine.phase == .discard {
             isProcessing = true
             starterCeremonyPhase = .idle
+            if isPassAndPlay {
+                passAndPlayPlayer = 1
+            }
             startDealCeremony()
         }
     }
@@ -360,6 +555,10 @@ final class GameViewModel {
         isProcessing = true
         statusMessage = nil
         starterCeremonyPhase = .idle
+        if isPassAndPlay {
+            passAndPlayPlayer = 1
+            showingHandOver = false
+        }
 
         // Engine.newGame() calls dealRound() internally, so cards are already dealt.
         // We still run the visual ceremony.
@@ -374,6 +573,13 @@ final class GameViewModel {
 
     private func checkGameOver() {
         guard let engine, engine.phase == .gameOver, let winner = engine.winner else { return }
+
+        if isPassAndPlay {
+            // In pass-and-play, don't record stats — just play the win sound
+            sound.playWin()
+            return
+        }
+
         let won = winner == engine.human.name
         stats.recordGameResult(won: won, difficulty: engine.aiDifficulty)
         let loserScore = won ? engine.computer.score : engine.human.score
@@ -386,6 +592,66 @@ final class GameViewModel {
         } else {
             sound.playLose()
         }
+    }
+
+    // MARK: - Hints
+
+    func showHint() {
+        guard let engine, !isProcessing else { return }
+        clearHint()
+
+        switch phase {
+        case .discard:
+            let hand: [Card]
+            let isDealer: Bool
+            if isPassAndPlay && passAndPlayPlayer == 2 {
+                hand = engine.computer.hand
+                isDealer = engine.computer.isDealer
+            } else {
+                hand = engine.human.hand
+                isDealer = engine.human.isDealer
+            }
+            let recommended = hintAI.chooseDiscards(hand: hand, isDealer: isDealer)
+            let sortedCards = sortedHand(hand)
+            var displayIndices: Set<Int> = []
+            for engineIdx in recommended {
+                let card = hand[engineIdx]
+                if let displayIdx = sortedCards.firstIndex(where: { $0.id == card.id }) {
+                    displayIndices.insert(displayIdx)
+                }
+            }
+            hintIndices = displayIndices
+            hintMessage = "Recommended discard"
+            HapticManager.lightImpact()
+
+        case .play:
+            let hand: [Card]
+            if isPassAndPlay && passAndPlayPlayer == 2 {
+                hand = engine.computerPlayHand
+            } else {
+                hand = engine.humanPlayHand
+            }
+            guard let engineIdx = hintAI.choosePlay(
+                hand: hand,
+                playPile: engine.playPile,
+                runningTotal: engine.runningTotal
+            ) else { return }
+            let card = hand[engineIdx]
+            let sortedCards = sortedHand(hand)
+            if let displayIdx = sortedCards.firstIndex(where: { $0.id == card.id }) {
+                hintIndices = [displayIdx]
+                hintMessage = "Recommended play"
+            }
+            HapticManager.lightImpact()
+
+        default:
+            break
+        }
+    }
+
+    func clearHint() {
+        hintIndices = []
+        hintMessage = nil
     }
 
     // MARK: - Card Sorting
@@ -403,6 +669,56 @@ final class GameViewModel {
                 }
                 return $0.suit.rawValue < $1.suit.rawValue
             }
+        }
+    }
+
+    // MARK: - Tutorial
+
+    func startTutorialIfNeeded() {
+        guard !tutorialCompleted, !isPassAndPlay else { return }
+        tutorialActive = true
+        tutorialStep = .welcome
+    }
+
+    func advanceTutorial() {
+        guard tutorialActive, let current = tutorialStep else { return }
+        let allSteps = TutorialStep.allCases
+        if let idx = allSteps.firstIndex(of: current), idx + 1 < allSteps.count {
+            let next = allSteps[idx + 1]
+            tutorialStep = next
+            if next == .complete {
+                tutorialCompleted = true
+            }
+        } else {
+            endTutorial()
+        }
+    }
+
+    func skipTutorial() {
+        tutorialCompleted = true
+        endTutorial()
+    }
+
+    private func endTutorial() {
+        tutorialActive = false
+        tutorialStep = nil
+    }
+
+    /// Called when game phase changes to potentially show the next tutorial step.
+    func tutorialCheckPhase() {
+        guard tutorialActive, let step = tutorialStep else { return }
+        // Auto-advance tutorial based on phase transitions
+        switch phase {
+        case .play:
+            if step == .selectDiscard {
+                tutorialStep = .starterCard
+            }
+        case .countNonDealer:
+            if step == .sayGo || step == .playPhase {
+                tutorialStep = .counting
+            }
+        default:
+            break
         }
     }
 
@@ -434,6 +750,7 @@ final class GameViewModel {
 
             dealPhase = .ready
             isProcessing = false
+            startTutorialIfNeeded()
         }
     }
 

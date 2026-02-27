@@ -7,23 +7,24 @@ struct CardView: View {
     var isSmall: Bool = false
 
     @Environment(ThemeManager.self) private var themeManager
+    @Environment(\.cardScale) private var cardScale
 
     private var width: CGFloat {
-        isSmall ? CribbageTheme.cardSmallWidth : CribbageTheme.cardWidth
+        isSmall ? CribbageTheme.cardSmallWidth(scale: cardScale) : CribbageTheme.cardWidth(scale: cardScale)
     }
     private var height: CGFloat {
-        isSmall ? CribbageTheme.cardSmallHeight : CribbageTheme.cardHeight
+        isSmall ? CribbageTheme.cardSmallHeight(scale: cardScale) : CribbageTheme.cardHeight(scale: cardScale)
     }
     private var cornerRadius: CGFloat { CribbageTheme.cardCornerRadius }
 
     private var rankFont: Font {
-        isSmall ? .system(size: 10, weight: .bold) : .system(size: 14, weight: .bold)
+        isSmall ? .system(size: 10 * cardScale, weight: .bold) : .system(size: 14 * cardScale, weight: .bold)
     }
     private var suitFont: Font {
-        isSmall ? .system(size: 8) : .system(size: 11)
+        isSmall ? .system(size: 8 * cardScale) : .system(size: 11 * cardScale)
     }
     private var centerFont: Font {
-        isSmall ? .system(size: 18) : .system(size: 26)
+        isSmall ? .system(size: 18 * cardScale) : .system(size: 26 * cardScale)
     }
 
     var body: some View {

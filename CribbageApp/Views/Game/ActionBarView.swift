@@ -23,9 +23,17 @@ struct ActionBarView: View {
 
     private var discardBar: some View {
         VStack(spacing: 8) {
-            Text("Select 2 cards for the crib")
-                .font(.subheadline)
-                .foregroundStyle(CribbageTheme.ivory)
+            HStack {
+                Text(viewModel.hintMessage ?? "Select 2 cards for the crib")
+                    .font(.subheadline)
+                    .foregroundStyle(viewModel.hintMessage != nil ? CribbageTheme.gold : CribbageTheme.ivory)
+
+                Spacer()
+
+                if viewModel.hintsEnabled && !viewModel.isProcessing && viewModel.dealPhase == .ready {
+                    hintButton
+                }
+            }
 
             Button {
                 viewModel.discard()
@@ -58,9 +66,17 @@ struct ActionBarView: View {
                 }
             } else if viewModel.yourTurn {
                 if viewModel.humanCanPlay {
-                    Text("Tap a card to play it")
-                        .font(.subheadline)
-                        .foregroundStyle(CribbageTheme.ivory)
+                    HStack {
+                        Text(viewModel.hintMessage ?? "Tap a card to play it")
+                            .font(.subheadline)
+                            .foregroundStyle(viewModel.hintMessage != nil ? CribbageTheme.gold : CribbageTheme.ivory)
+
+                        Spacer()
+
+                        if viewModel.hintsEnabled {
+                            hintButton
+                        }
+                    }
                 } else {
                     Button {
                         viewModel.sayGo()
@@ -114,15 +130,36 @@ struct ActionBarView: View {
         }
     }
 
+    // MARK: - Hint Button
+
+    private var hintButton: some View {
+        Button {
+            viewModel.showHint()
+        } label: {
+            Image(systemName: "lightbulb.fill")
+                .font(.subheadline)
+                .foregroundStyle(viewModel.hintIndices.isEmpty ? CribbageTheme.ivory.opacity(0.6) : CribbageTheme.gold)
+                .padding(8)
+                .background(
+                    Circle()
+                        .fill(CribbageTheme.feltGreenDark.opacity(0.8))
+                        .strokeBorder(
+                            viewModel.hintIndices.isEmpty ? CribbageTheme.ivory.opacity(0.2) : CribbageTheme.gold.opacity(0.5),
+                            lineWidth: 1
+                        )
+                )
+        }
+    }
+
     private var phaseLabel: some View {
         Group {
             switch viewModel.phase {
             case .countNonDealer:
-                Text("Count: \(viewModel.engine?.nonDealer.name ?? "")'s hand")
+                Text("Count: \(viewModel.countPhasePlayerName)'s hand")
             case .countDealer:
-                Text("Count: \(viewModel.engine?.dealer.name ?? "")'s hand")
+                Text("Count: \(viewModel.countPhasePlayerName)'s hand")
             case .countCrib:
-                Text("Count: \(viewModel.engine?.dealer.name ?? "")'s crib")
+                Text("Count: \(viewModel.countPhasePlayerName)'s crib")
             default:
                 EmptyView()
             }

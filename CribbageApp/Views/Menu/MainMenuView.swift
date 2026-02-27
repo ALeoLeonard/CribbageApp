@@ -2,7 +2,9 @@ import SwiftUI
 
 struct MainMenuView: View {
     @Environment(GameViewModel.self) private var viewModel
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var pulsing = false
+    @State private var showPassAndPlay = false
 
     var body: some View {
         @Bindable var vm = viewModel
@@ -98,12 +100,37 @@ struct MainMenuView: View {
                 }
             }
 
-            // Stats and Settings row
-            HStack(spacing: 24) {
+            // Pass & Play button
+            Button {
+                showPassAndPlay = true
+            } label: {
+                Label("Pass & Play", systemImage: "person.2.fill")
+                    .font(.system(.body, design: .serif).weight(.medium))
+                    .foregroundStyle(CribbageTheme.ivory)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14)
+                            .strokeBorder(CribbageTheme.gold.opacity(0.5), lineWidth: 1.5)
+                    )
+            }
+            .padding(.horizontal, 32)
+            .staggeredAppearance(index: 6)
+
+            // Stats, How to Play, and Settings row
+            HStack(spacing: 20) {
                 NavigationLink {
                     StatsView()
                 } label: {
                     Label("Stats", systemImage: "chart.bar.fill")
+                        .font(.subheadline.weight(.medium))
+                        .foregroundStyle(CribbageTheme.ivory.opacity(0.8))
+                }
+
+                NavigationLink {
+                    HowToPlayView()
+                } label: {
+                    Label("Rules", systemImage: "book.fill")
                         .font(.subheadline.weight(.medium))
                         .foregroundStyle(CribbageTheme.ivory.opacity(0.8))
                 }
@@ -116,13 +143,94 @@ struct MainMenuView: View {
                         .foregroundStyle(CribbageTheme.ivory.opacity(0.8))
                 }
             }
-            .staggeredAppearance(index: 6)
+            .staggeredAppearance(index: 7)
 
             Spacer()
         }
+        .frame(maxWidth: sizeClass == .regular ? 500 : .infinity)
+        .frame(maxWidth: .infinity)
         .feltBackground()
         .navigationBarTitleDisplayMode(.inline)
         .toolbarBackground(CribbageTheme.feltGreenDark, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
+        .sheet(isPresented: $showPassAndPlay) {
+            PassAndPlaySetupView()
+                .environment(viewModel)
+        }
+    }
+}
+
+// MARK: - Pass & Play Setup
+
+struct PassAndPlaySetupView: View {
+    @Environment(GameViewModel.self) private var viewModel
+    @Environment(\.dismiss) private var dismiss
+    @AppStorage("playerName") private var player1Name = "Player"
+    @AppStorage("player2Name") private var player2Name = "Player 2"
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 28) {
+                Spacer()
+
+                Image(systemName: "person.2.fill")
+                    .font(.system(size: 48))
+                    .foregroundStyle(CribbageTheme.gold.opacity(0.7))
+
+                Text("Pass & Play")
+                    .font(.system(size: 28, weight: .bold, design: .serif))
+                    .foregroundStyle(CribbageTheme.ivory)
+
+                Text("Two players, one device.\nPass the phone between turns.")
+                    .font(.subheadline)
+                    .foregroundStyle(CribbageTheme.ivory.opacity(0.7))
+                    .multilineTextAlignment(.center)
+
+                VStack(spacing: 16) {
+                    HStack {
+                        Circle()
+                            .fill(Color(red: 0.37, green: 0.65, blue: 0.95))
+                            .frame(width: 12, height: 12)
+                        TextField("Player 1", text: $player1Name)
+                            .textFieldStyle(.roundedBorder)
+                    }
+                    HStack {
+                        Circle()
+                            .fill(Color(red: 0.94, green: 0.35, blue: 0.35))
+                            .frame(width: 12, height: 12)
+                        TextField("Player 2", text: $player2Name)
+                            .textFieldStyle(.roundedBorder)
+                    }
+                }
+                .padding(.horizontal, 24)
+
+                Button {
+                    viewModel.newPassAndPlayGame()
+                    dismiss()
+                } label: {
+                    Label("Start Game", systemImage: "play.fill")
+                        .font(.system(.title3, design: .serif).weight(.semibold))
+                        .foregroundStyle(CribbageTheme.feltGreenDark)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 14)
+                        .background(CribbageTheme.goldGradient, in: RoundedRectangle(cornerRadius: 18))
+                        .shadow(color: CribbageTheme.gold.opacity(0.3), radius: 6, y: 2)
+                }
+                .padding(.horizontal, 32)
+
+                Spacer()
+            }
+            .feltBackground()
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Cancel") { dismiss() }
+                        .foregroundStyle(CribbageTheme.ivory)
+                }
+            }
+            .toolbarBackground(CribbageTheme.feltGreenDark, for: .navigationBar)
+            .toolbarBackground(.visible, for: .navigationBar)
+            .toolbarColorScheme(.dark, for: .navigationBar)
+        }
     }
 }

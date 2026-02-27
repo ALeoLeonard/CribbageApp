@@ -6,6 +6,7 @@ struct PlayAreaView: View {
     let starter: Card?
     var starterCeremonyPhase: StarterCeremonyPhase = .idle
 
+    @Environment(\.cardScale) private var cardScale
     @State private var starterRevealed = false
 
     var body: some View {
@@ -41,7 +42,7 @@ struct PlayAreaView: View {
 
             // Play pile — fanned with slight rotation
             if !playPile.isEmpty {
-                HStack(spacing: -14) {
+                HStack(spacing: -14 * cardScale) {
                     ForEach(Array(playPile.enumerated()), id: \.element.id) { idx, card in
                         let count = playPile.count
                         let midpoint = Double(count - 1) / 2.0

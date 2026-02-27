@@ -14,6 +14,8 @@ final class GameEngine {
 
     private let ai: CribbageAI
     let aiDifficulty: AIDifficulty
+    let isPassAndPlay: Bool
+    var waitingForPlayer2Discard: Bool = false
 
     var deck: [Card] = []
     var starter: Card?
@@ -92,6 +94,19 @@ final class GameEngine {
         self.computer = PlayerState(name: "Computer", isDealer: true)
         self.ai = createAI(aiDifficulty)
         self.aiDifficulty = aiDifficulty
+        self.isPassAndPlay = false
+        if autoDeal {
+            dealRound()
+        }
+    }
+
+    /// Pass-and-play init: two human players, no AI.
+    init(player1Name: String, player2Name: String, autoDeal: Bool = true) {
+        self.human = PlayerState(name: player1Name)
+        self.computer = PlayerState(name: player2Name, isDealer: true)
+        self.ai = EasyAI() // Not used in pass-and-play
+        self.aiDifficulty = .easy
+        self.isPassAndPlay = true
         if autoDeal {
             dealRound()
         }
@@ -116,12 +131,15 @@ final class GameEngine {
         runningTotal = 0
         lastGoBy = nil
         scoreBreakdown = nil
+        waitingForPlayer2Discard = false
         phase = .discard
 
-        // Computer discards immediately
-        let aiDiscardIndices = ai.chooseDiscards(hand: computer.hand, isDealer: computer.isDealer)
-        let discarded = aiDiscardIndices.sorted(by: >).map { computer.hand.remove(at: $0) }
-        crib.append(contentsOf: discarded)
+        if !isPassAndPlay {
+            // Computer discards immediately
+            let aiDiscardIndices = ai.chooseDiscards(hand: computer.hand, isDealer: computer.isDealer)
+            let discarded = aiDiscardIndices.sorted(by: >).map { computer.hand.remove(at: $0) }
+            crib.append(contentsOf: discarded)
+        }
     }
 
     // MARK: - Score / Winner
@@ -146,7 +164,7 @@ final class GameEngine {
 
     // MARK: - Discard
 
-    /// Human discards 2 cards to crib.
+    /// Human (player 1) discards 2 cards to crib.
     func discard(cardIndices: [Int]) {
         actionLog = []
         guard phase == .discard else { return }
@@ -155,14 +173,38 @@ final class GameEngine {
               cardIndices.allSatisfy({ $0 >= 0 && $0 < human.hand.count })
         else { return }
 
-        // Remove cards (highest index first to avoid shifting)
         let discarded = cardIndices.sorted(by: >).map { human.hand.remove(at: $0) }
         crib.append(contentsOf: discarded)
 
-        // Cut the starter
+        if isPassAndPlay {
+            // Wait for player 2 to discard
+            waitingForPlayer2Discard = true
+            return
+        }
+
+        proceedAfterDiscard()
+    }
+
+    /// Player 2 discards 2 cards to crib (pass-and-play only).
+    func discardPlayer2(cardIndices: [Int]) {
+        guard phase == .discard, isPassAndPlay, waitingForPlayer2Discard else { return }
+        guard cardIndices.count == 2,
+              Set(cardIndices).count == 2,
+              cardIndices.allSatisfy({ $0 >= 0 && $0 < computer.hand.count })
+        else { return }
+
+        actionLog = []
+        let discarded = cardIndices.sorted(by: >).map { computer.hand.remove(at: $0) }
+        crib.append(contentsOf: discarded)
+        waitingForPlayer2Discard = false
+
+        proceedAfterDiscard()
+    }
+
+    /// Cut starter, check His Heels, set up play phase.
+    private func proceedAfterDiscard() {
         starter = Deck.deal(1, from: &deck).first
 
-        // Check for His Heels (Jack starter = 2 pts to dealer)
         if let starter, starter.rank == .jack {
             if human.isDealer {
                 addScore(&human, 2)
@@ -178,7 +220,6 @@ final class GameEngine {
             if checkWinner() { return }
         }
 
-        // Set up play phase
         humanPlayHand = human.hand
         computerPlayHand = computer.hand
         playPile = []
@@ -186,8 +227,7 @@ final class GameEngine {
         currentTurn = human.isDealer ? "computer" : "human"
         phase = .play
 
-        // If computer goes first, auto-play
-        if currentTurn == "computer" {
+        if !isPassAndPlay && currentTurn == "computer" {
             computerPlayTurn()
         }
     }
@@ -317,9 +357,77 @@ final class GameEngine {
         }
     }
 
-    // MARK: - Computer Play
+    // MARK: - Player 2 Play (Pass-and-Play)
+
+    /// Whether player 2 can play any card (pass-and-play only).
+    var player2CanPlay: Bool {
+        PlayPhaseHelper.canPlay(hand: computerPlayHand, runningTotal: runningTotal)
+    }
+
+    /// Player 2 plays a card during pegging (pass-and-play only).
+    func player2PlayCard(cardIndex: Int) {
+        actionLog = []
+        guard phase == .play, currentTurn == "computer", isPassAndPlay else { return }
+        guard cardIndex >= 0, cardIndex < computerPlayHand.count else { return }
+
+        let card = computerPlayHand[cardIndex]
+        guard card.value + runningTotal <= 31 else { return }
+
+        computerPlayHand.remove(at: cardIndex)
+        playPile.append(card)
+        runningTotal += card.value
+
+        var events = Scoring.calculatePlayScore(playPile: playPile, runningTotal: runningTotal)
+        let totalPts = events.reduce(0) { $0 + $1.points }
+        if totalPts > 0 {
+            addScore(&computer, totalPts)
+            for i in events.indices { events[i].player = computer.name }
+        }
+
+        logAction(LastAction(
+            actor: computer.name,
+            action: "play",
+            card: card,
+            scoreEvents: events,
+            message: "\(computer.name) plays \(card.label)"
+        ))
+
+        if runningTotal == 31 {
+            playPile = []
+            runningTotal = 0
+            lastGoBy = nil
+        }
+
+        if checkWinner() { return }
+
+        if humanPlayHand.isEmpty && computerPlayHand.isEmpty {
+            endPlayPhase()
+            return
+        }
+
+        currentTurn = "human"
+        lastGoBy = nil
+    }
+
+    /// Player 2 says Go (pass-and-play only).
+    func player2SayGo() {
+        actionLog = []
+        guard phase == .play, currentTurn == "computer", isPassAndPlay else { return }
+        guard !PlayPhaseHelper.canPlay(hand: computerPlayHand, runningTotal: runningTotal) else { return }
+
+        logAction(LastAction(
+            actor: computer.name,
+            action: "go",
+            message: "\(computer.name) says Go!"
+        ))
+
+        handleGo(whoSaidGo: "computer")
+    }
+
+    // MARK: - Computer Play (AI)
 
     private func computerPlayTurn() {
+        if isPassAndPlay { return }
         while currentTurn == "computer" && phase == .play {
             if computerPlayHand.isEmpty {
                 if humanPlayHand.isEmpty {
@@ -527,6 +635,7 @@ final class GameEngine {
         actionLog = []
         lastAction = nil
         scoreBreakdown = nil
+        waitingForPlayer2Discard = false
         dealRound()
     }
 }

@@ -5,6 +5,7 @@ struct SettingsView: View {
     @AppStorage("soundEnabled") private var soundEnabled = true
     @AppStorage("hapticsEnabled") var hapticsEnabled = true
     @AppStorage("cardSort") private var cardSortRaw = CardSortPreference.dealt.rawValue
+    @AppStorage("hintsEnabled") private var hintsEnabled = true
 
     var body: some View {
         ScrollView {
@@ -39,6 +40,17 @@ struct SettingsView: View {
                             .pickerStyle(.menu)
                             .tint(CribbageTheme.gold)
                         }
+
+                        Toggle(isOn: $hintsEnabled) {
+                            HStack {
+                                Image(systemName: "lightbulb.fill")
+                                    .foregroundStyle(CribbageTheme.gold)
+                                    .frame(width: 24)
+                                Text("Show Hints")
+                                    .foregroundStyle(CribbageTheme.ivory)
+                            }
+                        }
+                        .tint(CribbageTheme.gold)
                     }
                 }
 
@@ -85,6 +97,15 @@ struct SettingsView: View {
                                 .font(.caption)
                                 .foregroundStyle(CribbageTheme.ivory.opacity(0.5))
                         }
+                    }
+                }
+
+                // Tutorial section
+                settingsCard(title: "Tutorial") {
+                    Button {
+                        UserDefaults.standard.set(false, forKey: "tutorialCompleted")
+                    } label: {
+                        settingsRow(icon: "graduationcap.fill", label: "Restart Tutorial")
                     }
                 }
 

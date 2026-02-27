@@ -7,11 +7,12 @@ struct GameOverView: View {
     @State private var trophyPulsing = false
 
     var playerWon: Bool { winner == viewModel.humanName }
+    private var isPassAndPlay: Bool { viewModel.isPassAndPlay }
 
     var body: some View {
         ZStack {
             // Confetti for wins
-            if playerWon {
+            if playerWon || isPassAndPlay {
                 ConfettiView()
                     .allowsHitTesting(false)
             }
@@ -20,17 +21,17 @@ struct GameOverView: View {
                 Spacer()
 
                 // Trophy icon
-                Image(systemName: playerWon ? "trophy.fill" : "hand.thumbsdown.fill")
+                Image(systemName: playerWon || isPassAndPlay ? "trophy.fill" : "hand.thumbsdown.fill")
                     .font(.system(size: 70))
-                    .foregroundStyle(playerWon ? CribbageTheme.gold : CribbageTheme.ivory.opacity(0.4))
+                    .foregroundStyle(playerWon || isPassAndPlay ? CribbageTheme.gold : CribbageTheme.ivory.opacity(0.4))
                     .shadow(
-                        color: playerWon ? CribbageTheme.gold.opacity(trophyPulsing ? 0.6 : 0.2) : .clear,
+                        color: playerWon || isPassAndPlay ? CribbageTheme.gold.opacity(trophyPulsing ? 0.6 : 0.2) : .clear,
                         radius: trophyPulsing ? 16 : 6
                     )
-                    .scaleEffect(playerWon ? (trophyPulsing ? 1.05 : 1.0) : 0.85)
+                    .scaleEffect(playerWon || isPassAndPlay ? (trophyPulsing ? 1.05 : 1.0) : 0.85)
                     .scorePop()
                     .onAppear {
-                        if playerWon {
+                        if playerWon || isPassAndPlay {
                             HapticManager.success()
                             withAnimation(.easeInOut(duration: 1.2).repeatForever(autoreverses: true)) {
                                 trophyPulsing = true
@@ -41,9 +42,9 @@ struct GameOverView: View {
                     }
 
                 // Result
-                Text(playerWon ? "You Win!" : "You Lose")
+                Text(isPassAndPlay ? "\(winner) Wins!" : (playerWon ? "You Win!" : "You Lose"))
                     .font(.system(size: 34, weight: .bold, design: .serif))
-                    .foregroundStyle(playerWon ? CribbageTheme.gold : CribbageTheme.ivory)
+                    .foregroundStyle(playerWon || isPassAndPlay ? CribbageTheme.gold : CribbageTheme.ivory)
 
                 // Skunk badge
                 if viewModel.skunkResult != .none {
@@ -79,8 +80,10 @@ struct GameOverView: View {
                 )
                 .padding(.horizontal)
 
-                // Quick stats
-                quickStats
+                // Quick stats (single-player only)
+                if !isPassAndPlay {
+                    quickStats
+                }
 
                 // Buttons
                 VStack(spacing: 12) {
@@ -99,6 +102,7 @@ struct GameOverView: View {
                     Button {
                         viewModel.engine = nil
                         viewModel.selectedIndices = []
+                        viewModel.isPassAndPlay = false
                     } label: {
                         Label("Main Menu", systemImage: "house.fill")
                             .font(.subheadline.weight(.semibold))

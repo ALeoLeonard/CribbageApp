@@ -66,6 +66,12 @@ enum CribbageTheme {
     static let cardSmallWidth: CGFloat = 50
     static let cardSmallHeight: CGFloat = 72
     static let cardCornerRadius: CGFloat = 10
+
+    // Scaled sizes for iPad
+    static func cardWidth(scale: CGFloat) -> CGFloat { cardWidth * scale }
+    static func cardHeight(scale: CGFloat) -> CGFloat { cardHeight * scale }
+    static func cardSmallWidth(scale: CGFloat) -> CGFloat { cardSmallWidth * scale }
+    static func cardSmallHeight(scale: CGFloat) -> CGFloat { cardSmallHeight * scale }
 }
 
 // MARK: - FeltBackground
