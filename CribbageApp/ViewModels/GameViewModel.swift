@@ -13,6 +13,7 @@ enum DealPhase: Equatable {
 enum StarterCeremonyPhase: Equatable {
     case idle
     case cutting
+    case anticipation
     case revealing
     case done
 }
@@ -619,7 +620,12 @@ final class GameViewModel {
             stats.recordPeggingPoints(engine.humanPeggingPoints)
         }
         if won {
-            sound.playWin()
+            if let milestone = stats.streakMilestone {
+                sound.playStreakFanfare(milestone: milestone)
+                HapticManager.streakCelebration(milestone: milestone)
+            } else {
+                sound.playWin()
+            }
         } else {
             sound.playLose()
         }
@@ -746,7 +752,8 @@ final class GameViewModel {
             return
         }
 
-        let (actualScore, _) = Scoring.calculateScore(hand: hand, starter: starter, isCrib: isCrib)
+        let nobsEnabled = UserDefaults.standard.object(forKey: "nobsEnabled") as? Bool ?? true
+        let (actualScore, _) = Scoring.calculateScore(hand: hand, starter: starter, isCrib: isCrib, nobsEnabled: nobsEnabled)
         let claimed = min(max(mugginsClaimedScore, 0), 29) // cap at max possible hand
         let result = MugginsResult(claimedScore: claimed, actualScore: actualScore)
         mugginsResult = result
@@ -993,14 +1000,26 @@ final class GameViewModel {
 
             // Cut animation
             try? await Task.sleep(for: .milliseconds(500))
-            starterCeremonyPhase = .revealing
 
-            // Flip sound
+            // Anticipation phase — rising tone before reveal
+            starterCeremonyPhase = .anticipation
+            sound.playAnticipation()
+            try? await Task.sleep(for: .milliseconds(600))
+
+            // Reveal
+            starterCeremonyPhase = .revealing
             sound.playCardFlip()
             HapticManager.lightImpact()
 
             try? await Task.sleep(for: .milliseconds(600))
             starterCeremonyPhase = .done
+
+            // His Heels celebration if Jack starter
+            let hisHeelsEnabled = UserDefaults.standard.object(forKey: "hisHeelsEnabled") as? Bool ?? true
+            if hisHeelsEnabled, let starter = engine?.starter, starter.rank == .jack {
+                sound.playHisHeelsCelebration()
+                HapticManager.success()
+            }
 
             try? await Task.sleep(for: .milliseconds(200))
             completion()

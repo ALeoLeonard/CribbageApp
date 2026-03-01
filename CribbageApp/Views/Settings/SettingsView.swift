@@ -7,6 +7,8 @@ struct SettingsView: View {
     @AppStorage("cardSort") private var cardSortRaw = CardSortPreference.dealt.rawValue
     @AppStorage("hintsEnabled") private var hintsEnabled = true
     @AppStorage("mugginsEnabled") private var mugginsEnabled = false
+    @AppStorage("nobsEnabled") private var nobsEnabled = true
+    @AppStorage("hisHeelsEnabled") private var hisHeelsEnabled = true
 
     var body: some View {
         ScrollView {
@@ -62,6 +64,38 @@ struct SettingsView: View {
                                     Text("Muggins")
                                         .foregroundStyle(CribbageTheme.ivory)
                                     Text("Count your own hand — missed points go to opponent")
+                                        .font(.caption2)
+                                        .foregroundStyle(CribbageTheme.ivory.opacity(0.5))
+                                }
+                            }
+                        }
+                        .tint(CribbageTheme.gold)
+
+                        Toggle(isOn: $nobsEnabled) {
+                            HStack {
+                                Image(systemName: "suit.club.fill")
+                                    .foregroundStyle(CribbageTheme.gold)
+                                    .frame(width: 24)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("His Nobs")
+                                        .foregroundStyle(CribbageTheme.ivory)
+                                    Text("1 point for Jack in hand matching starter suit")
+                                        .font(.caption2)
+                                        .foregroundStyle(CribbageTheme.ivory.opacity(0.5))
+                                }
+                            }
+                        }
+                        .tint(CribbageTheme.gold)
+
+                        Toggle(isOn: $hisHeelsEnabled) {
+                            HStack {
+                                Image(systemName: "suit.diamond.fill")
+                                    .foregroundStyle(CribbageTheme.gold)
+                                    .frame(width: 24)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("His Heels")
+                                        .foregroundStyle(CribbageTheme.ivory)
+                                    Text("2 points to dealer when starter is a Jack")
                                         .font(.caption2)
                                         .foregroundStyle(CribbageTheme.ivory.opacity(0.5))
                                 }

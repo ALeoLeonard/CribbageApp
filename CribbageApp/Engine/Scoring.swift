@@ -53,7 +53,8 @@ enum Scoring {
     static func calculateScore(
         hand: [Card],
         starter: Card,
-        isCrib: Bool = false
+        isCrib: Bool = false,
+        nobsEnabled: Bool = true
     ) -> (total: Int, events: [ScoreEvent]) {
         var total = 0
         var events: [ScoreEvent] = []
@@ -140,11 +141,13 @@ enum Scoring {
         }
 
         // --- Nobs: Jack in hand matching starter suit ---
-        for c in hand {
-            if c.rank == .jack && c.suit == starter.suit {
-                total += 1
-                events.append(ScoreEvent(player: "", points: 1, reason: "Nobs for 1"))
-                break
+        if nobsEnabled {
+            for c in hand {
+                if c.rank == .jack && c.suit == starter.suit {
+                    total += 1
+                    events.append(ScoreEvent(player: "", points: 1, reason: "Nobs for 1"))
+                    break
+                }
             }
         }
 

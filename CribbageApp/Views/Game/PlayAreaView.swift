@@ -12,7 +12,7 @@ struct PlayAreaView: View {
     var body: some View {
         VStack(spacing: 10) {
             // Starter area: ceremony or normal display
-            if starterCeremonyPhase == .cutting || starterCeremonyPhase == .revealing {
+            if starterCeremonyPhase == .cutting || starterCeremonyPhase == .anticipation || starterCeremonyPhase == .revealing {
                 starterCeremonyView
                     .transition(.opacity)
             } else if let starter {
@@ -73,7 +73,7 @@ struct PlayAreaView: View {
 
     private var starterCeremonyView: some View {
         VStack(spacing: 8) {
-            Text("Cutting deck...")
+            Text(starterCeremonyPhase == .anticipation ? "Revealing..." : "Cutting deck...")
                 .font(.caption.weight(.medium))
                 .foregroundStyle(CribbageTheme.ivory.opacity(0.8))
 

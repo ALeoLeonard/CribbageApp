@@ -217,7 +217,8 @@ final class GameEngine {
     private func proceedAfterDiscard() {
         starter = Deck.deal(1, from: &deck).first
 
-        if let starter, starter.rank == .jack {
+        let hisHeelsEnabled = UserDefaults.standard.object(forKey: "hisHeelsEnabled") as? Bool ?? true
+        if hisHeelsEnabled, let starter, starter.rank == .jack {
             if human.isDealer {
                 addScore(&human, 2)
             } else {
@@ -550,12 +551,13 @@ final class GameEngine {
     ///   to the scoring player. The caller is responsible for awarding muggins bonus to the opponent.
     func acknowledge(mugginsClaimedScore: Int? = nil) {
         actionLog = []
+        let nobsEnabled = UserDefaults.standard.object(forKey: "nobsEnabled") as? Bool ?? true
 
         switch phase {
         case .countNonDealer:
             guard let starter else { return }
             let hand = isHumanDealer ? computer.hand : human.hand
-            let (score, events) = Scoring.calculateScore(hand: hand, starter: starter)
+            let (score, events) = Scoring.calculateScore(hand: hand, starter: starter, nobsEnabled: nobsEnabled)
             let awarded = mugginsClaimedScore.map { min($0, score) } ?? score
             var taggedEvents = events
             let playerName = nonDealer.name
@@ -581,7 +583,7 @@ final class GameEngine {
         case .countDealer:
             guard let starter else { return }
             let hand = isHumanDealer ? human.hand : computer.hand
-            let (score, events) = Scoring.calculateScore(hand: hand, starter: starter)
+            let (score, events) = Scoring.calculateScore(hand: hand, starter: starter, nobsEnabled: nobsEnabled)
             let awarded = mugginsClaimedScore.map { min($0, score) } ?? score
             var taggedEvents = events
             let playerName = dealer.name
@@ -606,7 +608,7 @@ final class GameEngine {
 
         case .countCrib:
             guard let starter else { return }
-            let (score, events) = Scoring.calculateScore(hand: crib, starter: starter, isCrib: true)
+            let (score, events) = Scoring.calculateScore(hand: crib, starter: starter, isCrib: true, nobsEnabled: nobsEnabled)
             let awarded = mugginsClaimedScore.map { min($0, score) } ?? score
             var taggedEvents = events
             let playerName = dealer.name

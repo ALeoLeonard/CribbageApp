@@ -97,6 +97,33 @@ struct MugginsResult {
     var overClaimed: Bool { claimedScore > actualScore }
 }
 
+// MARK: - Streak Milestone
+
+enum StreakMilestone {
+    case rolling     // 3 wins
+    case hotStreak   // 5 wins
+    case legendary   // 10 wins
+    case domination  // 20 wins
+
+    var label: String {
+        switch self {
+        case .rolling: return "On a Roll!"
+        case .hotStreak: return "Hot Streak!"
+        case .legendary: return "Legendary!"
+        case .domination: return "Domination!"
+        }
+    }
+
+    var confettiCount: Int {
+        switch self {
+        case .rolling: return 80
+        case .hotStreak: return 120
+        case .legendary: return 180
+        case .domination: return 250
+        }
+    }
+}
+
 // MARK: - Game Stats
 
 struct GameStatsData {

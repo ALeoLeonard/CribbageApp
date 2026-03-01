@@ -65,6 +65,20 @@ enum HapticManager {
         }
     }
 
+    /// Streak celebration — escalating haptic for win streak milestones
+    static func streakCelebration(milestone: StreakMilestone) {
+        guard isEnabled else { return }
+        switch milestone {
+        case .rolling:
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+        case .hotStreak, .legendary, .domination:
+            UINotificationFeedbackGenerator().notificationOccurred(.success)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+            }
+        }
+    }
+
     /// Invalid action shake
     static func invalidAction() {
         guard isEnabled else { return }

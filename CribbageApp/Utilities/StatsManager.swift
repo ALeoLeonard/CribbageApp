@@ -107,6 +107,16 @@ final class StatsManager {
         return Double(totalPeggingPoints) / Double(totalPeggingRounds)
     }
 
+    var streakMilestone: StreakMilestone? {
+        switch currentWinStreak {
+        case 20...: return .domination
+        case 10...: return .legendary
+        case 5...:  return .hotStreak
+        case 3...:  return .rolling
+        default:    return nil
+        }
+    }
+
     // MARK: - Actions
 
     func recordGameResult(won: Bool, difficulty: AIDifficulty) {

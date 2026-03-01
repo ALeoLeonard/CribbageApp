@@ -181,6 +181,26 @@ final class SoundManager {
         }
     }
 
+    /// Rising 4-note sweep — tension before starter reveal
+    func playAnticipation() {
+        let notes: [(Double, Double)] = [(330, 0.1), (370, 0.1), (415, 0.1), (466, 0.15)]
+        for (i, note) in notes.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.12) {
+                self.playTone(frequency: note.0, duration: note.1, volume: 0.2, decay: 0.5)
+            }
+        }
+    }
+
+    /// Triumphant 4-note arpeggio (C5→C6) for Jack starter (His Heels)
+    func playHisHeelsCelebration() {
+        let notes: [(Double, Double)] = [(523, 0.12), (659, 0.12), (784, 0.12), (1047, 0.2)]
+        for (i, note) in notes.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.13) {
+                self.playTone(frequency: note.0, duration: note.1, volume: 0.3, decay: 0.5)
+            }
+        }
+    }
+
     /// Error / invalid play — low buzz
     func playInvalidAction() {
         playTone(frequency: 200, duration: 0.12, volume: 0.15, decay: 0.3)
@@ -191,6 +211,26 @@ final class SoundManager {
         let notes: [(Double, Double)] = [(660, 0.15), (880, 0.15), (1100, 0.25)]
         for (i, note) in notes.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.18) {
+                self.playTone(frequency: note.0, duration: note.1, volume: 0.35, decay: 0.5)
+            }
+        }
+    }
+
+    /// Escalating streak fanfare — more notes and higher pitches for bigger streaks
+    func playStreakFanfare(milestone: StreakMilestone) {
+        let notes: [(Double, Double)]
+        switch milestone {
+        case .rolling:
+            notes = [(660, 0.12), (880, 0.12), (1100, 0.2)]
+        case .hotStreak:
+            notes = [(660, 0.1), (880, 0.1), (1100, 0.1), (1320, 0.2)]
+        case .legendary:
+            notes = [(660, 0.1), (880, 0.1), (1100, 0.1), (1320, 0.1), (1540, 0.25)]
+        case .domination:
+            notes = [(660, 0.08), (880, 0.08), (1100, 0.08), (1320, 0.08), (1540, 0.08), (1760, 0.3)]
+        }
+        for (i, note) in notes.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.14) {
                 self.playTone(frequency: note.0, duration: note.1, volume: 0.35, decay: 0.5)
             }
         }

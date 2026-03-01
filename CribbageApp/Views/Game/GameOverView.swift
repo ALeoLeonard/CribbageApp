@@ -9,11 +9,16 @@ struct GameOverView: View {
     var playerWon: Bool { winner == viewModel.humanName }
     private var isPassAndPlay: Bool { viewModel.isPassAndPlay }
 
+    private var milestone: StreakMilestone? {
+        guard !isPassAndPlay else { return nil }
+        return StatsManager.shared.streakMilestone
+    }
+
     var body: some View {
         ZStack {
             // Confetti for wins
             if playerWon || isPassAndPlay {
-                ConfettiView()
+                ConfettiView(particleCount: milestone?.confettiCount ?? 60)
                     .allowsHitTesting(false)
             }
 
@@ -57,6 +62,21 @@ struct GameOverView: View {
                             Capsule()
                                 .fill(playerWon ? CribbageTheme.gold.opacity(0.15) : .red.opacity(0.15))
                                 .strokeBorder(playerWon ? CribbageTheme.gold.opacity(0.4) : .red.opacity(0.4), lineWidth: 1)
+                        )
+                        .transition(.scale.combined(with: .opacity))
+                }
+
+                // Streak milestone banner
+                if let milestone, playerWon {
+                    Text(milestone.label)
+                        .font(.system(size: 16, weight: .bold, design: .serif))
+                        .foregroundStyle(CribbageTheme.gold)
+                        .padding(.horizontal, 20)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(CribbageTheme.gold.opacity(0.15))
+                                .strokeBorder(CribbageTheme.gold.opacity(0.5), lineWidth: 1)
                         )
                         .transition(.scale.combined(with: .opacity))
                 }
@@ -169,9 +189,14 @@ struct GameOverView: View {
 // MARK: - Confetti
 
 private struct ConfettiView: View {
+    let particleCount: Int
+
+    init(particleCount: Int = 60) {
+        self.particleCount = particleCount
+    }
+
     @State private var animating = false
 
-    private let particleCount = 60
     private let colors: [Color] = [
         CribbageTheme.gold, CribbageTheme.goldLight,
         .red, .blue, .green, .orange, .purple, .pink

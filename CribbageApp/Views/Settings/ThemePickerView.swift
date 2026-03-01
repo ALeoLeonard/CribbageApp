@@ -3,8 +3,6 @@ import SwiftUI
 struct ThemePickerView: View {
     @Environment(ThemeManager.self) private var themeManager
 
-    @State private var showComingSoon = false
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
@@ -52,21 +50,21 @@ struct ThemePickerView: View {
         .toolbarBackground(CribbageTheme.feltGreenDark, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
-        .alert("Coming Soon", isPresented: $showComingSoon) {
-            Button("OK", role: .cancel) {}
-        } message: {
-            Text("Premium themes will be available in a future update.")
-        }
     }
 
     // MARK: - Section
 
     private func themeSection(title: String, @ViewBuilder content: () -> some View) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(title)
-                .font(.headline.weight(.semibold))
-                .foregroundStyle(CribbageTheme.gold)
-                .padding(.horizontal)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.headline.weight(.semibold))
+                    .foregroundStyle(CribbageTheme.gold)
+                Text("Changes apply instantly")
+                    .font(.caption2)
+                    .foregroundStyle(CribbageTheme.ivory.opacity(0.5))
+            }
+            .padding(.horizontal)
             content()
         }
     }
@@ -79,7 +77,7 @@ struct ThemePickerView: View {
 
         return Button {
             if isLocked {
-                showComingSoon = true
+                HapticManager.invalidAction()
             } else {
                 themeManager.selectCardBack(theme.id)
                 HapticManager.selection()
@@ -109,6 +107,11 @@ struct ThemePickerView: View {
                     RoundedRectangle(cornerRadius: 8)
                         .strokeBorder(isActive ? CribbageTheme.gold : .clear, lineWidth: 2)
                 )
+                .overlay(alignment: .bottomTrailing) {
+                    if isActive {
+                        checkmarkBadge
+                    }
+                }
 
                 Text(theme.displayName)
                     .font(.caption2)
@@ -126,7 +129,7 @@ struct ThemePickerView: View {
 
         return Button {
             if isLocked {
-                showComingSoon = true
+                HapticManager.invalidAction()
             } else {
                 themeManager.selectTable(theme.id)
                 HapticManager.selection()
@@ -152,6 +155,11 @@ struct ThemePickerView: View {
                     RoundedRectangle(cornerRadius: 8)
                         .strokeBorder(isActive ? CribbageTheme.gold : .clear, lineWidth: 2)
                 )
+                .overlay(alignment: .bottomTrailing) {
+                    if isActive {
+                        checkmarkBadge
+                    }
+                }
 
                 Text(theme.displayName)
                     .font(.caption2)
@@ -169,7 +177,7 @@ struct ThemePickerView: View {
 
         return Button {
             if isLocked {
-                showComingSoon = true
+                HapticManager.invalidAction()
             } else {
                 themeManager.selectBoard(theme.id)
                 HapticManager.selection()
@@ -206,6 +214,11 @@ struct ThemePickerView: View {
                     RoundedRectangle(cornerRadius: 6)
                         .strokeBorder(isActive ? CribbageTheme.gold : .clear, lineWidth: 2)
                 )
+                .overlay(alignment: .bottomTrailing) {
+                    if isActive {
+                        checkmarkBadge
+                    }
+                }
 
                 Text(theme.displayName)
                     .font(.caption2)
@@ -221,9 +234,24 @@ struct ThemePickerView: View {
         ZStack {
             Color.black.opacity(0.5)
                 .clipShape(RoundedRectangle(cornerRadius: 6))
-            Image(systemName: "lock.fill")
-                .font(.system(size: 16))
-                .foregroundStyle(.white.opacity(0.8))
+            VStack(spacing: 2) {
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 14))
+                    .foregroundStyle(.white.opacity(0.8))
+                Text("Premium")
+                    .font(.system(size: 8, weight: .semibold))
+                    .foregroundStyle(CribbageTheme.gold)
+            }
         }
+    }
+
+    // MARK: - Checkmark Badge
+
+    private var checkmarkBadge: some View {
+        Image(systemName: "checkmark.circle.fill")
+            .font(.system(size: 16))
+            .foregroundStyle(CribbageTheme.gold)
+            .background(Circle().fill(CribbageTheme.feltGreenDark).padding(2))
+            .offset(x: 4, y: 4)
     }
 }

@@ -136,6 +136,14 @@ struct NobsTests {
         let nobsPts = events.filter { $0.reason.lowercased().contains("nobs") }.reduce(0) { $0 + $1.points }
         #expect(nobsPts == 0)
     }
+
+    @Test func nobsDisabledSkipsPoint() {
+        let hand = [card(.jack, .hearts), card(.two), card(.three), card(.four)]
+        let starter = card(.king, .hearts)
+        let (_, events) = Scoring.calculateScore(hand: hand, starter: starter, nobsEnabled: false)
+        let nobsPts = events.filter { $0.reason.lowercased().contains("nobs") }.reduce(0) { $0 + $1.points }
+        #expect(nobsPts == 0)
+    }
 }
 
 // MARK: - Perfect & Zero Hands
