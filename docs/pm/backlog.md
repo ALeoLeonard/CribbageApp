@@ -2,10 +2,10 @@
 id: backlog
 type: backlog
 title: CribbageApp Project Backlog
-status: draft
+status: active
 author: /pm
 created: 2026-02-27
-updated: 2026-02-27
+updated: 2026-03-01
 refs: []
 ---
 
@@ -13,284 +13,205 @@ refs: []
 
 ## SDLC Maturity Assessment
 
-**Current Phase**: Late Alpha / Pre-Beta
+**Current Phase**: Beta / Pre-Launch
 
-The app has a production-quality game engine with complete cribbage rules, three AI difficulty tiers, polished UI with animations and sound, and persistent stats. However, it is missing table-stakes features (tutorial, skunk tracking, pass-and-play) that every top-rated competitor ships. Multiplayer is architecturally scaffolded but not connected. No monetization, analytics, or App Store preparation exists.
+Sprints 1-6 are complete. The app has a production-quality game engine, three AI tiers, polished UI with animations/sound/haptics, tutorial, pass-and-play, muggins, hint system, StoreKit 2 IAP, Game Center leaderboards + achievements, iCloud sync, TelemetryDeck analytics, VoiceOver accessibility, score breakdown with card-highlighting animation, in-app privacy policy, and release build optimizations. Ad monetization is deferred until post-launch to focus on game quality first.
 
 | Area | Maturity | Notes |
 |------|----------|-------|
-| Game Engine | Production | All rules, scoring, phases complete. 30+ unit tests. |
+| Game Engine | Production | All rules, scoring, phases complete. 54 unit tests. |
 | AI | Production | 3 distinct strategies, well-tested. |
-| UI/UX | Beta | Core views complete. Settings/ThemePicker partial. No tutorial. |
+| UI/UX | Production | Full views, animations, card highlighting, themes. |
 | Audio/Haptics | Production | Synthesized sounds, haptic feedback wired. |
-| Statistics | Beta | Core stats tracked. Missing skunks, pegging averages. |
-| Themes | Beta | 13 themes defined, unlock infrastructure exists. No purchase flow. |
-| Multiplayer | Alpha | Models + ViewModel exist. No server, no WebSocket connection. |
-| Monetization | Not Started | Theme premium flags exist but no StoreKit or ads. |
-| Analytics | Not Started | No crash reporting, no event tracking. |
-| App Store | Not Started | No screenshots, no listing, no review. |
-| Accessibility | Not Started | No VoiceOver, Dynamic Type, or high-contrast support. |
-| Tutorial | Not Started | No onboarding or learning flow. |
+| Statistics | Production | Full stats, skunk tracking, synced via iCloud KVS. |
+| Themes | Production | 13 themes, premium unlock via StoreKit 2 IAP. |
+| Monetization | Beta | StoreKit 2 IAP complete ($4.99 premium). Ads deferred. |
+| Analytics | Production | TelemetryDeck integrated (guarded in DEBUG). |
+| Game Center | Production | Auth, leaderboards, 13 achievements. |
+| Accessibility | Production | VoiceOver labels on all game elements. |
+| Tutorial | Production | Interactive guided tutorial + how-to-play screen. |
+| App Store | In Progress | Privacy policy done, app icon catalog scaffolded. Missing: icon art, screenshots, store listing. |
+| Multiplayer | Alpha | Models + ViewModel scaffolded. No server. Deferred to v2.0. |
 
 ---
 
 ## MVP Definition (v1.0 - App Store Launch)
 
-Ship a polished single-player cribbage game that can compete with Cribbage JD (4.8 stars) and Cribbage Classic (4.7 stars). Multiplayer deferred to v1.1.
+Ship a polished single-player cribbage game that competes with Cribbage JD (4.8 stars) and Cribbage Classic (4.7 stars). Multiplayer and ads deferred.
 
-**MVP must include:**
-- Complete, polished single-player vs AI (already done)
-- Tutorial / How-to-Play (table stakes -- every competitor has this)
-- Skunk / double-skunk tracking (expected by cribbage players)
-- Pass-and-play local multiplayer (standard feature)
-- Muggins rule option (serious player expectation)
-- Hint system powered by HardAI (competitive parity)
-- Settings view completion (sound toggle, rules config)
-- Theme picker wired to premium unlock
-- StoreKit 2 premium purchase ($4.99 remove ads + unlock themes)
-- Ad integration (interstitial between games, banner on menus)
-- Game Center leaderboards + achievements
-- iCloud sync for stats and purchases
-- App Store screenshots, description, metadata
-- Analytics + crash reporting (Firebase or TelemetryDeck)
+**MVP complete:**
+- [x] Complete single-player vs AI (3 difficulty tiers)
+- [x] Tutorial / How-to-Play
+- [x] Skunk / double-skunk tracking
+- [x] Pass-and-play local multiplayer
+- [x] Muggins rule option
+- [x] Hint system powered by HardAI
+- [x] Full settings (sound, haptics, rules config)
+- [x] Theme picker wired to premium unlock
+- [x] StoreKit 2 premium purchase ($4.99 unlock themes)
+- [x] Game Center leaderboards + 13 achievements
+- [x] iCloud sync for stats
+- [x] TelemetryDeck analytics
+- [x] VoiceOver accessibility
+- [x] Score breakdown with card-highlighting animation
+- [x] In-app privacy policy
+- [x] Release build optimizations
+- [x] App icon asset catalog structure
+
+**MVP remaining:**
+- [ ] App icon artwork (1024x1024 PNG)
+- [ ] App Store screenshots (iPhone + iPad)
+- [ ] App Store listing (title, subtitle, description, keywords)
+- [ ] TelemetryDeck account setup (replace placeholder App ID)
+- [ ] TestFlight beta testing
+- [ ] Final bug fixes and polish
 
 ---
 
 ## Active Epics
 
-### epic-app-polish: Complete UI & Settings
-Status: active | Tickets: 3/5
-- [x] `ticket-complete-settings-view` [M] [p1-high] -- Wire up full settings (sound, haptics, rules, about)
-- [ ] `ticket-wire-theme-picker` [M] [p1-high] -- Connect ThemePickerView to ThemeManager unlock flow
-- [x] `ticket-enhanced-stats` [M] [p2-medium] -- Add skunk tracking, pegging averages, hand history
-- [x] `ticket-card-sort-toggle` [S] [p2-medium] -- Sort hand by rank or suit option
-- [ ] `ticket-icloud-sync` [M] [p1-high] -- Sync stats + theme unlocks via NSUbiquitousKeyValueStore
+### epic-app-polish: Complete UI & Settings — DONE
+Status: complete | All tickets done
+- [x] `ticket-complete-settings-view` [M] [p1-high]
+- [x] `ticket-wire-theme-picker` [M] [p1-high] — Wired via StoreKit 2 premium gate
+- [x] `ticket-enhanced-stats` [M] [p2-medium]
+- [x] `ticket-card-sort-toggle` [S] [p2-medium]
+- [x] `ticket-icloud-sync` [M] [p1-high]
 
-### epic-tutorial: Onboarding & Learning
-Status: active | Tickets: 3/4
-- [x] `ticket-first-launch-tutorial` [L] [p0-critical] -- Interactive guided first game with tooltip overlays
-- [x] `ticket-how-to-play-screen` [M] [p1-high] -- Static rules reference accessible from menu
-- [x] `ticket-hint-system` [M] [p1-high] -- Optional hints during discard/play powered by HardAI
-- [ ] `ticket-scoring-practice` [M] [p2-medium] -- Practice mode to learn hand counting
+### epic-tutorial: Onboarding & Learning — DONE (MVP scope)
+Status: complete (MVP) | 1 post-MVP ticket remains
+- [x] `ticket-first-launch-tutorial` [L] [p0-critical]
+- [x] `ticket-how-to-play-screen` [M] [p1-high]
+- [x] `ticket-hint-system` [M] [p1-high]
+- [ ] `ticket-scoring-practice` [M] [p2-medium] — Deferred to v1.1
 
-### epic-game-rules: Missing Cribbage Rules & Modes
-Status: active | Tickets: 3/4
-- [x] `ticket-skunk-tracking` [S] [p1-high] -- Track skunk (31+ margin) and double-skunk (61+ margin)
-- [x] `ticket-muggins-rule` [M] [p1-high] -- Optional muggins with manual counting mode
-- [x] `ticket-pass-and-play` [L] [p1-high] -- Two-human local multiplayer with hand-over screen
-- [ ] `ticket-customizable-rules` [S] [p2-medium] -- Settings toggles for muggins, free cut, nobs
+### epic-game-rules: Cribbage Rules & Modes — DONE
+Status: complete | All tickets done
+- [x] `ticket-skunk-tracking` [S] [p1-high]
+- [x] `ticket-muggins-rule` [M] [p1-high]
+- [x] `ticket-pass-and-play` [L] [p1-high]
+- [x] `ticket-customizable-rules` [S] [p2-medium] — Nobs, his heels toggles in settings
 
-### epic-monetization: StoreKit & Ads
-Status: draft | Tickets: 0/5
-- [ ] `ticket-storekit-manager` [L] [p0-critical] -- StoreKit 2 integration: premium IAP ($4.99), theme packs
-- [ ] `ticket-ad-integration` [M] [p1-high] -- AdMob interstitial between games, banner on menu/stats
-- [ ] `ticket-premium-gate` [M] [p1-high] -- Wire premium purchase to theme unlocks and ad removal
-- [ ] `ticket-restore-purchases` [S] [p1-high] -- Restore purchases flow + receipt validation
-- [ ] `ticket-paywall-ui` [M] [p1-high] -- Premium upsell screen with feature comparison
+### epic-monetization: StoreKit & Ads — PARTIAL
+Status: active | IAP done, ads deferred
+- [x] `ticket-storekit-manager` [L] [p0-critical] — StoreKit 2 integration complete
+- [x] `ticket-premium-gate` [M] [p1-high] — Premium unlocks themes, removes ad placeholder
+- [x] `ticket-restore-purchases` [S] [p1-high] — Restore flow in settings
+- [x] `ticket-paywall-ui` [M] [p1-high] — Paywall view with feature comparison
+- [ ] `ticket-ad-integration` [M] [p2-medium] — AdMob deferred to post-launch. AdManager placeholder exists.
 
-### epic-game-center: Apple Platform Integration
-Status: draft | Tickets: 0/4
-- [ ] `ticket-game-center-auth` [S] [p1-high] -- Game Center authentication on launch
-- [ ] `ticket-leaderboards` [M] [p1-high] -- Submit scores: win streak, highest hand, win rate by difficulty
-- [ ] `ticket-achievements` [L] [p2-medium] -- 12-15 achievements (29 hand, skunk, streak milestones)
-- [ ] `ticket-share-results` [S] [p2-medium] -- Share game results as image to Messages/social
+### epic-game-center: Apple Platform Integration — DONE (MVP scope)
+Status: complete (MVP) | 1 post-MVP ticket remains
+- [x] `ticket-game-center-auth` [S] [p1-high]
+- [x] `ticket-leaderboards` [M] [p1-high]
+- [x] `ticket-achievements` [L] [p2-medium] — 13 achievements
+- [ ] `ticket-share-results` [S] [p2-medium] — Deferred to v1.1
 
-### epic-app-store-prep: Launch Readiness
-Status: draft | Tickets: 0/5
-- [ ] `ticket-analytics-setup` [M] [p1-high] -- Firebase Analytics / TelemetryDeck + crash reporting
-- [ ] `ticket-app-icons` [M] [p1-high] -- App icon design (all required sizes)
-- [ ] `ticket-screenshots` [M] [p1-high] -- App Store screenshots for iPhone + iPad
-- [ ] `ticket-store-listing` [S] [p1-high] -- Title, subtitle, description, keywords, categories
-- [ ] `ticket-privacy-policy` [S] [p1-high] -- Privacy policy page (required for App Store)
+### epic-juice-polish: Sensory Polish — DONE
+Status: complete | All tickets done
+- [x] `ticket-scoring-celebrations` [M] [p1-high]
+- [x] `ticket-peg-animation` [M] [p1-high]
+- [x] `ticket-score-anticipation` [M] [p2-medium]
+- [x] `ticket-streak-celebrations` [S] [p2-medium]
+- [x] `ticket-micro-interactions` [M] [p2-medium]
+
+### epic-app-store-prep: Launch Readiness — IN PROGRESS
+Status: active | 2/5 done
+- [x] `ticket-analytics-setup` [M] [p1-high] — TelemetryDeck integrated
+- [x] `ticket-privacy-policy` [S] [p1-high] — In-app PrivacyPolicyView
+- [ ] `ticket-app-icons` [M] [p1-high] — Asset catalog scaffolded, needs 1024x1024 artwork
+- [ ] `ticket-screenshots` [M] [p1-high] — App Store screenshots for iPhone + iPad
+- [ ] `ticket-store-listing` [S] [p1-high] — Title, subtitle, description, keywords
 
 ---
 
-### epic-juice-polish: Duolingo-Style Sensory Polish
-Status: active | Tickets: 3/5
-- [x] `ticket-scoring-celebrations` [M] [p1-high] -- Escalating haptic combos, sparkle VFX, callout text for 15s/31/pairs/runs during pegging
-- [x] `ticket-peg-animation` [M] [p1-high] -- Animate peg movement along cribbage board track on score change
-- [ ] `ticket-score-anticipation` [M] [p2-medium] -- Tension build before starter reveal, drum-roll haptic for big hand counts
-- [ ] `ticket-streak-celebrations` [S] [p2-medium] -- Progressive celebrations for win streaks (3/5/10), milestone haptic patterns
-- [x] `ticket-micro-interactions` [M] [p2-medium] -- Card hover/press haptics, round transition fanfare, invalid play shake, combo escalation sound
+## Completed Sprint History
+
+### Sprint 1-2: Foundation Polish + Core Features
+- [x] Settings polish, skunk tracking, stats, how-to-play, hints, pass-and-play, tutorial
+
+### Sprint 3: Juice & Game Rules
+- [x] Scoring celebrations, muggins rule, peg animation, micro-interactions
+
+### Sprint 4: Monetization & Game Center
+- [x] StoreKit 2 IAP, paywall, Game Center leaderboards, ad hooks
+
+### Sprint 5: Platform Integration
+- [x] 13 achievements, iCloud KVS sync, TelemetryDeck analytics, VoiceOver accessibility
+
+### Sprint 6: Score Animation & App Store Prep
+- [x] Score breakdown card-highlighting animation, in-app privacy policy, app icon asset catalog, release build config, AnalyticsManager DEBUG guard, settings rate/privacy fixes
+
+---
+
+## Remaining Work to Ship v1.0
+
+### Sprint 7: App Store Submission
+- [ ] `ticket-app-icons` — Design and export 1024x1024 app icon
+- [ ] `ticket-screenshots` — Capture App Store screenshots (iPhone 6.7", 6.1", iPad 12.9")
+- [ ] `ticket-store-listing` — Write title, subtitle, description, keywords, categories
+- [ ] TelemetryDeck account creation + real App ID
+- [ ] TestFlight beta build + invite testers
+- [ ] Final bug sweep and polish
+- [ ] App Store submission
+
+---
 
 ## Post-MVP Epics
 
-### epic-daily-challenges: Retention & Engagement (v1.1)
-Status: draft | Tickets: 0/4
-- [ ] `ticket-daily-hand-challenge` [L] [p2-medium] -- Daily preset hand for score optimization
-- [ ] `ticket-daily-streak` [S] [p2-medium] -- Track consecutive days played with rewards
-- [ ] `ticket-challenge-leaderboard` [M] [p2-medium] -- Global leaderboard for daily challenges
-- [ ] `ticket-reward-system` [M] [p2-medium] -- Unlock themes/cosmetics via streaks and achievements
+### v1.1: Engagement & Polish
+| Epic | Theme | Key Tickets |
+|------|-------|-------------|
+| epic-daily-challenges | Retention | Daily hand challenge, streak tracking, leaderboard |
+| epic-hand-analysis | Coaching (differentiator) | Discard analyzer, pegging review, game replay |
+| epic-accessibility-v2 | Inclusive design | Dynamic Type, high-contrast, colorblind pegs |
+| Remaining MVP tickets | Completeness | scoring-practice, share-results, ad-integration |
 
-### epic-hand-analysis: Coaching & Analysis (v1.1)
-Status: draft | Tickets: 0/3
-- [ ] `ticket-discard-analyzer` [L] [p2-medium] -- Post-discard "optimal play" analysis using HardAI engine
-- [ ] `ticket-pegging-review` [M] [p2-medium] -- Post-round pegging efficiency score
-- [ ] `ticket-game-replay` [L] [p3-low] -- Save and replay completed games move-by-move
+### v1.2: Differentiation
+| Epic | Theme | Key Tickets |
+|------|-------|-------------|
+| epic-ai-personalities | Delight | Named opponents, AI commentary, opponent gallery |
+| epic-widgets | Platform | Stats widget, daily challenge widget, Live Activity |
 
-### epic-ai-personalities: Named AI Opponents (v1.2)
-Status: draft | Tickets: 0/3
-- [ ] `ticket-ai-character-system` [M] [p2-medium] -- Named opponents with avatars and play style descriptions
-- [ ] `ticket-ai-commentary` [M] [p2-medium] -- Contextual remarks from AI during play
-- [ ] `ticket-opponent-gallery` [M] [p3-low] -- Gallery to choose AI opponent in main menu
-
-### epic-multiplayer: Online Play (v1.2+)
-Status: draft | Tickets: 0/6
-- [ ] `ticket-backend-server` [XL] [p2-medium] -- WebSocket game server (needs splitting)
-- [ ] `ticket-user-auth` [L] [p2-medium] -- Sign in with Apple + guest mode
-- [ ] `ticket-matchmaking` [L] [p2-medium] -- Online matchmaking with Elo rating
-- [ ] `ticket-friend-system` [M] [p2-medium] -- Add friends, invite to game
-- [ ] `ticket-reconnection` [M] [p2-medium] -- Handle disconnect/reconnect during online games
-- [ ] `ticket-in-game-chat` [S] [p3-low] -- Quick reactions and text chat (model exists)
-
-### epic-accessibility: Inclusive Design (v1.1)
-Status: draft | Tickets: 0/4
-- [ ] `ticket-voiceover-support` [L] [p2-medium] -- Full VoiceOver labels on all game elements
-- [ ] `ticket-dynamic-type` [M] [p2-medium] -- Respect system text size preferences
-- [ ] `ticket-high-contrast` [M] [p2-medium] -- High-contrast mode for card suits and board
-- [ ] `ticket-colorblind-pegs` [S] [p2-medium] -- Alternative peg colors/shapes for colorblind users
-
-### epic-widgets: iOS Platform Features (v1.2)
-Status: draft | Tickets: 0/3
-- [ ] `ticket-stats-widget` [M] [p3-low] -- Lock screen / home screen streak and stats widget
-- [ ] `ticket-daily-challenge-widget` [M] [p3-low] -- Widget showing daily challenge prompt
-- [ ] `ticket-live-activity` [L] [p3-low] -- Live Activity for in-progress games
+### v2.0: Online Play
+| Epic | Theme | Key Tickets |
+|------|-------|-------------|
+| epic-multiplayer | Social | WebSocket server, auth, matchmaking, friends, chat |
 
 ---
 
-## Dependency Graph
-
-```
-epic-app-polish ──────────────────┐
-                                   ├──> epic-app-store-prep ──> LAUNCH v1.0
-epic-tutorial ────────────────────┤
-                                   │
-epic-game-rules ──────────────────┤
-                                   │
-epic-monetization ────────────────┤
-                                   │
-epic-game-center ─────────────────┘
-
-                           Post-MVP:
-epic-daily-challenges ← (depends on: epic-game-center for leaderboards)
-epic-hand-analysis    ← (no blockers, can start anytime post-launch)
-epic-ai-personalities ← (no blockers)
-epic-accessibility    ← (no blockers, can start anytime)
-epic-multiplayer      ← (depends on: epic-monetization for subscription tier)
-epic-widgets          ← (depends on: epic-daily-challenges for challenge widget)
-```
-
-### Critical Path (MVP)
-
-```
-ticket-complete-settings-view ──> ticket-wire-theme-picker ──> ticket-storekit-manager ──> ticket-premium-gate
-                                                                       │
-ticket-first-launch-tutorial (parallel) ───────────────────────────────┤
-                                                                       │
-ticket-skunk-tracking + ticket-muggins-rule (parallel) ────────────────┤
-                                                                       │
-ticket-pass-and-play (parallel) ───────────────────────────────────────┤
-                                                                       │
-ticket-game-center-auth ──> ticket-leaderboards + ticket-achievements ─┤
-                                                                       │
-ticket-analytics-setup (parallel) ─────────────────────────────────────┤
-                                                                       ▼
-                                               ticket-screenshots ──> ticket-store-listing ──> SUBMIT
-```
-
-### Ticket Dependencies (within MVP)
-
-| Ticket | Blocked By | Blocks |
-|--------|-----------|--------|
-| ticket-complete-settings-view | -- | ticket-wire-theme-picker, ticket-customizable-rules |
-| ticket-wire-theme-picker | ticket-complete-settings-view | ticket-premium-gate |
-| ticket-storekit-manager | -- | ticket-premium-gate, ticket-restore-purchases, ticket-paywall-ui |
-| ticket-premium-gate | ticket-storekit-manager, ticket-wire-theme-picker | ticket-ad-integration |
-| ticket-ad-integration | ticket-premium-gate | -- |
-| ticket-game-center-auth | -- | ticket-leaderboards, ticket-achievements |
-| ticket-leaderboards | ticket-game-center-auth | -- |
-| ticket-achievements | ticket-game-center-auth, ticket-skunk-tracking | -- |
-| ticket-screenshots | all UI tickets | ticket-store-listing |
-| ticket-store-listing | ticket-screenshots | SUBMIT |
-| ticket-first-launch-tutorial | -- | -- |
-| ticket-skunk-tracking | -- | ticket-achievements |
-| ticket-pass-and-play | -- | -- |
-| ticket-muggins-rule | -- | -- |
-| ticket-hint-system | -- | -- |
-| ticket-icloud-sync | ticket-storekit-manager | -- |
-
----
-
-## Risk Assessment
+## Risk Assessment (Updated)
 
 | Risk | Likelihood | Impact | Mitigation |
 |------|-----------|--------|------------|
-| StoreKit 2 complexity (sandbox testing, edge cases) | Medium | High | Start early, test on device not simulator |
-| App Store rejection (first submission) | Medium | Medium | Follow HIG, test all flows, prepare privacy manifest |
-| Tutorial scope creep (interactive tutorial is complex) | High | Medium | Start with simple tooltip overlay, iterate |
-| Ad SDK conflicts with SwiftUI lifecycle | Medium | Medium | Use AdMob SwiftUI wrappers, test thoroughly |
-| Hard AI perceived as "cheating" by users | Medium | High | Add transparency (show AI "thinking"), tune difficulty |
-| Pass-and-play hand security (peeking) | Low | Medium | Mandatory hand-over screen between turns |
-| iCloud sync conflicts | Low | Medium | Use NSUbiquitousKeyValueStore (merge semantics built-in) |
-| Premium pricing resistance ($4.99) | Medium | Medium | A/B test $3.99 vs $4.99, ensure free tier is generous |
+| App Store rejection (first submission) | Medium | Medium | Follow HIG, test all flows, privacy policy in-app |
+| Hard AI perceived as "cheating" by users | Medium | High | Add transparency, tune difficulty |
+| Premium pricing resistance ($4.99) | Medium | Medium | Free tier is fully playable, premium is cosmetic |
+| Missing ads reduces revenue at launch | Low | Medium | Acceptable — focus on ratings first, add ads in v1.1 if needed |
+| TelemetryDeck placeholder still in code | Low | High | Must create account and replace before release build |
 
 ---
 
-## Recommended Sprint Sequence
+## Dependency Graph (Updated)
 
-### Sprint 1 (Week 1-2): Foundation Polish [DONE]
-- [x] ticket-complete-settings-view [M]
-- [x] ticket-skunk-tracking [S]
-- [x] ticket-card-sort-toggle [S]
-- [x] ticket-enhanced-stats [M]
+```
+DONE ──────────────────────────────┐
+  epic-app-polish (complete)        │
+  epic-tutorial (complete)          │
+  epic-game-rules (complete)        ├──> epic-app-store-prep ──> LAUNCH v1.0
+  epic-monetization (IAP done)      │      (3 tickets remaining)
+  epic-game-center (complete)       │
+  epic-juice-polish (complete)      │
+  Sprint 6 polish (complete)       ─┘
 
-### Sprint 2 (Week 3-4): Core Missing Features [DONE]
-- [x] ticket-first-launch-tutorial [L]
-- [x] ticket-hint-system [M]
-- [x] ticket-pass-and-play [L]
-- [x] ticket-how-to-play-screen [M]
-
-### Sprint 3 (Week 5-6): Juice & Game Rules [DONE]
-- [x] ticket-scoring-celebrations [M] -- Escalating haptics, sparkle VFX, callouts for pegging combos
-- [x] ticket-peg-animation [M] -- Animate peg movement with spring physics and trail glow
-- [x] ticket-muggins-rule [M] -- Optional muggins with manual counting and stepper UI
-- [x] ticket-micro-interactions [M] -- Card press-down haptics, score glow, invalid play shake, round transition fanfare
-
-### Sprint 4 (Week 7-8): Monetization Wiring & Game Center
-- ticket-premium-gate [M]
-- ticket-ad-integration [M]
-- ticket-paywall-ui [M]
-- ticket-leaderboards [M]
-- ticket-restore-purchases [S]
-
-### Sprint 5 (Week 9-10): Launch Prep
-- ticket-achievements [L]
-- ticket-icloud-sync [M]
-- ticket-share-results [S]
-- ticket-app-icons [M]
-- ticket-privacy-policy [S]
-
-### Sprint 6 (Week 11-12): Ship It
-- ticket-screenshots [M]
-- ticket-store-listing [S]
-- ticket-customizable-rules [S]
-- ticket-scoring-practice [M]
-- Bug fixes, polish, TestFlight beta
-
-**Total estimated MVP timeline: 10-12 weeks** (solo developer)
-
----
-
-## Upcoming (Post-MVP)
-
-| Version | Epic | Theme |
-|---------|------|-------|
-| v1.1 | epic-daily-challenges | Retention & engagement |
-| v1.1 | epic-hand-analysis | Coaching (differentiator -- no competitor does this well) |
-| v1.1 | epic-accessibility | Inclusive design (Apple promotes accessible apps) |
-| v1.2 | epic-ai-personalities | Delight & differentiation |
-| v1.2 | epic-widgets | Platform integration |
-| v2.0 | epic-multiplayer | Online play (requires backend investment) |
+                         Post-MVP:
+epic-daily-challenges ← (depends on: Game Center leaderboards — done)
+epic-hand-analysis    ← (no blockers, can start anytime)
+epic-ai-personalities ← (no blockers)
+epic-accessibility-v2 ← (VoiceOver done, extends with Dynamic Type etc.)
+epic-multiplayer      ← (requires backend investment)
+epic-widgets          ← (depends on: epic-daily-challenges for challenge widget)
+```
 
 ---
 
@@ -299,8 +220,7 @@ ticket-analytics-setup (parallel) ───────────────�
 **Artifact**: `docs/pm/backlog.md`
 
 Suggested next steps:
-- `/qa review docs/pm/backlog.md` -- ensure all requirements have tickets and acceptance criteria
-- `/fe plan tutorial` -- design the interactive tutorial component architecture
-- `/mobile plan pass-and-play` -- plan the two-human local multiplayer mode
-- `/spec create monetization --from docs/pm/backlog.md` -- technical spec for StoreKit + ads
-- `/design plan app-store-assets` -- design app icon, screenshots, and store listing visuals
+- `/design plan app-icon` — design the 1024x1024 app icon
+- `/design plan screenshots` — plan App Store screenshot compositions
+- `/copy write store-listing` — draft App Store title, subtitle, description, keywords
+- `/qa plan beta-test` — create TestFlight beta test plan
