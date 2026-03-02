@@ -148,6 +148,11 @@ final class CosmeticRegistry {
             ?? ClassicSoundPack()
     }
 
+    var activeHapticPack: any HapticPack {
+        (equipped(for: .hapticPack) as? HapticPackCosmeticItem)?.pack
+            ?? StandardHapticPack()
+    }
+
     func selectCardBack(_ id: String) {
         equip(id, in: .cardBack)
     }
@@ -243,6 +248,16 @@ final class CosmeticRegistry {
         for (pack, condition) in soundPacks {
             register(SoundPackCosmeticItem(pack, unlockCondition: condition))
         }
+
+        // Haptic packs
+        let hapticPacks: [(any HapticPack, UnlockCondition)] = [
+            (StandardHapticPack(), .free),
+            (SubtleHapticPack(), .free),
+            (IntenseHapticPack(), .premium)
+        ]
+        for (pack, condition) in hapticPacks {
+            register(HapticPackCosmeticItem(pack, unlockCondition: condition))
+        }
     }
 
     // MARK: - Init
@@ -256,7 +271,8 @@ final class CosmeticRegistry {
             "classic-wood", "dark-walnut",
             "classic-phrases", "grandpa-phrases",
             "classic-peg", "brass-peg",
-            "classic-sounds"
+            "classic-sounds",
+            "standard-haptics", "subtle-haptics"
         ]
 
         let saved = Set(UserDefaults.standard.stringArray(forKey: "unlockedThemes") ?? [])

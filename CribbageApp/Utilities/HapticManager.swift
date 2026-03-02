@@ -7,81 +7,61 @@ enum HapticManager {
         UserDefaults.standard.object(forKey: "hapticsEnabled") as? Bool ?? true
     }
 
+    static var activeHapticPack: any HapticPack {
+        CosmeticRegistry.shared.activeHapticPack
+    }
+
     static func lightImpact() {
         guard isEnabled else { return }
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        activeHapticPack.lightImpact()
     }
 
     static func mediumImpact() {
         guard isEnabled else { return }
-        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        activeHapticPack.mediumImpact()
     }
 
     static func heavyImpact() {
         guard isEnabled else { return }
-        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        activeHapticPack.heavyImpact()
     }
 
     static func success() {
         guard isEnabled else { return }
-        UINotificationFeedbackGenerator().notificationOccurred(.success)
+        activeHapticPack.success()
     }
 
     static func error() {
         guard isEnabled else { return }
-        UINotificationFeedbackGenerator().notificationOccurred(.error)
+        activeHapticPack.error()
     }
 
     static func selection() {
         guard isEnabled else { return }
-        UISelectionFeedbackGenerator().selectionChanged()
+        activeHapticPack.selection()
     }
 
     /// Escalating haptic based on point value — bigger scores feel bigger
     static func scoringImpact(points: Int) {
         guard isEnabled else { return }
-        switch points {
-        case 1:
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        case 2:
-            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        case 3...5:
-            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-        default:
-            // Big scores: double tap
-            UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
-                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-            }
-        }
+        activeHapticPack.scoringImpact(points: points)
     }
 
     /// 15 or 31 — crisp double-tap
     static func fifteenThirtyOne() {
         guard isEnabled else { return }
-        UIImpactFeedbackGenerator(style: .heavy).impactOccurred(intensity: 0.8)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.06) {
-            UIImpactFeedbackGenerator(style: .rigid).impactOccurred(intensity: 1.0)
-        }
+        activeHapticPack.fifteenThirtyOne()
     }
 
     /// Streak celebration — escalating haptic for win streak milestones
     static func streakCelebration(milestone: StreakMilestone) {
         guard isEnabled else { return }
-        switch milestone {
-        case .rolling:
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
-        case .hotStreak, .legendary, .domination:
-            UINotificationFeedbackGenerator().notificationOccurred(.success)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
-                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-            }
-        }
+        activeHapticPack.streakCelebration(milestone: milestone)
     }
 
     /// Invalid action shake
     static func invalidAction() {
         guard isEnabled else { return }
-        UINotificationFeedbackGenerator().notificationOccurred(.warning)
+        activeHapticPack.invalidAction()
     }
 }

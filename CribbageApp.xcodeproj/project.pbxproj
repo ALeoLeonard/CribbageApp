@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00CC348349AE6C109827465D /* HapticPack.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77F9ACEFD284885C6D6321F /* HapticPack.swift */; };
 		029F8DDE51C91970FD96AA35 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DFEDF2B9873AF83DAD15E81 /* User.swift */; };
 		054D553F473BF6CAF8A60C19 /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AEB0D7D23803CB7EF1BFD55 /* GameEngine.swift */; };
 		0DAFB042FCD0ED6889AF6B8D /* AnimationHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E6495C749C145DCC06A4119 /* AnimationHelpers.swift */; };
@@ -25,6 +26,7 @@
 		3BAE3B86A3A1A2B27A50E68E /* PhrasePack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96EA373DEAA2CBEB9A63FDD8 /* PhrasePack.swift */; };
 		3C27279F7E886C2E75FD4BC6 /* CardSizeEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A4D131C9A603AE0547B325 /* CardSizeEnvironment.swift */; };
 		43BA9691D321EBE4B1B35821 /* PlayPhaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */; };
+		4461AF6A2407DAF0C4C5B268 /* HapticPacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C9A61EB5C0BA7A4EC193C20 /* HapticPacks.swift */; };
 		4EE26CEE8B51AFE32F62F86D /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22699546BD6120DFA1B1A906 /* PaywallView.swift */; };
 		5225479A4E6251E954B5B385 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5AD574A3AC4ED85160792A /* DeckView.swift */; };
 		5856128D3566A8990EF8ED62 /* CosmeticRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2767428C8410B731EAB15A5A /* CosmeticRegistryTests.swift */; };
@@ -43,6 +45,7 @@
 		7521D019BA32E6ADAB78E34D /* CosmeticItems+PhrasePacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ECD9AEC57376926789D19F /* CosmeticItems+PhrasePacks.swift */; };
 		785B15D4DE4983A641C004B7 /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F80F966A72AF38CC204CD18 /* Scoring.swift */; };
 		7AC5FF60B67DB2C6F4B990EC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */; };
+		7F5434030C71059313D51ECF /* CosmeticItems+HapticPacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6775929991FC489023A2F3B /* CosmeticItems+HapticPacks.swift */; };
 		7F5685B66362D74456E2E09C /* TutorialOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B61DE52168D6A022332897 /* TutorialOverlayView.swift */; };
 		858341BA1BAEE1A353561116 /* HardAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA28D6157ECA9F550184D78 /* HardAI.swift */; };
 		85C23A4F21716537B725E0D7 /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97650273E09901D07D5EBD3E /* GameEngineTests.swift */; };
@@ -66,6 +69,7 @@
 		BC92C30CEFE842D0FB0CEF28 /* GameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA61F2576AF35FD42E54A0B /* GameViewModel.swift */; };
 		BFB43201056A5B95049B4296 /* ActionBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9E95DBA0E02C77B1961D9 /* ActionBarView.swift */; };
 		CF42656DF4F6A82D59A6F8E8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3C509E24FBC40F85AD6D7C /* SettingsView.swift */; };
+		D56CAB38F294FFEFBBD6895A /* HapticPackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E532647876B87CD400348F /* HapticPackTests.swift */; };
 		D891CAED1209BD22D66B4D57 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D51AD48686B7E464D3B8F /* ThemeManager.swift */; };
 		E05837780C9DCBC5930F9C62 /* MultiplayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D7CB16E3A1884924971BE /* MultiplayerViewModel.swift */; };
 		E074E1C23982527E873E36BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6F5F21574ED24741A4A322 /* Assets.xcassets */; };
@@ -103,6 +107,7 @@
 		12E03452F0CFE95B5DB25883 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
 		1467CE11B57FE639814FC6ED /* CribbageAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CribbageAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		14CE43B2E3B6E9C47EF1BEF8 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+		17E532647876B87CD400348F /* HapticPackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticPackTests.swift; sourceTree = "<group>"; };
 		18DB89C988981B3EFD5C58CA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1AEB0D7D23803CB7EF1BFD55 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		1C5AD574A3AC4ED85160792A /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
@@ -134,6 +139,7 @@
 		662845B473DFA07F7621EF71 /* CosmeticRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticRegistry.swift; sourceTree = "<group>"; };
 		76C74977A19BC49777145619 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
 		78ABD6E628B64EAED68079DB /* PegThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegThemes.swift; sourceTree = "<group>"; };
+		7C9A61EB5C0BA7A4EC193C20 /* HapticPacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticPacks.swift; sourceTree = "<group>"; };
 		7EAC834D015367C4F4607547 /* CosmeticSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticSlot.swift; sourceTree = "<group>"; };
 		7FF285A067E0D69E106A177D /* AdaptiveGameLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveGameLayout.swift; sourceTree = "<group>"; };
 		8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CribbageAppApp.swift; sourceTree = "<group>"; };
@@ -150,6 +156,7 @@
 		A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPhaseTests.swift; sourceTree = "<group>"; };
 		A3B61DE52168D6A022332897 /* TutorialOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialOverlayView.swift; sourceTree = "<group>"; };
 		A5843180EF1B46026B3721C9 /* CribbageBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CribbageBoardView.swift; sourceTree = "<group>"; };
+		A6775929991FC489023A2F3B /* CosmeticItems+HapticPacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CosmeticItems+HapticPacks.swift"; sourceTree = "<group>"; };
 		AAF07AA9B889EE151A559056 /* PegThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegThemeTests.swift; sourceTree = "<group>"; };
 		AC166BD84563EF94C851CB97 /* ScoringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringTests.swift; sourceTree = "<group>"; };
 		AF86EF902C32A5807181A552 /* Configuration.storekit */ = {isa = PBXFileReference; path = Configuration.storekit; sourceTree = "<group>"; };
@@ -159,6 +166,7 @@
 		B5A4D131C9A603AE0547B325 /* CardSizeEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSizeEnvironment.swift; sourceTree = "<group>"; };
 		C01D1B80544DC8ED9F835943 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		C598AC4DFFB08768020AD8F9 /* GameCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterManager.swift; sourceTree = "<group>"; };
+		C77F9ACEFD284885C6D6321F /* HapticPack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticPack.swift; sourceTree = "<group>"; };
 		C9314ABFB4D20CB39FADDFE2 /* CloudSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncManager.swift; sourceTree = "<group>"; };
 		CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CD15AC727590EB5D488FD7DD /* CardFanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFanView.swift; sourceTree = "<group>"; };
@@ -189,12 +197,15 @@
 			isa = PBXGroup;
 			children = (
 				51DFF58FAB9857E614E40982 /* CosmeticItem.swift */,
+				A6775929991FC489023A2F3B /* CosmeticItems+HapticPacks.swift */,
 				E6F0376679311AD38E5F906A /* CosmeticItems+PegThemes.swift */,
 				B2ECD9AEC57376926789D19F /* CosmeticItems+PhrasePacks.swift */,
 				0C06B3BDB7F25C53E620AB92 /* CosmeticItems+SoundPacks.swift */,
 				F33066AFBD2842D4B58C792C /* CosmeticItems+Themes.swift */,
 				662845B473DFA07F7621EF71 /* CosmeticRegistry.swift */,
 				7EAC834D015367C4F4607547 /* CosmeticSlot.swift */,
+				C77F9ACEFD284885C6D6321F /* HapticPack.swift */,
+				7C9A61EB5C0BA7A4EC193C20 /* HapticPacks.swift */,
 				97D196B3BD095F665F82F7D4 /* PegTheme.swift */,
 				78ABD6E628B64EAED68079DB /* PegThemes.swift */,
 				96EA373DEAA2CBEB9A63FDD8 /* PhrasePack.swift */,
@@ -222,6 +233,7 @@
 				A158CEE251162854C6511B68 /* AITests.swift */,
 				2767428C8410B731EAB15A5A /* CosmeticRegistryTests.swift */,
 				97650273E09901D07D5EBD3E /* GameEngineTests.swift */,
+				17E532647876B87CD400348F /* HapticPackTests.swift */,
 				AAF07AA9B889EE151A559056 /* PegThemeTests.swift */,
 				4327652EA7ED7135D7F40E12 /* PhrasePackTests.swift */,
 				A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */,
@@ -464,6 +476,7 @@
 				87A36B718A7B842E1F817A3C /* AITests.swift in Sources */,
 				5856128D3566A8990EF8ED62 /* CosmeticRegistryTests.swift in Sources */,
 				85C23A4F21716537B725E0D7 /* GameEngineTests.swift in Sources */,
+				D56CAB38F294FFEFBBD6895A /* HapticPackTests.swift in Sources */,
 				9AD7FE8306A4CDEA81FD547A /* PegThemeTests.swift in Sources */,
 				9802BB8BC887176E16FE7DA0 /* PhrasePackTests.swift in Sources */,
 				43BA9691D321EBE4B1B35821 /* PlayPhaseTests.swift in Sources */,
@@ -491,6 +504,7 @@
 				2918C67F7D74748DA8A40D7A /* Constants.swift in Sources */,
 				7AC5FF60B67DB2C6F4B990EC /* ContentView.swift in Sources */,
 				23BD93ACA8E6A30118D7C4EE /* CosmeticItem.swift in Sources */,
+				7F5434030C71059313D51ECF /* CosmeticItems+HapticPacks.swift in Sources */,
 				90CECC107460539E1DBD6C2D /* CosmeticItems+PegThemes.swift in Sources */,
 				7521D019BA32E6ADAB78E34D /* CosmeticItems+PhrasePacks.swift in Sources */,
 				E6C77CCA5B59953FC1AC0F00 /* CosmeticItems+SoundPacks.swift in Sources */,
@@ -510,6 +524,8 @@
 				BC92C30CEFE842D0FB0CEF28 /* GameViewModel.swift in Sources */,
 				E0E4D5FB8DDFFFC2A0D561F4 /* HandOverView.swift in Sources */,
 				637854AD0F7ECB3B5E9650CD /* HapticManager.swift in Sources */,
+				00CC348349AE6C109827465D /* HapticPack.swift in Sources */,
+				4461AF6A2407DAF0C4C5B268 /* HapticPacks.swift in Sources */,
 				858341BA1BAEE1A353561116 /* HardAI.swift in Sources */,
 				73EED096B7F4570C7DC6FCA1 /* HowToPlayView.swift in Sources */,
 				F8913AB141B84587ED146601 /* LeaderboardsView.swift in Sources */,
