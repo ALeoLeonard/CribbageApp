@@ -5,7 +5,7 @@ title: CribbageApp Project Backlog
 status: active
 author: /pm
 created: 2026-02-27
-updated: 2026-03-01
+updated: 2026-03-02
 refs: []
 ---
 
@@ -159,6 +159,27 @@ Status: active | 2/5 done
 
 ## Post-MVP Epics
 
+### v1.1: Deep Customization & Progression (NEW — from idea-tactile-immersion)
+
+#### epic-cosmetic-system: Cosmetic System & Deep Customization
+Status: draft | 8 tickets | Ref: [idea-tactile-immersion](../ideas/tactile-immersion.md)
+- [ ] `ticket-cosmetic-registry` [L] [p0-critical] — CosmeticSlot enum, CosmeticItem protocol, unified registry
+- [ ] `ticket-phrase-packs` [M] [p1-high] — PhrasePack protocol + 3 packs (Classic, Grandpa, Trash Talk)
+- [ ] `ticket-peg-themes` [S] [p1-high] — PegTheme protocol + 6 peg styles
+- [ ] `ticket-sound-packs` [M] [p2-medium] — SoundPack protocol, refactor SoundManager, 2 packs
+- [ ] `ticket-haptic-packs` [S] [p2-medium] — HapticPack protocol, bundle with sound packs
+- [ ] `ticket-card-front-themes` [L] [p2-medium] — CardFrontTheme protocol, parameterized rendering, 3 styles
+- [ ] `ticket-cosmetic-picker-ui` [M] [p1-high] — Generic picker view for any CosmeticSlot
+- [ ] `ticket-persona-system` [M] [p2-medium] — Persona struct: name, avatar, phrase pack, loadout
+
+#### epic-progression-unlocks: Progression & Unlock Engine
+Status: draft | 5 tickets | Ref: [idea-tactile-immersion](../ideas/tactile-immersion.md)
+- [ ] `ticket-unlock-engine` [M] [p1-high] — UnlockCondition enum, UnlockManager observing StatsManager
+- [ ] `ticket-unlock-celebration` [S] [p1-high] — Unlock animation + toast notification + queue
+- [ ] `ticket-collection-screen` [M] [p2-medium] — Grid view of all items with locked/unlocked/equipped state
+- [ ] `ticket-unlock-content-design` [M] [p1-high] — Define 20-30 items with conditions and thresholds
+- [ ] `ticket-near-miss-prompts` [S] [p2-medium] — Post-game "X more to unlock Y" nudges
+
 ### v1.1: Engagement & Polish
 | Epic | Theme | Key Tickets |
 |------|-------|-------------|
@@ -204,11 +225,19 @@ DONE ─────────────────────────
   epic-juice-polish (complete)      │
   Sprint 6 polish (complete)       ─┘
 
-                         Post-MVP:
+                    Post-MVP v1.1 (Customization — priority):
+ticket-cosmetic-registry ─────────┐
+  │                                ├──> epic-cosmetic-system (phrase packs, pegs, sounds, personas)
+  └──> ticket-unlock-engine ───────┤
+                                   └──> epic-progression-unlocks (celebrations, collection, nudges)
+
+                    Post-MVP v1.1 (Engagement):
 epic-daily-challenges ← (depends on: Game Center leaderboards — done)
 epic-hand-analysis    ← (no blockers, can start anytime)
-epic-ai-personalities ← (no blockers)
+epic-ai-personalities ← (subsumes into persona system from epic-cosmetic-system)
 epic-accessibility-v2 ← (VoiceOver done, extends with Dynamic Type etc.)
+
+                    Post-MVP v1.2+:
 epic-multiplayer      ← (requires backend investment)
 epic-widgets          ← (depends on: epic-daily-challenges for challenge widget)
 ```
