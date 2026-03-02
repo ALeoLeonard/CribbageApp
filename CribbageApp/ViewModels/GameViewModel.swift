@@ -896,18 +896,25 @@ final class GameViewModel {
     }
 
     private func calloutText(for event: ScoreEvent) -> String {
+        guard let eventType = phraseEventType(for: event) else {
+            return "+\(event.points)"
+        }
+        return CosmeticRegistry.shared.activePhrasePack.randomPhrase(for: eventType, points: event.points)
+    }
+
+    private func phraseEventType(for event: ScoreEvent) -> PhraseEventType? {
         let reason = event.reason.lowercased()
-        if reason.contains("15") { return "15 for \(event.points)!" }
-        if reason.contains("pair") { return "Pair!" }
-        if reason.contains("three of") || reason.contains("royal pair") { return "Three of a Kind!" }
-        if reason.contains("four of") || reason.contains("double royal") { return "Four of a Kind!" }
-        if reason.contains("run") { return "Run of \(event.reason.filter(\.isNumber))!" }
-        if reason.contains("31") { return "31 for 2!" }
-        if reason.contains("go") || reason.contains("last card") { return "Go!" }
-        if reason.contains("his heels") { return "His Heels!" }
-        if reason.contains("nobs") || reason.contains("his nobs") { return "His Nobs!" }
-        if reason.contains("flush") { return "Flush!" }
-        return "+\(event.points)"
+        if reason.contains("15") { return .fifteen }
+        if reason.contains("three of") || reason.contains("royal pair") { return .threeOfAKind }
+        if reason.contains("four of") || reason.contains("double royal") { return .fourOfAKind }
+        if reason.contains("pair") { return .pair }
+        if reason.contains("run") { return .run }
+        if reason.contains("31") { return .thirtyOne }
+        if reason.contains("go") || reason.contains("last card") { return .go }
+        if reason.contains("his heels") { return .hisHeels }
+        if reason.contains("nobs") || reason.contains("his nobs") { return .nobs }
+        if reason.contains("flush") { return .flush }
+        return nil
     }
 
     /// Invalid play attempt — card can't be played (exceeds 31 or not your turn)

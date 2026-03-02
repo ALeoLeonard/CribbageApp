@@ -133,6 +133,11 @@ final class CosmeticRegistry {
         boards.first { $0.id == activeBoardID } ?? boards[0]
     }
 
+    var activePhrasePack: any PhrasePack {
+        (equipped(for: .phrasePack) as? PhrasePackCosmeticItem)?.pack
+            ?? ClassicPhrasePack()
+    }
+
     func selectCardBack(_ id: String) {
         equip(id, in: .cardBack)
     }
@@ -196,6 +201,16 @@ final class CosmeticRegistry {
         for theme in boardThemes {
             register(BoardCosmeticItem(theme))
         }
+
+        // Phrase packs
+        let phrasePacks: [(any PhrasePack, UnlockCondition)] = [
+            (ClassicPhrasePack(), .free),
+            (GrandpaPhrasePack(), .free),
+            (TrashTalkPhrasePack(), .achievement("firstwin"))
+        ]
+        for (pack, condition) in phrasePacks {
+            register(PhrasePackCosmeticItem(pack, unlockCondition: condition))
+        }
     }
 
     // MARK: - Init
@@ -206,7 +221,8 @@ final class CosmeticRegistry {
         let freeIDs: Set<String> = [
             "classic-navy", "royal-red", "emerald",
             "green-felt", "blue-felt",
-            "classic-wood", "dark-walnut"
+            "classic-wood", "dark-walnut",
+            "classic-phrases", "grandpa-phrases"
         ]
 
         let saved = Set(UserDefaults.standard.stringArray(forKey: "unlockedThemes") ?? [])
