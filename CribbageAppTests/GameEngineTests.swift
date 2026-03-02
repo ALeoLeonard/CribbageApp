@@ -136,7 +136,9 @@ struct GameEngineTests {
             if engine.currentTurn == "human" {
                 let before = engine.humanPlayHand.count
                 if PlayPhaseHelper.canPlay(hand: engine.humanPlayHand, runningTotal: engine.runningTotal) {
-                    engine.playCard(cardIndex: 0)
+                    // Find a card that can actually be played (value + running total <= 31)
+                    let playableIndex = engine.humanPlayHand.firstIndex { $0.value + engine.runningTotal <= 31 }!
+                    engine.playCard(cardIndex: playableIndex)
                     humanCardsPlayed += 1
                     let after = engine.humanPlayHand.count
                     #expect(after == before - 1, "Hand should shrink by 1 after play, was \(before) now \(after)")
