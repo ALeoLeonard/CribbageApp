@@ -186,8 +186,8 @@ enum Scoring {
         }
 
         // Pairs: check last 2, 3, 4 cards for matching ranks
-        if playPile.count >= 2 {
-            let lastRank = playPile.last!.rank
+        if playPile.count >= 2, let lastCard = playPile.last {
+            let lastRank = lastCard.rank
             var pairCount = 0
             for i in stride(from: playPile.count - 2, through: 0, by: -1) {
                 if playPile[i].rank == lastRank {

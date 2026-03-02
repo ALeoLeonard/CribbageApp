@@ -1,9 +1,12 @@
 import Foundation
 import GameKit
+import os
 
 /// Manages Game Center authentication and leaderboard submissions.
 @MainActor @Observable
 final class GameCenterManager {
+
+    private static let logger = Logger(subsystem: "com.cribbage.CribbageApp", category: "GameCenter")
 
     static let shared = GameCenterManager()
 
@@ -46,7 +49,7 @@ final class GameCenterManager {
                 self.isAuthenticated = player.isAuthenticated
                 self.localPlayerName = player.isAuthenticated ? player.displayName : nil
                 if let error {
-                    print("Game Center auth error: \(error.localizedDescription)")
+                    Self.logger.error("Game Center auth error: \(error.localizedDescription)")
                 }
             }
         }
@@ -65,7 +68,7 @@ final class GameCenterManager {
                     leaderboardIDs: [leaderboardID]
                 )
             } catch {
-                print("Leaderboard submit error: \(error.localizedDescription)")
+                Self.logger.error("Leaderboard submit error: \(error.localizedDescription)")
             }
         }
     }
@@ -90,7 +93,7 @@ final class GameCenterManager {
                 try await GKAchievement.report([gkAchievement])
                 AnalyticsManager.shared.trackAchievementUnlocked(achievementID: achievement.rawValue)
             } catch {
-                print("Achievement report error: \(error.localizedDescription)")
+                Self.logger.error("Achievement report error: \(error.localizedDescription)")
             }
         }
     }
@@ -108,7 +111,7 @@ final class GameCenterManager {
                     AnalyticsManager.shared.trackAchievementUnlocked(achievementID: achievement.rawValue)
                 }
             } catch {
-                print("Achievement progress error: \(error.localizedDescription)")
+                Self.logger.error("Achievement progress error: \(error.localizedDescription)")
             }
         }
     }

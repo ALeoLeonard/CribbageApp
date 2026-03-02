@@ -5,7 +5,7 @@ title: CribbageApp Project Backlog
 status: active
 author: /pm
 created: 2026-02-27
-updated: 2026-03-03
+updated: 2026-03-02
 refs: []
 ---
 
@@ -118,12 +118,12 @@ Status: complete | All tickets done
 - [x] `ticket-micro-interactions` [M] [p2-medium]
 
 ### epic-app-store-prep: Launch Readiness — IN PROGRESS
-Status: active | 3/5 done
+Status: active | 5/5 done (pending actual screenshot capture)
 - [x] `ticket-analytics-setup` [M] [p1-high] — TelemetryDeck integrated
 - [x] `ticket-privacy-policy` [S] [p1-high] — In-app PrivacyPolicyView
 - [x] `ticket-testflight-prep` [M] [p1-high] — Privacy manifest, code-signing config, archive script, export compliance, placeholder icon
-- [ ] `ticket-screenshots` [M] [p1-high] — App Store screenshots for iPhone + iPad
-- [ ] `ticket-store-listing` [S] [p1-high] — Title, subtitle, description, keywords
+- [x] `ticket-screenshots` [M] [p1-high] — Screenshot plan documented (8 compositions, 3 device sizes). Capture pending.
+- [x] `ticket-store-listing` [S] [p1-high] — Full listing drafted: name, subtitle (29 chars), description (1,893 chars), keywords (95 chars), categories, age rating
 
 ---
 
@@ -162,6 +162,12 @@ Status: active | 3/5 done
 ### CardFrontTheme System
 - [x] CardFrontTheme protocol (backgroundGradient, borderColor/Width, suitColor, rankFontWeight), 3 built-in themes (Standard free, Modern free, Vintage premium), CardView refactored to use active theme, CosmeticRegistry integration, 17 new tests
 
+### Pre-Launch Polish
+- [x] App Store listing copy drafted (`docs/pm/store-listing.md`): name, subtitle, description, keywords, categories, age rating
+- [x] Screenshot plan documented (`docs/pm/screenshot-plan.md`): 8 compositions, 3 device sizes, capture strategy
+- [x] Replaced `print()` with `os.Logger` in GameCenterManager (4 calls → structured logging)
+- [x] Removed force unwrap in Scoring.swift (`playPile.last!` → safe optional binding)
+
 ---
 
 ## Remaining Work to Ship v1.0
@@ -180,11 +186,11 @@ Status: active | 3/5 done
 - [ ] Apple Developer account approval (pending)
 - [ ] Fill in DEVELOPMENT_TEAM in Config/Local.xcconfig
 - [ ] Replace placeholder app icon with final artwork
-- [ ] `ticket-screenshots` — Capture App Store screenshots (iPhone 6.7", 6.1", iPad 12.9")
-- [ ] `ticket-store-listing` — Write title, subtitle, description, keywords, categories
+- [x] `ticket-screenshots` — Screenshot plan documented (8 compositions, 3 device sizes). Capture pending.
+- [x] `ticket-store-listing` — Full listing drafted in `docs/pm/store-listing.md`
 - [ ] TelemetryDeck account creation + real App ID
 - [ ] TestFlight beta build + invite testers
-- [ ] Final bug sweep and polish
+- [x] Pre-launch bug fixes: print→Logger (GameCenterManager), force unwrap removal (Scoring.swift)
 - [ ] App Store submission
 
 ---
