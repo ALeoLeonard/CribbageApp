@@ -38,6 +38,7 @@
 		716B224CF7DB4209AC1BE672 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C74977A19BC49777145619 /* GameState.swift */; };
 		728944A0987FD2F13850968C /* CloudSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9314ABFB4D20CB39FADDFE2 /* CloudSyncManager.swift */; };
 		73EED096B7F4570C7DC6FCA1 /* HowToPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B79D876241777F04510143 /* HowToPlayView.swift */; };
+		7462FE62B2B1808B293C0A2F /* PegThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78ABD6E628B64EAED68079DB /* PegThemes.swift */; };
 		750B01449ADF02C544A29A6E /* CribbageAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */; };
 		7521D019BA32E6ADAB78E34D /* CosmeticItems+PhrasePacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2ECD9AEC57376926789D19F /* CosmeticItems+PhrasePacks.swift */; };
 		785B15D4DE4983A641C004B7 /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F80F966A72AF38CC204CD18 /* Scoring.swift */; };
@@ -47,8 +48,10 @@
 		85C23A4F21716537B725E0D7 /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97650273E09901D07D5EBD3E /* GameEngineTests.swift */; };
 		86AF000D6201E1A831B4E8A3 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DEF5A2AFE6CBFE5C5465 /* Card.swift */; };
 		87A36B718A7B842E1F817A3C /* AITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A158CEE251162854C6511B68 /* AITests.swift */; };
+		90CECC107460539E1DBD6C2D /* CosmeticItems+PegThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F0376679311AD38E5F906A /* CosmeticItems+PegThemes.swift */; };
 		96451395D3A6BBB80C172011 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0DE3DEE7F89EE11DA3FD7B /* SoundManager.swift */; };
 		9802BB8BC887176E16FE7DA0 /* PhrasePackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4327652EA7ED7135D7F40E12 /* PhrasePackTests.swift */; };
+		9AD7FE8306A4CDEA81FD547A /* PegThemeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF07AA9B889EE151A559056 /* PegThemeTests.swift */; };
 		9B9F42B02A8142CECA5D5489 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D1B80544DC8ED9F835943 /* StoreManager.swift */; };
 		9BA00C46D04375E53CCC5D80 /* AdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F80E2A4B0D93B4B325C10F4 /* AdManager.swift */; };
 		9C8A2EB70B44D98BFC487BCE /* ServerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F16A53FF0DF504F9F9008C1 /* ServerModels.swift */; };
@@ -74,6 +77,7 @@
 		F8913AB141B84587ED146601 /* LeaderboardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AF2B3C085DB78C4BD6AD99 /* LeaderboardsView.swift */; };
 		F8B79F0B63D2EC0605C5B4C4 /* MediumAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFAAE3DBA8A691CF1E3EB8 /* MediumAI.swift */; };
 		FA880C8EDFEB8D33AC37F615 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289A5B4BF6E9EAAF8FF72831 /* MainMenuView.swift */; };
+		FE6FBA837C7820EB65B714DE /* PegTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D196B3BD095F665F82F7D4 /* PegTheme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +126,7 @@
 		62B79D876241777F04510143 /* HowToPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToPlayView.swift; sourceTree = "<group>"; };
 		662845B473DFA07F7621EF71 /* CosmeticRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticRegistry.swift; sourceTree = "<group>"; };
 		76C74977A19BC49777145619 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		78ABD6E628B64EAED68079DB /* PegThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegThemes.swift; sourceTree = "<group>"; };
 		7EAC834D015367C4F4607547 /* CosmeticSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticSlot.swift; sourceTree = "<group>"; };
 		7FF285A067E0D69E106A177D /* AdaptiveGameLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveGameLayout.swift; sourceTree = "<group>"; };
 		8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CribbageAppApp.swift; sourceTree = "<group>"; };
@@ -130,6 +135,7 @@
 		8F80F966A72AF38CC204CD18 /* Scoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
 		96EA373DEAA2CBEB9A63FDD8 /* PhrasePack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhrasePack.swift; sourceTree = "<group>"; };
 		97650273E09901D07D5EBD3E /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
+		97D196B3BD095F665F82F7D4 /* PegTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegTheme.swift; sourceTree = "<group>"; };
 		9AA61F2576AF35FD42E54A0B /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
 		9CD3DEF5A2AFE6CBFE5C5465 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		9D1FE9218C409B97CBCC8B97 /* PhrasePacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhrasePacks.swift; sourceTree = "<group>"; };
@@ -137,6 +143,7 @@
 		A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPhaseTests.swift; sourceTree = "<group>"; };
 		A3B61DE52168D6A022332897 /* TutorialOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialOverlayView.swift; sourceTree = "<group>"; };
 		A5843180EF1B46026B3721C9 /* CribbageBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CribbageBoardView.swift; sourceTree = "<group>"; };
+		AAF07AA9B889EE151A559056 /* PegThemeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PegThemeTests.swift; sourceTree = "<group>"; };
 		AC166BD84563EF94C851CB97 /* ScoringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringTests.swift; sourceTree = "<group>"; };
 		AF86EF902C32A5807181A552 /* Configuration.storekit */ = {isa = PBXFileReference; path = Configuration.storekit; sourceTree = "<group>"; };
 		AFBF8DB0F5972BAFF91570B4 /* ScoringCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringCalloutView.swift; sourceTree = "<group>"; };
@@ -151,6 +158,7 @@
 		D571190280CFB9632F72C5FC /* CribbageApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CribbageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF3C509E24FBC40F85AD6D7C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E030DD3CF4837D4C4C44C236 /* StatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsManager.swift; sourceTree = "<group>"; };
+		E6F0376679311AD38E5F906A /* CosmeticItems+PegThemes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CosmeticItems+PegThemes.swift"; sourceTree = "<group>"; };
 		E74F6CAEA289BE054592F85E /* AIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProtocol.swift; sourceTree = "<group>"; };
 		F2B50602FADD7EBEA096BE3C /* EasyAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyAI.swift; sourceTree = "<group>"; };
 		F33066AFBD2842D4B58C792C /* CosmeticItems+Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CosmeticItems+Themes.swift"; sourceTree = "<group>"; };
@@ -173,10 +181,13 @@
 			isa = PBXGroup;
 			children = (
 				51DFF58FAB9857E614E40982 /* CosmeticItem.swift */,
+				E6F0376679311AD38E5F906A /* CosmeticItems+PegThemes.swift */,
 				B2ECD9AEC57376926789D19F /* CosmeticItems+PhrasePacks.swift */,
 				F33066AFBD2842D4B58C792C /* CosmeticItems+Themes.swift */,
 				662845B473DFA07F7621EF71 /* CosmeticRegistry.swift */,
 				7EAC834D015367C4F4607547 /* CosmeticSlot.swift */,
+				97D196B3BD095F665F82F7D4 /* PegTheme.swift */,
+				78ABD6E628B64EAED68079DB /* PegThemes.swift */,
 				96EA373DEAA2CBEB9A63FDD8 /* PhrasePack.swift */,
 				9D1FE9218C409B97CBCC8B97 /* PhrasePacks.swift */,
 			);
@@ -200,6 +211,7 @@
 				A158CEE251162854C6511B68 /* AITests.swift */,
 				2767428C8410B731EAB15A5A /* CosmeticRegistryTests.swift */,
 				97650273E09901D07D5EBD3E /* GameEngineTests.swift */,
+				AAF07AA9B889EE151A559056 /* PegThemeTests.swift */,
 				4327652EA7ED7135D7F40E12 /* PhrasePackTests.swift */,
 				A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */,
 				AC166BD84563EF94C851CB97 /* ScoringTests.swift */,
@@ -440,6 +452,7 @@
 				87A36B718A7B842E1F817A3C /* AITests.swift in Sources */,
 				5856128D3566A8990EF8ED62 /* CosmeticRegistryTests.swift in Sources */,
 				85C23A4F21716537B725E0D7 /* GameEngineTests.swift in Sources */,
+				9AD7FE8306A4CDEA81FD547A /* PegThemeTests.swift in Sources */,
 				9802BB8BC887176E16FE7DA0 /* PhrasePackTests.swift in Sources */,
 				43BA9691D321EBE4B1B35821 /* PlayPhaseTests.swift in Sources */,
 				A6733B4B076AEF9791B90615 /* ScoringTests.swift in Sources */,
@@ -465,6 +478,7 @@
 				2918C67F7D74748DA8A40D7A /* Constants.swift in Sources */,
 				7AC5FF60B67DB2C6F4B990EC /* ContentView.swift in Sources */,
 				23BD93ACA8E6A30118D7C4EE /* CosmeticItem.swift in Sources */,
+				90CECC107460539E1DBD6C2D /* CosmeticItems+PegThemes.swift in Sources */,
 				7521D019BA32E6ADAB78E34D /* CosmeticItems+PhrasePacks.swift in Sources */,
 				59DA49985F00CC3527698582 /* CosmeticItems+Themes.swift in Sources */,
 				36EBCB32B0D3B3FB968131F4 /* CosmeticRegistry.swift in Sources */,
@@ -489,6 +503,8 @@
 				F8B79F0B63D2EC0605C5B4C4 /* MediumAI.swift in Sources */,
 				E05837780C9DCBC5930F9C62 /* MultiplayerViewModel.swift in Sources */,
 				4EE26CEE8B51AFE32F62F86D /* PaywallView.swift in Sources */,
+				FE6FBA837C7820EB65B714DE /* PegTheme.swift in Sources */,
+				7462FE62B2B1808B293C0A2F /* PegThemes.swift in Sources */,
 				3BAE3B86A3A1A2B27A50E68E /* PhrasePack.swift in Sources */,
 				3A955910C491B4B2AC55B5E9 /* PhrasePacks.swift in Sources */,
 				A8F365E9FC9BAF1DC847CD3F /* PlayAreaView.swift in Sources */,

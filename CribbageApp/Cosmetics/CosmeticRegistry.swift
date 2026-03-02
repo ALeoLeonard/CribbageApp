@@ -138,6 +138,11 @@ final class CosmeticRegistry {
             ?? ClassicPhrasePack()
     }
 
+    var activePegTheme: any PegTheme {
+        (equipped(for: .peg) as? PegThemeCosmeticItem)?.theme
+            ?? ClassicPeg()
+    }
+
     func selectCardBack(_ id: String) {
         equip(id, in: .cardBack)
     }
@@ -211,6 +216,19 @@ final class CosmeticRegistry {
         for (pack, condition) in phrasePacks {
             register(PhrasePackCosmeticItem(pack, unlockCondition: condition))
         }
+
+        // Peg themes
+        let pegThemes: [(any PegTheme, UnlockCondition)] = [
+            (ClassicPeg(), .free),
+            (BrassPeg(), .free),
+            (IvoryPeg(), .premium),
+            (RubyPeg(), .premium),
+            (JadePeg(), .premium),
+            (ObsidianPeg(), .premium)
+        ]
+        for (theme, condition) in pegThemes {
+            register(PegThemeCosmeticItem(theme, unlockCondition: condition))
+        }
     }
 
     // MARK: - Init
@@ -222,7 +240,8 @@ final class CosmeticRegistry {
             "classic-navy", "royal-red", "emerald",
             "green-felt", "blue-felt",
             "classic-wood", "dark-walnut",
-            "classic-phrases", "grandpa-phrases"
+            "classic-phrases", "grandpa-phrases",
+            "classic-peg", "brass-peg"
         ]
 
         let saved = Set(UserDefaults.standard.stringArray(forKey: "unlockedThemes") ?? [])

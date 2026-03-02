@@ -24,6 +24,7 @@ struct CribbageBoardView: View {
             let w = geo.size.width
             let trackW = w - hPad * 2
             let board = themeManager.activeBoard
+            let pegTheme = themeManager.activePegTheme
 
             ZStack {
                 // Wood board background
@@ -103,8 +104,8 @@ struct CribbageBoardView: View {
                 // Player peg
                 pegView(
                     score: playerScore,
-                    color: board.pegPlayerColor,
-                    glowColor: .blue,
+                    color: pegTheme.playerColor,
+                    glowColor: pegTheme.playerGlowColor,
                     trackW: trackW,
                     yOffset: -3
                 )
@@ -112,8 +113,8 @@ struct CribbageBoardView: View {
                 // Opponent peg
                 pegView(
                     score: opponentScore,
-                    color: board.pegOpponentColor,
-                    glowColor: .red,
+                    color: pegTheme.opponentColor,
+                    glowColor: pegTheme.opponentGlowColor,
                     trackW: trackW,
                     yOffset: 3
                 )
