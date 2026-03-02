@@ -1,0 +1,10 @@
+// Local.xcconfig — Machine-specific build settings (NOT committed to git)
+//
+// Copy this file to Local.xcconfig and fill in your values:
+//   cp Config/Local.xcconfig.template Config/Local.xcconfig
+//
+// DEVELOPMENT_TEAM: Your Apple Developer Team ID (10-char alphanumeric).
+//   Find it at https://developer.apple.com/account → Membership Details.
+//   Example: DEVELOPMENT_TEAM = A1B2C3D4E5
+
+DEVELOPMENT_TEAM = XXXXXXXXXX

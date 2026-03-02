@@ -20,6 +20,13 @@ Package.resolved
 *.swp
 *~
 
+# Local config (contains developer Team ID)
+Config/Local.xcconfig
+
+# Build artifacts
+build/
+*.xcarchive
+
 # Misc
 *.moved-aside
 *.pbxuser
