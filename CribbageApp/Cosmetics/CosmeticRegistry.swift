@@ -148,6 +148,11 @@ final class CosmeticRegistry {
             ?? ClassicSoundPack()
     }
 
+    var activeCardFront: any CardFrontTheme {
+        (equipped(for: .cardFront) as? CardFrontCosmeticItem)?.theme
+            ?? StandardCardFront()
+    }
+
     var activeHapticPack: any HapticPack {
         (equipped(for: .hapticPack) as? HapticPackCosmeticItem)?.pack
             ?? StandardHapticPack()
@@ -217,6 +222,14 @@ final class CosmeticRegistry {
             register(BoardCosmeticItem(theme))
         }
 
+        // Card fronts
+        let cardFronts: [any CardFrontTheme] = [
+            StandardCardFront(), ModernCardFront(), VintageCardFront()
+        ]
+        for theme in cardFronts {
+            register(CardFrontCosmeticItem(theme))
+        }
+
         // Phrase packs
         let phrasePacks: [(any PhrasePack, UnlockCondition)] = [
             (ClassicPhrasePack(), .free),
@@ -271,6 +284,7 @@ final class CosmeticRegistry {
             "classic-wood", "dark-walnut",
             "classic-phrases", "grandpa-phrases",
             "classic-peg", "brass-peg",
+            "standard", "modern-card",
             "classic-sounds",
             "standard-haptics", "subtle-haptics"
         ]

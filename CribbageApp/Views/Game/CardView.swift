@@ -17,8 +17,12 @@ struct CardView: View {
     }
     private var cornerRadius: CGFloat { CribbageTheme.cardCornerRadius }
 
+    private var cardFrontTheme: any CardFrontTheme {
+        themeManager.activeCardFront
+    }
+
     private var rankFont: Font {
-        isSmall ? .system(size: 10 * cardScale, weight: .bold) : .system(size: 14 * cardScale, weight: .bold)
+        isSmall ? .system(size: 10 * cardScale, weight: cardFrontTheme.rankFontWeight) : .system(size: 14 * cardScale, weight: cardFrontTheme.rankFontWeight)
     }
     private var suitFont: Font {
         isSmall ? .system(size: 8 * cardScale) : .system(size: 11 * cardScale)
@@ -53,11 +57,11 @@ struct CardView: View {
 
     private var cardFace: some View {
         ZStack {
-            // Ivory background
+            // Background
             RoundedRectangle(cornerRadius: cornerRadius)
-                .fill(CribbageTheme.cardFaceGradient)
+                .fill(cardFrontTheme.backgroundGradient)
             RoundedRectangle(cornerRadius: cornerRadius)
-                .strokeBorder(CribbageTheme.cardBorder, lineWidth: 0.8)
+                .strokeBorder(cardFrontTheme.borderColor, lineWidth: cardFrontTheme.borderWidth)
 
             // Corner indices
             VStack {
@@ -77,7 +81,7 @@ struct CardView: View {
             // Center pip
             Text(card.suit.symbol)
                 .font(centerFont)
-                .foregroundStyle(card.suit.color)
+                .foregroundStyle(cardFrontTheme.suitColor(for: card.suit))
         }
     }
 
@@ -88,7 +92,7 @@ struct CardView: View {
             Text(card.suit.symbol)
                 .font(suitFont)
         }
-        .foregroundStyle(card.suit.color)
+        .foregroundStyle(cardFrontTheme.suitColor(for: card.suit))
     }
 
     // MARK: - Card Back (themed)
