@@ -16,7 +16,8 @@ struct GoScoringTests {
             maxTurns -= 1
             if engine.currentTurn == "human" {
                 if PlayPhaseHelper.canPlay(hand: engine.humanPlayHand, runningTotal: engine.runningTotal) {
-                    engine.playCard(cardIndex: 0)
+                    let playableIndex = engine.humanPlayHand.firstIndex { $0.value + engine.runningTotal <= 31 }!
+                    engine.playCard(cardIndex: playableIndex)
                 } else {
                     engine.sayGo()
                 }
@@ -42,7 +43,8 @@ struct GoScoringTests {
                 maxTurns -= 1
                 if engine.currentTurn == "human" {
                     if PlayPhaseHelper.canPlay(hand: engine.humanPlayHand, runningTotal: engine.runningTotal) {
-                        engine.playCard(cardIndex: 0)
+                        let playableIndex = engine.humanPlayHand.firstIndex { $0.value + engine.runningTotal <= 31 }!
+                        engine.playCard(cardIndex: playableIndex)
                     } else {
                         engine.sayGo()
                     }

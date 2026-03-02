@@ -49,7 +49,8 @@ struct GameEngineTests {
         while engine.phase == .play {
             if engine.currentTurn == "human" {
                 if PlayPhaseHelper.canPlay(hand: engine.humanPlayHand, runningTotal: engine.runningTotal) {
-                    engine.playCard(cardIndex: 0)
+                    let playableIndex = engine.humanPlayHand.firstIndex { $0.value + engine.runningTotal <= 31 }!
+                    engine.playCard(cardIndex: playableIndex)
                 } else {
                     engine.sayGo()
                 }
@@ -83,7 +84,8 @@ struct GameEngineTests {
             case .play:
                 if engine.currentTurn == "human" {
                     if PlayPhaseHelper.canPlay(hand: engine.humanPlayHand, runningTotal: engine.runningTotal) {
-                        engine.playCard(cardIndex: 0)
+                        let playableIndex = engine.humanPlayHand.firstIndex { $0.value + engine.runningTotal <= 31 }!
+                        engine.playCard(cardIndex: playableIndex)
                     } else {
                         engine.sayGo()
                     }
@@ -114,7 +116,8 @@ struct GameEngineTests {
 
         // Wait for human turn then play a card
         if engine.currentTurn == "human" {
-            engine.playCard(cardIndex: 0)
+            let playableIndex = engine.humanPlayHand.firstIndex { $0.value + engine.runningTotal <= 31 } ?? 0
+            engine.playCard(cardIndex: playableIndex)
             let handAfter = engine.humanPlayHand
             #expect(handAfter.count == 3, "Should have 3 cards after playing one")
             // Remaining cards should be the same cards (minus the played one)
