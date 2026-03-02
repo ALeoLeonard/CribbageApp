@@ -48,6 +48,7 @@
 		85C23A4F21716537B725E0D7 /* GameEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97650273E09901D07D5EBD3E /* GameEngineTests.swift */; };
 		86AF000D6201E1A831B4E8A3 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DEF5A2AFE6CBFE5C5465 /* Card.swift */; };
 		87A36B718A7B842E1F817A3C /* AITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A158CEE251162854C6511B68 /* AITests.swift */; };
+		90A400B3A13870425DA984DD /* SoundPack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3169787D4006372C769DA2 /* SoundPack.swift */; };
 		90CECC107460539E1DBD6C2D /* CosmeticItems+PegThemes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6F0376679311AD38E5F906A /* CosmeticItems+PegThemes.swift */; };
 		96451395D3A6BBB80C172011 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0DE3DEE7F89EE11DA3FD7B /* SoundManager.swift */; };
 		9802BB8BC887176E16FE7DA0 /* PhrasePackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4327652EA7ED7135D7F40E12 /* PhrasePackTests.swift */; };
@@ -72,10 +73,13 @@
 		E0EA41F3DEB12A54C299B466 /* CardFanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD15AC727590EB5D488FD7DD /* CardFanView.swift */; };
 		E3269F5F9B5927E31348856B /* CosmeticSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC834D015367C4F4607547 /* CosmeticSlot.swift */; };
 		E57E7DD23A85BFEA14DF8C66 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CE43B2E3B6E9C47EF1BEF8 /* GameOverView.swift */; };
+		E6C77CCA5B59953FC1AC0F00 /* CosmeticItems+SoundPacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C06B3BDB7F25C53E620AB92 /* CosmeticItems+SoundPacks.swift */; };
 		F0168D0B15503351FB603832 /* EasyAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B50602FADD7EBEA096BE3C /* EasyAI.swift */; };
 		F17628926B25A84AB1F5ADB1 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D1EF60D63F69E4B01F357C /* StatsView.swift */; };
+		F3E0AB19AE339F192939AABB /* SoundPackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4985295FA1340F9537D13C /* SoundPackTests.swift */; };
 		F8913AB141B84587ED146601 /* LeaderboardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AF2B3C085DB78C4BD6AD99 /* LeaderboardsView.swift */; };
 		F8B79F0B63D2EC0605C5B4C4 /* MediumAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFAAE3DBA8A691CF1E3EB8 /* MediumAI.swift */; };
+		FA65BC930067FE13615750BE /* SoundPacks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F50DF99BA6B38589572F2A /* SoundPacks.swift */; };
 		FA880C8EDFEB8D33AC37F615 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289A5B4BF6E9EAAF8FF72831 /* MainMenuView.swift */; };
 		FE6FBA837C7820EB65B714DE /* PegTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97D196B3BD095F665F82F7D4 /* PegTheme.swift */; };
 /* End PBXBuildFile section */
@@ -93,6 +97,7 @@
 /* Begin PBXFileReference section */
 		03C9E95DBA0E02C77B1961D9 /* ActionBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionBarView.swift; sourceTree = "<group>"; };
 		0AA28D6157ECA9F550184D78 /* HardAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HardAI.swift; sourceTree = "<group>"; };
+		0C06B3BDB7F25C53E620AB92 /* CosmeticItems+SoundPacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CosmeticItems+SoundPacks.swift"; sourceTree = "<group>"; };
 		0DFEDF2B9873AF83DAD15E81 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		0E6495C749C145DCC06A4119 /* AnimationHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationHelpers.swift; sourceTree = "<group>"; };
 		12E03452F0CFE95B5DB25883 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
@@ -101,6 +106,7 @@
 		18DB89C988981B3EFD5C58CA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1AEB0D7D23803CB7EF1BFD55 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		1C5AD574A3AC4ED85160792A /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		20F50DF99BA6B38589572F2A /* SoundPacks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPacks.swift; sourceTree = "<group>"; };
 		22699546BD6120DFA1B1A906 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		23A20848A0B39788EB0300CC /* HandOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandOverView.swift; sourceTree = "<group>"; };
 		2767428C8410B731EAB15A5A /* CosmeticRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticRegistryTests.swift; sourceTree = "<group>"; };
@@ -123,6 +129,7 @@
 		571D51AD48686B7E464D3B8F /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		57E6C2B9534FF9832B484A4D /* ScoreBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreBreakdownView.swift; sourceTree = "<group>"; };
 		587E8094E6027D8EAFE30202 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		5F3169787D4006372C769DA2 /* SoundPack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPack.swift; sourceTree = "<group>"; };
 		62B79D876241777F04510143 /* HowToPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToPlayView.swift; sourceTree = "<group>"; };
 		662845B473DFA07F7621EF71 /* CosmeticRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticRegistry.swift; sourceTree = "<group>"; };
 		76C74977A19BC49777145619 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
@@ -155,6 +162,7 @@
 		C9314ABFB4D20CB39FADDFE2 /* CloudSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncManager.swift; sourceTree = "<group>"; };
 		CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CD15AC727590EB5D488FD7DD /* CardFanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFanView.swift; sourceTree = "<group>"; };
+		CE4985295FA1340F9537D13C /* SoundPackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPackTests.swift; sourceTree = "<group>"; };
 		D571190280CFB9632F72C5FC /* CribbageApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CribbageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF3C509E24FBC40F85AD6D7C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E030DD3CF4837D4C4C44C236 /* StatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsManager.swift; sourceTree = "<group>"; };
@@ -183,6 +191,7 @@
 				51DFF58FAB9857E614E40982 /* CosmeticItem.swift */,
 				E6F0376679311AD38E5F906A /* CosmeticItems+PegThemes.swift */,
 				B2ECD9AEC57376926789D19F /* CosmeticItems+PhrasePacks.swift */,
+				0C06B3BDB7F25C53E620AB92 /* CosmeticItems+SoundPacks.swift */,
 				F33066AFBD2842D4B58C792C /* CosmeticItems+Themes.swift */,
 				662845B473DFA07F7621EF71 /* CosmeticRegistry.swift */,
 				7EAC834D015367C4F4607547 /* CosmeticSlot.swift */,
@@ -190,6 +199,8 @@
 				78ABD6E628B64EAED68079DB /* PegThemes.swift */,
 				96EA373DEAA2CBEB9A63FDD8 /* PhrasePack.swift */,
 				9D1FE9218C409B97CBCC8B97 /* PhrasePacks.swift */,
+				5F3169787D4006372C769DA2 /* SoundPack.swift */,
+				20F50DF99BA6B38589572F2A /* SoundPacks.swift */,
 			);
 			path = Cosmetics;
 			sourceTree = "<group>";
@@ -215,6 +226,7 @@
 				4327652EA7ED7135D7F40E12 /* PhrasePackTests.swift */,
 				A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */,
 				AC166BD84563EF94C851CB97 /* ScoringTests.swift */,
+				CE4985295FA1340F9537D13C /* SoundPackTests.swift */,
 			);
 			path = CribbageAppTests;
 			sourceTree = "<group>";
@@ -456,6 +468,7 @@
 				9802BB8BC887176E16FE7DA0 /* PhrasePackTests.swift in Sources */,
 				43BA9691D321EBE4B1B35821 /* PlayPhaseTests.swift in Sources */,
 				A6733B4B076AEF9791B90615 /* ScoringTests.swift in Sources */,
+				F3E0AB19AE339F192939AABB /* SoundPackTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,6 +493,7 @@
 				23BD93ACA8E6A30118D7C4EE /* CosmeticItem.swift in Sources */,
 				90CECC107460539E1DBD6C2D /* CosmeticItems+PegThemes.swift in Sources */,
 				7521D019BA32E6ADAB78E34D /* CosmeticItems+PhrasePacks.swift in Sources */,
+				E6C77CCA5B59953FC1AC0F00 /* CosmeticItems+SoundPacks.swift in Sources */,
 				59DA49985F00CC3527698582 /* CosmeticItems+Themes.swift in Sources */,
 				36EBCB32B0D3B3FB968131F4 /* CosmeticRegistry.swift in Sources */,
 				E3269F5F9B5927E31348856B /* CosmeticSlot.swift in Sources */,
@@ -516,6 +530,8 @@
 				9C8A2EB70B44D98BFC487BCE /* ServerModels.swift in Sources */,
 				CF42656DF4F6A82D59A6F8E8 /* SettingsView.swift in Sources */,
 				96451395D3A6BBB80C172011 /* SoundManager.swift in Sources */,
+				90A400B3A13870425DA984DD /* SoundPack.swift in Sources */,
+				FA65BC930067FE13615750BE /* SoundPacks.swift in Sources */,
 				A55237FC27DE1D86DA51A658 /* StatsManager.swift in Sources */,
 				F17628926B25A84AB1F5ADB1 /* StatsView.swift in Sources */,
 				9B9F42B02A8142CECA5D5489 /* StoreManager.swift in Sources */,

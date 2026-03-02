@@ -143,6 +143,11 @@ final class CosmeticRegistry {
             ?? ClassicPeg()
     }
 
+    var activeSoundPack: any SoundPack {
+        (equipped(for: .soundPack) as? SoundPackCosmeticItem)?.pack
+            ?? ClassicSoundPack()
+    }
+
     func selectCardBack(_ id: String) {
         equip(id, in: .cardBack)
     }
@@ -229,6 +234,15 @@ final class CosmeticRegistry {
         for (theme, condition) in pegThemes {
             register(PegThemeCosmeticItem(theme, unlockCondition: condition))
         }
+
+        // Sound packs
+        let soundPacks: [(any SoundPack, UnlockCondition)] = [
+            (ClassicSoundPack(), .free),
+            (QuietEveningSoundPack(), .premium)
+        ]
+        for (pack, condition) in soundPacks {
+            register(SoundPackCosmeticItem(pack, unlockCondition: condition))
+        }
     }
 
     // MARK: - Init
@@ -241,7 +255,8 @@ final class CosmeticRegistry {
             "green-felt", "blue-felt",
             "classic-wood", "dark-walnut",
             "classic-phrases", "grandpa-phrases",
-            "classic-peg", "brass-peg"
+            "classic-peg", "brass-peg",
+            "classic-sounds"
         ]
 
         let saved = Set(UserDefaults.standard.stringArray(forKey: "unlockedThemes") ?? [])

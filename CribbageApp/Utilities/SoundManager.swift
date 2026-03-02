@@ -3,8 +3,9 @@ import SwiftUI
 
 /// Synthesizes physical card-game sound effects using noise-based AVAudioEngine synthesis.
 /// Card sounds use filtered white noise for a physical feel; musical sounds use sine tones.
+/// Delegates sound design to the active SoundPack; owns the AVAudioEngine infrastructure.
 @MainActor
-final class SoundManager {
+final class SoundManager: SoundSynth {
 
     static let shared = SoundManager()
 
@@ -18,6 +19,12 @@ final class SoundManager {
 
     private init() {
         setupEngine()
+    }
+
+    // MARK: - Active Sound Pack
+
+    var activeSoundPack: any SoundPack {
+        CosmeticRegistry.shared.activeSoundPack
     }
 
     // MARK: - Setup
@@ -54,199 +61,111 @@ final class SoundManager {
 
     /// Soft whoosh — card sliding on felt
     func playCardSlide() {
-        playNoise(
-            duration: 0.08,
-            volume: 0.25,
-            attackMs: 10,
-            decayMs: 70,
-            filterType: .lowPass,
-            filterFreq: 2000
-        )
+        guard soundEnabled else { return }
+        activeSoundPack.playCardSlide(using: self)
     }
 
     /// Thud + slap — card hitting table
     func playCardPlace() {
-        playNoise(
-            duration: 0.05,
-            volume: 0.4,
-            attackMs: 2,
-            decayMs: 48,
-            filterType: .bandPass,
-            filterFreq: 800
-        )
+        guard soundEnabled else { return }
+        activeSoundPack.playCardPlace(using: self)
     }
 
     /// Crisp snap — card turning over
     func playCardFlip() {
-        playNoise(
-            duration: 0.03,
-            volume: 0.2,
-            attackMs: 1,
-            decayMs: 29,
-            filterType: .highPass,
-            filterFreq: 3000
-        )
+        guard soundEnabled else { return }
+        activeSoundPack.playCardFlip(using: self)
     }
 
     /// Rapid flutter — riffle shuffle (sequence of micro-clicks)
     func playShuffleRiffle() {
-        Task {
-            let clickCount = Int.random(in: 8...12)
-            for i in 0..<clickCount {
-                let vol: Float = 0.12 + Float.random(in: -0.03...0.03)
-                let freq: Float = 1500 + Float.random(in: -200...200)
-                playNoise(
-                    duration: 0.025,
-                    volume: vol,
-                    attackMs: 1,
-                    decayMs: 24,
-                    filterType: .bandPass,
-                    filterFreq: freq
-                )
-                // Randomized gap between clicks (30–50ms)
-                let gap = Int.random(in: 30...50)
-                // Speed up slightly toward end
-                let factor = max(0.6, 1.0 - Double(i) * 0.04)
-                try? await Task.sleep(for: .milliseconds(Int(Double(gap) * factor)))
-            }
-        }
+        guard soundEnabled else { return }
+        activeSoundPack.playShuffleRiffle(using: self)
     }
 
     /// Knock — tapping deck to cut
     func playDeckTap() {
-        playNoise(
-            duration: 0.04,
-            volume: 0.35,
-            attackMs: 3,
-            decayMs: 37,
-            filterType: .lowPass,
-            filterFreq: 600
-        )
+        guard soundEnabled else { return }
+        activeSoundPack.playDeckTap(using: self)
     }
 
-    /// Short card tap (reuse cardPlace at lower vol) for "Go"
+    /// Short card tap for "Go"
     func playGo() {
-        playNoise(
-            duration: 0.05,
-            volume: 0.2,
-            attackMs: 2,
-            decayMs: 48,
-            filterType: .bandPass,
-            filterFreq: 800
-        )
+        guard soundEnabled else { return }
+        activeSoundPack.playGo(using: self)
     }
 
-    /// Deal sound — alias for card slide
+    /// Deal sound
     func playDeal() {
-        playCardSlide()
+        guard soundEnabled else { return }
+        activeSoundPack.playDeal(using: self)
     }
 
-    // MARK: - Musical Sounds (kept as sine tones)
+    // MARK: - Musical Sounds
 
     /// Rising two-note chime (generic)
     func playScore() {
-        playScoreChime(points: 2)
+        guard soundEnabled else { return }
+        activeSoundPack.playScore(using: self)
     }
 
     /// Point-scaled score chime — higher points = higher pitch, more notes
     func playScoreChime(points: Int) {
-        let baseFreq: Double = 660 + Double(min(points, 12)) * 30
-        playTone(frequency: baseFreq, duration: 0.1, volume: 0.25, decay: 0.7)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            self.playTone(frequency: baseFreq * 1.25, duration: 0.12, volume: 0.3, decay: 0.6)
-        }
-        // Third note for big scores (4+)
-        if points >= 4 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                self.playTone(frequency: baseFreq * 1.5, duration: 0.15, volume: 0.3, decay: 0.5)
-            }
-        }
+        guard soundEnabled else { return }
+        activeSoundPack.playScoreChime(points: points, using: self)
     }
 
     /// Special 15/31 hit — satisfying "ding"
     func playFifteenOrThirtyOne() {
-        playTone(frequency: 1320, duration: 0.08, volume: 0.35, decay: 0.4)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.08) {
-            self.playTone(frequency: 1760, duration: 0.15, volume: 0.3, decay: 0.3)
-        }
+        guard soundEnabled else { return }
+        activeSoundPack.playFifteenOrThirtyOne(using: self)
     }
 
     /// Round transition fanfare — brief ascending arpeggio
     func playRoundTransition() {
-        let notes: [(Double, Double)] = [(523, 0.08), (659, 0.08), (784, 0.12)]
-        for (i, note) in notes.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.09) {
-                self.playTone(frequency: note.0, duration: note.1, volume: 0.2, decay: 0.5)
-            }
-        }
+        guard soundEnabled else { return }
+        activeSoundPack.playRoundTransition(using: self)
     }
 
-    /// Rising 4-note sweep — tension before starter reveal
+    /// Rising sweep — tension before starter reveal
     func playAnticipation() {
-        let notes: [(Double, Double)] = [(330, 0.1), (370, 0.1), (415, 0.1), (466, 0.15)]
-        for (i, note) in notes.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.12) {
-                self.playTone(frequency: note.0, duration: note.1, volume: 0.2, decay: 0.5)
-            }
-        }
+        guard soundEnabled else { return }
+        activeSoundPack.playAnticipation(using: self)
     }
 
-    /// Triumphant 4-note arpeggio (C5→C6) for Jack starter (His Heels)
+    /// Triumphant arpeggio for Jack starter (His Heels)
     func playHisHeelsCelebration() {
-        let notes: [(Double, Double)] = [(523, 0.12), (659, 0.12), (784, 0.12), (1047, 0.2)]
-        for (i, note) in notes.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.13) {
-                self.playTone(frequency: note.0, duration: note.1, volume: 0.3, decay: 0.5)
-            }
-        }
+        guard soundEnabled else { return }
+        activeSoundPack.playHisHeelsCelebration(using: self)
     }
 
-    /// Error / invalid play — low buzz
+    /// Error / invalid play
     func playInvalidAction() {
-        playTone(frequency: 200, duration: 0.12, volume: 0.15, decay: 0.3)
+        guard soundEnabled else { return }
+        activeSoundPack.playInvalidAction(using: self)
     }
 
-    /// Ascending three-note fanfare
+    /// Ascending fanfare
     func playWin() {
-        let notes: [(Double, Double)] = [(660, 0.15), (880, 0.15), (1100, 0.25)]
-        for (i, note) in notes.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.18) {
-                self.playTone(frequency: note.0, duration: note.1, volume: 0.35, decay: 0.5)
-            }
-        }
+        guard soundEnabled else { return }
+        activeSoundPack.playWin(using: self)
     }
 
-    /// Escalating streak fanfare — more notes and higher pitches for bigger streaks
-    func playStreakFanfare(milestone: StreakMilestone) {
-        let notes: [(Double, Double)]
-        switch milestone {
-        case .rolling:
-            notes = [(660, 0.12), (880, 0.12), (1100, 0.2)]
-        case .hotStreak:
-            notes = [(660, 0.1), (880, 0.1), (1100, 0.1), (1320, 0.2)]
-        case .legendary:
-            notes = [(660, 0.1), (880, 0.1), (1100, 0.1), (1320, 0.1), (1540, 0.25)]
-        case .domination:
-            notes = [(660, 0.08), (880, 0.08), (1100, 0.08), (1320, 0.08), (1540, 0.08), (1760, 0.3)]
-        }
-        for (i, note) in notes.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.14) {
-                self.playTone(frequency: note.0, duration: note.1, volume: 0.35, decay: 0.5)
-            }
-        }
-    }
-
-    /// Descending two-note
+    /// Descending tone
     func playLose() {
-        playTone(frequency: 440, duration: 0.2, volume: 0.25, decay: 0.6)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.22) {
-            self.playTone(frequency: 330, duration: 0.3, volume: 0.2, decay: 0.5)
-        }
+        guard soundEnabled else { return }
+        activeSoundPack.playLose(using: self)
     }
 
-    // MARK: - Noise Generator
+    /// Escalating streak fanfare
+    func playStreakFanfare(milestone: StreakMilestone) {
+        guard soundEnabled else { return }
+        activeSoundPack.playStreakFanfare(milestone: milestone, using: self)
+    }
 
-    private func playNoise(
+    // MARK: - SoundSynth Primitives
+
+    func playNoise(
         duration: Double,
         volume: Float,
         attackMs: Double,
@@ -254,7 +173,7 @@ final class SoundManager {
         filterType: AVAudioUnitEQFilterType,
         filterFreq: Float
     ) {
-        guard soundEnabled, let playerNode, let engine, let eq else { return }
+        guard let playerNode, let engine, let eq else { return }
         ensureRunning()
         guard engine.isRunning else { return }
 
@@ -301,10 +220,8 @@ final class SoundManager {
         }
     }
 
-    // MARK: - Tone Generator (for musical sounds)
-
-    private func playTone(frequency: Double, duration: Double, volume: Float, decay: Double) {
-        guard soundEnabled, let playerNode, let engine, let eq else { return }
+    func playTone(frequency: Double, duration: Double, volume: Float, decay: Double) {
+        guard let playerNode, let engine, let eq else { return }
         ensureRunning()
         guard engine.isRunning else { return }
 
