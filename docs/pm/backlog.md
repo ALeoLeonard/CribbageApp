@@ -24,7 +24,7 @@ Sprints 1-6 are complete. The app has a production-quality game engine, three AI
 | UI/UX | Production | Full views, animations, card highlighting, themes. |
 | Audio/Haptics | Production | SoundPack protocol (2 packs), HapticPack protocol (3 packs), fully customizable. |
 | Statistics | Production | Full stats, skunk tracking, synced via iCloud KVS. |
-| Themes/Cosmetics | Production | 13 themes + 3 phrase packs + 6 peg themes + 2 sound packs + 3 haptic packs wrapped in CosmeticRegistry. 9 customization slots defined. ThemeManager is typealias. |
+| Themes/Cosmetics | Production | 13 themes + 3 card front themes + 3 phrase packs + 6 peg themes + 2 sound packs + 3 haptic packs wrapped in CosmeticRegistry. 9 customization slots defined. ThemeManager is typealias. |
 | Monetization | Beta | StoreKit 2 IAP complete ($4.99 premium). Ads deferred. |
 | Analytics | Production | TelemetryDeck integrated (guarded in DEBUG). |
 | Game Center | Production | Auth, leaderboards, 13 achievements. |
@@ -157,6 +157,9 @@ Status: active | 2/5 done
 ### HapticPack System
 - [x] HapticPack protocol (10 haptic methods), 3 built-in packs (Standard free, Subtle free, Intense premium), HapticManager refactored to delegate to active pack, CosmeticRegistry integration, 15 new tests
 
+### CardFrontTheme System
+- [x] CardFrontTheme protocol (backgroundGradient, borderColor/Width, suitColor, rankFontWeight), 3 built-in themes (Standard free, Modern free, Vintage premium), CardView refactored to use active theme, CosmeticRegistry integration, 17 new tests
+
 ---
 
 ## Remaining Work to Ship v1.0
@@ -177,13 +180,13 @@ Status: active | 2/5 done
 ### v1.1: Deep Customization & Progression (NEW — from idea-tactile-immersion)
 
 #### epic-cosmetic-system: Cosmetic System & Deep Customization
-Status: active | 3 remaining | Ref: [idea-tactile-immersion](../ideas/tactile-immersion.md)
+Status: active | 2 remaining | Ref: [idea-tactile-immersion](../ideas/tactile-immersion.md)
 - [x] `ticket-cosmetic-registry` [L] [p0-critical] — CosmeticSlot enum, CosmeticItem protocol, unified registry ✅
 - [x] `ticket-phrase-packs` [M] [p1-high] — PhrasePack protocol + 3 packs (Classic, Grandpa, Trash Talk) ✅
 - [x] `ticket-peg-themes` [S] [p1-high] — PegTheme protocol + 6 peg styles (2 free, 4 premium) ✅
 - [x] `ticket-sound-packs` [M] [p2-medium] — SoundPack protocol, refactor SoundManager, 2 packs (Classic free, Quiet Evening premium) ✅
 - [x] `ticket-haptic-packs` [S] [p2-medium] — HapticPack protocol + 3 packs (Standard, Subtle, Intense), HapticManager delegates to active pack ✅
-- [ ] `ticket-card-front-themes` [L] [p2-medium] — CardFrontTheme protocol, parameterized rendering, 3 styles
+- [x] `ticket-card-front-themes` [L] [p2-medium] — CardFrontTheme protocol, CardView refactor, 3 styles (Standard free, Modern free, Vintage premium) ✅
 - [ ] `ticket-cosmetic-picker-ui` [M] [p1-high] — Generic picker view for any CosmeticSlot
 - [ ] `ticket-persona-system` [M] [p2-medium] — Persona struct: name, avatar, phrase pack, loadout
 
