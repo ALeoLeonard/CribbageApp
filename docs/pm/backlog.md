@@ -5,7 +5,7 @@ title: CribbageApp Project Backlog
 status: active
 author: /pm
 created: 2026-02-27
-updated: 2026-03-02
+updated: 2026-03-03
 refs: []
 ---
 
@@ -30,7 +30,7 @@ Sprints 1-6 are complete. The app has a production-quality game engine, three AI
 | Game Center | Production | Auth, leaderboards, 13 achievements. |
 | Accessibility | Production | VoiceOver labels on all game elements. |
 | Tutorial | Production | Interactive guided tutorial + how-to-play screen. |
-| App Store | In Progress | Privacy policy done, app icon catalog scaffolded. Missing: icon art, screenshots, store listing. |
+| App Store | In Progress | Privacy policy + manifest done, placeholder icon generated, TestFlight prep complete (code-signing config, archive script, export compliance). Missing: final icon art, screenshots, store listing, developer account approval. |
 | Multiplayer | Alpha | Models + ViewModel scaffolded. No server. Deferred to v2.0. |
 
 ---
@@ -57,13 +57,15 @@ Ship a polished single-player cribbage game that competes with Cribbage JD (4.8 
 - [x] In-app privacy policy
 - [x] Release build optimizations
 - [x] App icon asset catalog structure
+- [x] TestFlight preparation (privacy manifest, code-signing config, archive script, export compliance, placeholder icon)
 
 **MVP remaining:**
-- [ ] App icon artwork (1024x1024 PNG)
+- [ ] Apple Developer account approval
+- [ ] App icon final artwork (replace placeholder)
 - [ ] App Store screenshots (iPhone + iPad)
 - [ ] App Store listing (title, subtitle, description, keywords)
 - [ ] TelemetryDeck account setup (replace placeholder App ID)
-- [ ] TestFlight beta testing
+- [ ] TestFlight beta build + invite testers
 - [ ] Final bug fixes and polish
 
 ---
@@ -116,10 +118,10 @@ Status: complete | All tickets done
 - [x] `ticket-micro-interactions` [M] [p2-medium]
 
 ### epic-app-store-prep: Launch Readiness — IN PROGRESS
-Status: active | 2/5 done
+Status: active | 3/5 done
 - [x] `ticket-analytics-setup` [M] [p1-high] — TelemetryDeck integrated
 - [x] `ticket-privacy-policy` [S] [p1-high] — In-app PrivacyPolicyView
-- [ ] `ticket-app-icons` [M] [p1-high] — Asset catalog scaffolded, needs 1024x1024 artwork
+- [x] `ticket-testflight-prep` [M] [p1-high] — Privacy manifest, code-signing config, archive script, export compliance, placeholder icon
 - [ ] `ticket-screenshots` [M] [p1-high] — App Store screenshots for iPhone + iPad
 - [ ] `ticket-store-listing` [S] [p1-high] — Title, subtitle, description, keywords
 
@@ -164,8 +166,20 @@ Status: active | 2/5 done
 
 ## Remaining Work to Ship v1.0
 
+### TestFlight Preparation
+- [x] PrivacyInfo.xcprivacy (UserDefaults CA92.1, no tracking)
+- [x] Config/Local.xcconfig.template + gitignored Local.xcconfig for DEVELOPMENT_TEAM
+- [x] Config/ExportOptions.plist for App Store Connect export
+- [x] scripts/archive_and_upload.sh with Team ID guard + optional --upload
+- [x] scripts/generate_app_icon.py → 1024x1024 placeholder icon generated
+- [x] project.yml: configFiles block + ITSAppUsesNonExemptEncryption=false
+- [x] CI workflow: create Local.xcconfig before xcodegen
+- [x] .gitignore: Local.xcconfig, build/, *.xcarchive
+
 ### Sprint 7: App Store Submission
-- [ ] `ticket-app-icons` — Design and export 1024x1024 app icon
+- [ ] Apple Developer account approval (pending)
+- [ ] Fill in DEVELOPMENT_TEAM in Config/Local.xcconfig
+- [ ] Replace placeholder app icon with final artwork
 - [ ] `ticket-screenshots` — Capture App Store screenshots (iPhone 6.7", 6.1", iPad 12.9")
 - [ ] `ticket-store-listing` — Write title, subtitle, description, keywords, categories
 - [ ] TelemetryDeck account creation + real App ID
@@ -227,6 +241,7 @@ Status: draft | 5 tickets | Ref: [idea-tactile-immersion](../ideas/tactile-immer
 | Hard AI perceived as "cheating" by users | Medium | High | Add transparency, tune difficulty |
 | Premium pricing resistance ($4.99) | Medium | Medium | Free tier is fully playable, premium is cosmetic |
 | Missing ads reduces revenue at launch | Low | Medium | Acceptable — focus on ratings first, add ads in v1.1 if needed |
+| Apple Developer account pending | Medium | High | All prep done; blocked on approval for signing, TestFlight, App Store Connect |
 | TelemetryDeck placeholder still in code | Low | High | Must create account and replace before release build |
 
 ---
@@ -238,10 +253,11 @@ DONE ─────────────────────────
   epic-app-polish (complete)        │
   epic-tutorial (complete)          │
   epic-game-rules (complete)        ├──> epic-app-store-prep ──> LAUNCH v1.0
-  epic-monetization (IAP done)      │      (3 tickets remaining)
+  epic-monetization (IAP done)      │      (2 tickets remaining)
   epic-game-center (complete)       │
   epic-juice-polish (complete)      │
-  Sprint 6 polish (complete)       ─┘
+  Sprint 6 polish (complete)        │
+  TestFlight prep (complete)       ─┘
 
                     Post-MVP v1.1 (Customization — priority):
 ticket-cosmetic-registry (DONE) ──┐
@@ -267,7 +283,8 @@ epic-widgets          ← (depends on: epic-daily-challenges for challenge widge
 **Artifact**: `docs/pm/backlog.md`
 
 Suggested next steps:
-- `/design plan app-icon` — design the 1024x1024 app icon
+- `/design plan app-icon` — design final 1024x1024 app icon (replace placeholder)
 - `/design plan screenshots` — plan App Store screenshot compositions
 - `/copy write store-listing` — draft App Store title, subtitle, description, keywords
-- `/qa plan beta-test` — create TestFlight beta test plan
+- Fill in `Config/Local.xcconfig` with real Team ID once developer account is approved
+- `./scripts/archive_and_upload.sh --upload` to push first TestFlight build
