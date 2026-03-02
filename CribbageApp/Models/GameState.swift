@@ -42,6 +42,7 @@ struct ScoreEvent: Identifiable {
     var player: String
     let points: Int
     let reason: String
+    var cards: [Card] = []
 }
 
 // MARK: - Last Action

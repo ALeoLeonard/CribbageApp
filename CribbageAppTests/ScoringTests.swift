@@ -15,7 +15,7 @@ struct FifteensTests {
         let hand = [card(.five), card(.ten), card(.two), card(.three)]
         let starter = card(.ace, .clubs)
         let (_, events) = Scoring.calculateScore(hand: hand, starter: starter)
-        let fifteenPts = events.filter { $0.reason.lowercased().contains("fifteen") }.reduce(0) { $0 + $1.points }
+        let fifteenPts = events.filter { $0.reason.contains("15 for") }.reduce(0) { $0 + $1.points }
         #expect(fifteenPts >= 4) // 5+10=15, 2+3+10=15
     }
 
@@ -23,7 +23,7 @@ struct FifteensTests {
         let hand = [card(.ace), card(.ace, .diamonds), card(.two), card(.three)]
         let starter = card(.ace, .clubs)
         let (_, events) = Scoring.calculateScore(hand: hand, starter: starter)
-        let fifteenPts = events.filter { $0.reason.lowercased().contains("fifteen") }.reduce(0) { $0 + $1.points }
+        let fifteenPts = events.filter { $0.reason.contains("15 for") }.reduce(0) { $0 + $1.points }
         #expect(fifteenPts == 0)
     }
 }
@@ -196,6 +196,67 @@ struct CribFlushTests {
         let (_, events) = Scoring.calculateScore(hand: hand, starter: starter, isCrib: false)
         let flushPts = events.filter { $0.reason.lowercased().contains("flush") }.reduce(0) { $0 + $1.points }
         #expect(flushPts == 4)
+    }
+}
+
+// MARK: - Score Event Cards
+
+@Suite("Score Event Cards")
+struct ScoreEventCardsTests {
+    @Test func fifteensHaveIndividualEvents() {
+        // 5+10=15, 5+K=15, 10+2+3=15 → 3 individual events
+        let hand = [card(.five), card(.ten), card(.two), card(.three)]
+        let starter = card(.king, .clubs)
+        let (_, events) = Scoring.calculateScore(hand: hand, starter: starter)
+        let fifteenEvents = events.filter { $0.reason == "15 for 2" }
+        // Each fifteen is its own event worth 2 points
+        for event in fifteenEvents {
+            #expect(event.points == 2)
+            #expect(!event.cards.isEmpty)
+            // Verify the cards actually sum to 15
+            let sum = event.cards.reduce(0) { $0 + $1.value }
+            #expect(sum == 15)
+        }
+    }
+
+    @Test func pairCardsAttached() {
+        let hand = [card(.eight), card(.eight, .diamonds), card(.ace), card(.two)]
+        let starter = card(.king, .clubs)
+        let (_, events) = Scoring.calculateScore(hand: hand, starter: starter)
+        let pairEvent = events.first { $0.reason.lowercased().contains("pair") }
+        #expect(pairEvent != nil)
+        #expect(pairEvent!.cards.count == 2)
+        #expect(pairEvent!.cards.allSatisfy { $0.rank == .eight })
+    }
+
+    @Test func runCardsAttached() {
+        let hand = [card(.three), card(.four), card(.five), card(.king)]
+        let starter = card(.ace, .clubs)
+        let (_, events) = Scoring.calculateScore(hand: hand, starter: starter)
+        let runEvent = events.first { $0.reason.lowercased().contains("run") }
+        #expect(runEvent != nil)
+        #expect(runEvent!.cards.count >= 3)
+    }
+
+    @Test func flushCardsAttached() {
+        let hand = [card(.two, .hearts), card(.four, .hearts), card(.eight, .hearts), card(.king, .hearts)]
+        let starter = card(.ace, .clubs)
+        let (_, events) = Scoring.calculateScore(hand: hand, starter: starter)
+        let flushEvent = events.first { $0.reason.lowercased().contains("flush") }
+        #expect(flushEvent != nil)
+        #expect(flushEvent!.cards.count == 4)
+        #expect(flushEvent!.cards.allSatisfy { $0.suit == .hearts })
+    }
+
+    @Test func nobsCardAttached() {
+        let hand = [card(.jack, .hearts), card(.two), card(.three), card(.four)]
+        let starter = card(.king, .hearts)
+        let (_, events) = Scoring.calculateScore(hand: hand, starter: starter)
+        let nobsEvent = events.first { $0.reason.lowercased().contains("nobs") }
+        #expect(nobsEvent != nil)
+        #expect(nobsEvent!.cards.count == 1)
+        #expect(nobsEvent!.cards[0].rank == .jack)
+        #expect(nobsEvent!.cards[0].suit == .hearts)
     }
 }
 

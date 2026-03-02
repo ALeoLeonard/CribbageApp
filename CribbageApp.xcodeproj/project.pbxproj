@@ -23,6 +23,7 @@
 		43BA9691D321EBE4B1B35821 /* PlayPhaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */; };
 		4EE26CEE8B51AFE32F62F86D /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22699546BD6120DFA1B1A906 /* PaywallView.swift */; };
 		5225479A4E6251E954B5B385 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5AD574A3AC4ED85160792A /* DeckView.swift */; };
+		5C0A0F4234B27CFB27A367E7 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEA8465368F31484432965F /* PrivacyPolicyView.swift */; };
 		61CAFA57ED8BC3E51C09A3BE /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587E8094E6027D8EAFE30202 /* Deck.swift */; };
 		637854AD0F7ECB3B5E9650CD /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E03452F0CFE95B5DB25883 /* HapticManager.swift */; };
 		66BF670492221CE8921E0F83 /* TelemetryDeck in Frameworks */ = {isa = PBXBuildFile; productRef = 3AEC2AA2F19ECFF6ADC05960 /* TelemetryDeck */; };
@@ -55,6 +56,7 @@
 		CF42656DF4F6A82D59A6F8E8 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF3C509E24FBC40F85AD6D7C /* SettingsView.swift */; };
 		D891CAED1209BD22D66B4D57 /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571D51AD48686B7E464D3B8F /* ThemeManager.swift */; };
 		E05837780C9DCBC5930F9C62 /* MultiplayerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 492D7CB16E3A1884924971BE /* MultiplayerViewModel.swift */; };
+		E074E1C23982527E873E36BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6F5F21574ED24741A4A322 /* Assets.xcassets */; };
 		E0E4D5FB8DDFFFC2A0D561F4 /* HandOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A20848A0B39788EB0300CC /* HandOverView.swift */; };
 		E0EA41F3DEB12A54C299B466 /* CardFanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD15AC727590EB5D488FD7DD /* CardFanView.swift */; };
 		E57E7DD23A85BFEA14DF8C66 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CE43B2E3B6E9C47EF1BEF8 /* GameOverView.swift */; };
@@ -97,6 +99,7 @@
 		46AF2B3C085DB78C4BD6AD99 /* LeaderboardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardsView.swift; sourceTree = "<group>"; };
 		47EFAAE3DBA8A691CF1E3EB8 /* MediumAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumAI.swift; sourceTree = "<group>"; };
 		492D7CB16E3A1884924971BE /* MultiplayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerViewModel.swift; sourceTree = "<group>"; };
+		4BEA8465368F31484432965F /* PrivacyPolicyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivacyPolicyView.swift; sourceTree = "<group>"; };
 		4D995F8DAA78116C879DB121 /* ThemePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerView.swift; sourceTree = "<group>"; };
 		4F16A53FF0DF504F9F9008C1 /* ServerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModels.swift; sourceTree = "<group>"; };
 		4F28378DFA44355E5F03B5C2 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
@@ -109,6 +112,7 @@
 		7FF285A067E0D69E106A177D /* AdaptiveGameLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveGameLayout.swift; sourceTree = "<group>"; };
 		8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CribbageAppApp.swift; sourceTree = "<group>"; };
 		8C9072C8C39ED621841345A6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		8F6F5F21574ED24741A4A322 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F80F966A72AF38CC204CD18 /* Scoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoring.swift; sourceTree = "<group>"; };
 		97650273E09901D07D5EBD3E /* GameEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngineTests.swift; sourceTree = "<group>"; };
 		9AA61F2576AF35FD42E54A0B /* GameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewModel.swift; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 		3AF3A707AA2DC81D03E7CBB2 /* CribbageApp */ = {
 			isa = PBXGroup;
 			children = (
+				8F6F5F21574ED24741A4A322 /* Assets.xcassets */,
 				AF86EF902C32A5807181A552 /* Configuration.storekit */,
 				CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */,
 				8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */,
@@ -280,6 +285,7 @@
 			isa = PBXGroup;
 			children = (
 				22699546BD6120DFA1B1A906 /* PaywallView.swift */,
+				4BEA8465368F31484432965F /* PrivacyPolicyView.swift */,
 				DF3C509E24FBC40F85AD6D7C /* SettingsView.swift */,
 				4D995F8DAA78116C879DB121 /* ThemePickerView.swift */,
 			);
@@ -384,6 +390,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E074E1C23982527E873E36BE /* Assets.xcassets in Resources */,
 				20B14E36F45BAB964C0B88F5 /* Configuration.storekit in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -442,6 +449,7 @@
 				4EE26CEE8B51AFE32F62F86D /* PaywallView.swift in Sources */,
 				A8F365E9FC9BAF1DC847CD3F /* PlayAreaView.swift in Sources */,
 				1F370BAB856EAC380B687378 /* PlayPhase.swift in Sources */,
+				5C0A0F4234B27CFB27A367E7 /* PrivacyPolicyView.swift in Sources */,
 				B647D9AF8A70D9076DC9C8B2 /* ScoreBreakdownView.swift in Sources */,
 				785B15D4DE4983A641C004B7 /* Scoring.swift in Sources */,
 				6A4D5A1395F5E500F0E6DE40 /* ScoringCalloutView.swift in Sources */,
@@ -634,6 +642,8 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.cribbage.CribbageApp;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_STRICT_CONCURRENCY = minimal;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

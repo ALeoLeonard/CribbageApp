@@ -60,22 +60,18 @@ enum Scoring {
         var events: [ScoreEvent] = []
         let combined = hand + [starter]
 
-        // --- 15s ---
-        var fifteensCount = 0
+        // --- 15s (one event per combination) ---
         for combo in getAllSubsets(combined) {
             if (2...5).contains(combo.count) {
                 if combo.reduce(0, { $0 + $1.value }) == 15 {
-                    fifteensCount += 1
+                    total += 2
+                    events.append(ScoreEvent(
+                        player: "", points: 2,
+                        reason: "15 for 2",
+                        cards: combo
+                    ))
                 }
             }
-        }
-        if fifteensCount > 0 {
-            let pts = fifteensCount * 2
-            total += pts
-            events.append(ScoreEvent(
-                player: "", points: pts,
-                reason: "\(fifteensCount) fifteen(s) for \(pts)"
-            ))
         }
 
         // --- Pairs / Triples / Quads ---
@@ -84,24 +80,28 @@ enum Scoring {
             rankCounts[c.rank, default: 0] += 1
         }
         for (rank, count) in rankCounts {
+            let matchingCards = combined.filter { $0.rank == rank }
             switch count {
             case 2:
                 total += 2
                 events.append(ScoreEvent(
                     player: "", points: 2,
-                    reason: "Pair of \(rank.rawValue)s for 2"
+                    reason: "Pair of \(rank.rawValue)s for 2",
+                    cards: matchingCards
                 ))
             case 3:
                 total += 6
                 events.append(ScoreEvent(
                     player: "", points: 6,
-                    reason: "Three \(rank.rawValue)s for 6"
+                    reason: "Three \(rank.rawValue)s for 6",
+                    cards: matchingCards
                 ))
             case 4:
                 total += 12
                 events.append(ScoreEvent(
                     player: "", points: 12,
-                    reason: "Four \(rank.rawValue)s for 12"
+                    reason: "Four \(rank.rawValue)s for 12",
+                    cards: matchingCards
                 ))
             default:
                 break
@@ -111,17 +111,32 @@ enum Scoring {
         // --- Runs ---
         let runs = calculateRuns(combined)
         for (runLength, multiplier) in runs {
+            // Collect all cards whose rank falls in this run's range
+            let frequency: [Int: Int] = combined.reduce(into: [:]) { $0[$1.rank.order, default: 0] += 1 }
+            let uniqueOrders = frequency.keys.sorted()
+            // Find the consecutive slice that matches this run
+            var runCards: [Card] = []
+            for startIdx in 0...(uniqueOrders.count - runLength) {
+                let slice = Array(uniqueOrders[startIdx..<(startIdx + runLength)])
+                let consecutive = zip(slice, slice.dropFirst()).allSatisfy { $1 == $0 + 1 }
+                if consecutive {
+                    runCards = combined.filter { slice.contains($0.rank.order) }
+                    break
+                }
+            }
             let pts = runLength * multiplier
             total += pts
             if multiplier > 1 {
                 events.append(ScoreEvent(
                     player: "", points: pts,
-                    reason: "\(multiplier)x run of \(runLength) for \(pts)"
+                    reason: "\(multiplier)x run of \(runLength) for \(pts)",
+                    cards: runCards
                 ))
             } else {
                 events.append(ScoreEvent(
                     player: "", points: pts,
-                    reason: "Run of \(runLength) for \(pts)"
+                    reason: "Run of \(runLength) for \(pts)",
+                    cards: runCards
                 ))
             }
         }
@@ -132,10 +147,10 @@ enum Scoring {
             if hand.allSatisfy({ $0.suit == firstSuit }) {
                 if starter.suit == firstSuit {
                     total += 5
-                    events.append(ScoreEvent(player: "", points: 5, reason: "Flush for 5"))
+                    events.append(ScoreEvent(player: "", points: 5, reason: "Flush for 5", cards: combined))
                 } else if !isCrib {
                     total += 4
-                    events.append(ScoreEvent(player: "", points: 4, reason: "Flush for 4"))
+                    events.append(ScoreEvent(player: "", points: 4, reason: "Flush for 4", cards: Array(hand)))
                 }
             }
         }
@@ -145,7 +160,7 @@ enum Scoring {
             for c in hand {
                 if c.rank == .jack && c.suit == starter.suit {
                     total += 1
-                    events.append(ScoreEvent(player: "", points: 1, reason: "Nobs for 1"))
+                    events.append(ScoreEvent(player: "", points: 1, reason: "Nobs for 1", cards: [c]))
                     break
                 }
             }

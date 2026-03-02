@@ -12,8 +12,10 @@ final class AnalyticsManager {
     // MARK: - Setup
 
     func initialize() {
+        #if !DEBUG
         let config = TelemetryDeck.Config(appID: "YOUR_TELEMETRYDECK_APP_ID")
         TelemetryDeck.initialize(config: config)
+        #endif
     }
 
     // MARK: - Game Events

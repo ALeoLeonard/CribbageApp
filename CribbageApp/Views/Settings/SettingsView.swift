@@ -1,4 +1,5 @@
 import SwiftUI
+import StoreKit
 
 struct SettingsView: View {
     @AppStorage("playerName") private var playerName = "Player"
@@ -209,16 +210,19 @@ struct SettingsView: View {
                             }
                         }
 
-                        if let url = URL(string: "https://apps.apple.com/app/id0") { // placeholder
-                            Link(destination: url) {
-                                settingsRow(icon: "star.fill", label: "Rate on App Store")
+                        Button {
+                            if let scene = UIApplication.shared.connectedScenes
+                                .first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene {
+                                SKStoreReviewController.requestReview(in: scene)
                             }
+                        } label: {
+                            settingsRow(icon: "star.fill", label: "Rate This App")
                         }
 
-                        if let url = URL(string: "https://example.com/privacy") { // placeholder
-                            Link(destination: url) {
-                                settingsRow(icon: "hand.raised.fill", label: "Privacy Policy")
-                            }
+                        NavigationLink {
+                            PrivacyPolicyView()
+                        } label: {
+                            settingsRow(icon: "hand.raised.fill", label: "Privacy Policy")
                         }
                     }
                 }
