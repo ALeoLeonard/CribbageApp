@@ -87,14 +87,17 @@ final class ThemeManager {
     func selectCardBack(_ id: String) {
         guard isUnlocked(id) else { return }
         activeCardBackID = id
+        AnalyticsManager.shared.trackThemeChanged(themeID: id, category: "cardBack")
     }
     func selectTable(_ id: String) {
         guard isUnlocked(id) else { return }
         activeTableID = id
+        AnalyticsManager.shared.trackThemeChanged(themeID: id, category: "table")
     }
     func selectBoard(_ id: String) {
         guard isUnlocked(id) else { return }
         activeBoardID = id
+        AnalyticsManager.shared.trackThemeChanged(themeID: id, category: "board")
     }
 
     func unlockAllPremiumThemes() {

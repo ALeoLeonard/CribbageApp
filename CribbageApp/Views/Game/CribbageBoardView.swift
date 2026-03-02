@@ -120,6 +120,8 @@ struct CribbageBoardView: View {
             }
         }
         .frame(height: boardHeight)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Cribbage board. You: \(playerScore). Opponent: \(opponentScore).")
         .onAppear {
             withAnimation(.easeInOut(duration: 1.8).repeatForever(autoreverses: true)) {
                 pegPulse = true

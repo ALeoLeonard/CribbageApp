@@ -95,6 +95,7 @@ final class GameViewModel {
 
     private let stats = StatsManager.shared
     private let sound = SoundManager.shared
+    private let analytics = AnalyticsManager.shared
 
     // Multiplayer
     var multiplayerVM: MultiplayerViewModel?
@@ -263,6 +264,7 @@ final class GameViewModel {
         isProcessing = true
         statusMessage = nil
         starterCeremonyPhase = .idle
+        analytics.trackGameStarted(difficulty: difficulty.rawValue, isPassAndPlay: false)
         startDealCeremony()
     }
 
@@ -282,6 +284,7 @@ final class GameViewModel {
         isProcessing = true
         statusMessage = nil
         starterCeremonyPhase = .idle
+        analytics.trackGameStarted(difficulty: "passAndPlay", isPassAndPlay: true)
         startDealCeremony()
     }
 
@@ -555,6 +558,14 @@ final class GameViewModel {
                 stats.recordCribScore(breakdown.total)
             } else {
                 stats.recordHandScore(breakdown.total)
+
+                // Check skill achievements from breakdown items
+                let gc = GameCenterManager.shared
+                if breakdown.total == 29 { gc.unlockAchievement(.perfect29) }
+                if breakdown.total >= 24 { gc.unlockAchievement(.hand24plus) }
+                let reasons = breakdown.items.map { $0.reason.lowercased() }
+                if reasons.contains(where: { $0.contains("flush") }) { gc.unlockAchievement(.flush) }
+                if reasons.contains(where: { $0.contains("nobs") }) { gc.unlockAchievement(.nobs) }
             }
         }
         if let breakdown = engine.scoreBreakdown, breakdown.total > 0 {
@@ -620,8 +631,30 @@ final class GameViewModel {
             stats.recordPeggingPoints(engine.humanPeggingPoints)
         }
 
+        // Analytics
+        analytics.trackGameCompleted(
+            difficulty: engine.aiDifficulty.rawValue,
+            won: won,
+            playerScore: engine.human.score,
+            opponentScore: engine.computer.score
+        )
+
         // Game Center score submissions
         GameCenterManager.shared.submitAllStats()
+
+        // Achievement checks
+        let gc = GameCenterManager.shared
+        if won {
+            gc.unlockAchievement(.firstwin)
+            if stats.bestWinStreak >= 3 { gc.unlockAchievement(.streak3) }
+            if stats.bestWinStreak >= 5 { gc.unlockAchievement(.streak5) }
+            if stats.bestWinStreak >= 10 { gc.unlockAchievement(.streak10) }
+            if engine.aiDifficulty == .hard { gc.unlockAchievement(.winonhard) }
+        }
+        if stats.skunksGiven > 0 { gc.unlockAchievement(.firstskunk) }
+        if stats.doubleSkunksGiven > 0 { gc.unlockAchievement(.doubleskunk) }
+        gc.reportProgress(.games50, current: stats.totalGamesPlayed, goal: 50)
+        gc.reportProgress(.games100, current: stats.totalGamesPlayed, goal: 100)
 
         // Ad cadence tracking
         if AdManager.shared.recordGameCompleted() {
@@ -907,6 +940,7 @@ final class GameViewModel {
             tutorialStep = next
             if next == .complete {
                 tutorialCompleted = true
+                analytics.trackTutorialCompleted()
             }
         } else {
             endTutorial()
@@ -915,6 +949,7 @@ final class GameViewModel {
 
     func skipTutorial() {
         tutorialCompleted = true
+        analytics.trackTutorialCompleted()
         endTutorial()
     }
 

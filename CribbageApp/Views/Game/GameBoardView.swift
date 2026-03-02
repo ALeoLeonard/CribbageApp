@@ -271,6 +271,8 @@ struct GameBoardView: View {
                 }
                 ScoreLabel(score: viewModel.humanScore, color: CribbageTheme.gold)
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("\(viewModel.humanName): \(viewModel.humanScore) points")
 
             Spacer()
 
@@ -283,6 +285,7 @@ struct GameBoardView: View {
                     .font(.caption2)
                     .foregroundStyle(CribbageTheme.ivory.opacity(0.6))
             }
+            .accessibilityLabel("Crib has \(viewModel.cribCount) cards")
 
             Spacer()
 
@@ -298,6 +301,8 @@ struct GameBoardView: View {
                 }
                 ScoreLabel(score: viewModel.opponentScore, color: CribbageTheme.gold)
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("\(viewModel.opponentName): \(viewModel.opponentScore) points")
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)

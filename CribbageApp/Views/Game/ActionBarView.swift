@@ -46,6 +46,7 @@ struct ActionBarView: View {
                     .background(CribbageTheme.goldGradient, in: RoundedRectangle(cornerRadius: 16))
                     .shadow(color: CribbageTheme.gold.opacity(0.3), radius: 4, y: 2)
             }
+            .accessibilityLabel("Send selected cards to crib")
             .disabled(viewModel.selectedIndices.count != 2 || viewModel.isProcessing)
             .opacity(viewModel.selectedIndices.count != 2 || viewModel.isProcessing ? 0.5 : 1)
         }
@@ -99,6 +100,8 @@ struct ActionBarView: View {
                             )
                             .shadow(color: .orange.opacity(0.3), radius: 4, y: 2)
                     }
+                    .accessibilityLabel("Say Go")
+                    .accessibilityHint("Pass your turn")
                 }
             } else {
                 Text("Waiting for computer...")
@@ -130,6 +133,7 @@ struct ActionBarView: View {
                         .background(CribbageTheme.goldGradient, in: RoundedRectangle(cornerRadius: 16))
                         .shadow(color: CribbageTheme.gold.opacity(0.3), radius: 4, y: 2)
                 }
+                .accessibilityLabel("Continue to next phase")
                 .disabled(viewModel.isProcessing)
                 .opacity(viewModel.isProcessing ? 0.5 : 1)
             }
@@ -253,6 +257,7 @@ struct ActionBarView: View {
                         )
                 )
         }
+        .accessibilityLabel("Show hint")
     }
 
     private var phaseLabel: some View {

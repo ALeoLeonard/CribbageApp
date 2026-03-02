@@ -105,6 +105,7 @@ struct SettingsView: View {
                             }
                         }
                         .tint(CribbageTheme.gold)
+                        .accessibilityHint("When enabled, you must count your own hand. Missed points are awarded to your opponent.")
 
                         Toggle(isOn: $nobsEnabled) {
                             HStack {
@@ -121,6 +122,7 @@ struct SettingsView: View {
                             }
                         }
                         .tint(CribbageTheme.gold)
+                        .accessibilityHint("When enabled, a Jack in your hand matching the starter card's suit scores 1 point.")
 
                         Toggle(isOn: $hisHeelsEnabled) {
                             HStack {
@@ -137,6 +139,7 @@ struct SettingsView: View {
                             }
                         }
                         .tint(CribbageTheme.gold)
+                        .accessibilityHint("When enabled, the dealer scores 2 points when the starter card is a Jack.")
                     }
                 }
 

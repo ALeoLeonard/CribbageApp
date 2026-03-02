@@ -8,6 +8,9 @@ struct CribbageAppApp: App {
 
     init() {
         GameCenterManager.shared.authenticate()
+        AnalyticsManager.shared.initialize()
+        CloudSyncManager.shared.startListening()
+        CloudSyncManager.shared.pullAndMerge()
     }
 
     var body: some Scene {
@@ -15,6 +18,10 @@ struct CribbageAppApp: App {
             ContentView()
                 .environment(viewModel)
                 .environment(themeManager)
+                .task {
+                    try? await Task.sleep(for: .seconds(2))
+                    GameCenterManager.shared.checkAllAchievements()
+                }
                 .onChange(of: store.isPremium) { _, isPremium in
                     if isPremium {
                         ThemeManager.shared.unlockAllPremiumThemes()

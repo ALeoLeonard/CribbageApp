@@ -45,6 +45,8 @@ struct CardView: View {
         .scaleEffect(isSelected ? 1.05 : 1.0)
         .offset(y: isSelected ? -14 : 0)
         .animation(.easeInOut(duration: 0.2), value: isSelected)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(isFaceDown ? "Face-down card" : card.accessibilityDescription)
     }
 
     // MARK: - Card Face

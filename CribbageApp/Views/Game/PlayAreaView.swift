@@ -27,6 +27,7 @@ struct PlayAreaView: View {
                         )
                         .animation(.easeInOut(duration: 0.5), value: starterRevealed)
                 }
+                .accessibilityLabel("Starter card: \(starter.accessibilityDescription)")
                 .onChange(of: starter.id) {
                     starterRevealed = false
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
@@ -65,6 +66,7 @@ struct PlayAreaView: View {
                         Capsule()
                             .fill(.black.opacity(0.3))
                     )
+                    .accessibilityLabel("Running count: \(runningTotal) of 31")
             }
         }
     }

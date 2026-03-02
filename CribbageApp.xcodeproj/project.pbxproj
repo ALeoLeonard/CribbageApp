@@ -14,6 +14,7 @@
 		175FC45B1729C5D6AE5B04E2 /* GameBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E902C0C3243B6857CE3A9E /* GameBoardView.swift */; };
 		1F370BAB856EAC380B687378 /* PlayPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986B7D6BA95868018D7D2 /* PlayPhase.swift */; };
 		20B14E36F45BAB964C0B88F5 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = AF86EF902C32A5807181A552 /* Configuration.storekit */; };
+		221FA31AB4E1036BEB0AE776 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F28378DFA44355E5F03B5C2 /* AnalyticsManager.swift */; };
 		24B051EA20EBC864D3F38343 /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598AC4DFFB08768020AD8F9 /* GameCenterManager.swift */; };
 		25A2A2F286254ED497BE1023 /* ThemePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D995F8DAA78116C879DB121 /* ThemePickerView.swift */; };
 		2918C67F7D74748DA8A40D7A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07DF68449CC062181A44B4 /* Constants.swift */; };
@@ -24,9 +25,11 @@
 		5225479A4E6251E954B5B385 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5AD574A3AC4ED85160792A /* DeckView.swift */; };
 		61CAFA57ED8BC3E51C09A3BE /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587E8094E6027D8EAFE30202 /* Deck.swift */; };
 		637854AD0F7ECB3B5E9650CD /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E03452F0CFE95B5DB25883 /* HapticManager.swift */; };
+		66BF670492221CE8921E0F83 /* TelemetryDeck in Frameworks */ = {isa = PBXBuildFile; productRef = 3AEC2AA2F19ECFF6ADC05960 /* TelemetryDeck */; };
 		6A4D5A1395F5E500F0E6DE40 /* ScoringCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFBF8DB0F5972BAFF91570B4 /* ScoringCalloutView.swift */; };
 		6BFAAD834E5294B099F07943 /* AIProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E74F6CAEA289BE054592F85E /* AIProtocol.swift */; };
 		716B224CF7DB4209AC1BE672 /* GameState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76C74977A19BC49777145619 /* GameState.swift */; };
+		728944A0987FD2F13850968C /* CloudSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9314ABFB4D20CB39FADDFE2 /* CloudSyncManager.swift */; };
 		73EED096B7F4570C7DC6FCA1 /* HowToPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62B79D876241777F04510143 /* HowToPlayView.swift */; };
 		750B01449ADF02C544A29A6E /* CribbageAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */; };
 		785B15D4DE4983A641C004B7 /* Scoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F80F966A72AF38CC204CD18 /* Scoring.swift */; };
@@ -96,6 +99,7 @@
 		492D7CB16E3A1884924971BE /* MultiplayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerViewModel.swift; sourceTree = "<group>"; };
 		4D995F8DAA78116C879DB121 /* ThemePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerView.swift; sourceTree = "<group>"; };
 		4F16A53FF0DF504F9F9008C1 /* ServerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModels.swift; sourceTree = "<group>"; };
+		4F28378DFA44355E5F03B5C2 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		50E902C0C3243B6857CE3A9E /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardView.swift; sourceTree = "<group>"; };
 		571D51AD48686B7E464D3B8F /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		57E6C2B9534FF9832B484A4D /* ScoreBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreBreakdownView.swift; sourceTree = "<group>"; };
@@ -120,6 +124,7 @@
 		B5A4D131C9A603AE0547B325 /* CardSizeEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSizeEnvironment.swift; sourceTree = "<group>"; };
 		C01D1B80544DC8ED9F835943 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
 		C598AC4DFFB08768020AD8F9 /* GameCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterManager.swift; sourceTree = "<group>"; };
+		C9314ABFB4D20CB39FADDFE2 /* CloudSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncManager.swift; sourceTree = "<group>"; };
 		CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CD15AC727590EB5D488FD7DD /* CardFanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFanView.swift; sourceTree = "<group>"; };
 		D571190280CFB9632F72C5FC /* CribbageApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CribbageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +134,17 @@
 		F2B50602FADD7EBEA096BE3C /* EasyAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyAI.swift; sourceTree = "<group>"; };
 		FF0DE3DEE7F89EE11DA3FD7B /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D928C21BE0DC9396B3BA1135 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66BF670492221CE8921E0F83 /* TelemetryDeck in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		1F582779EAB56463B794C756 /* AI */ = {
@@ -274,8 +290,10 @@
 			isa = PBXGroup;
 			children = (
 				3F80E2A4B0D93B4B325C10F4 /* AdManager.swift */,
+				4F28378DFA44355E5F03B5C2 /* AnalyticsManager.swift */,
 				0E6495C749C145DCC06A4119 /* AnimationHelpers.swift */,
 				B5A4D131C9A603AE0547B325 /* CardSizeEnvironment.swift */,
+				C9314ABFB4D20CB39FADDFE2 /* CloudSyncManager.swift */,
 				2E07DF68449CC062181A44B4 /* Constants.swift */,
 				C598AC4DFFB08768020AD8F9 /* GameCenterManager.swift */,
 				12E03452F0CFE95B5DB25883 /* HapticManager.swift */,
@@ -297,6 +315,7 @@
 			buildPhases = (
 				D770FD7EEDB54E637FACBD07 /* Sources */,
 				CA2471501F83ABF1C8BB46F0 /* Resources */,
+				D928C21BE0DC9396B3BA1135 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -304,6 +323,7 @@
 			);
 			name = CribbageApp;
 			packageProductDependencies = (
+				3AEC2AA2F19ECFF6ADC05960 /* TelemetryDeck */,
 			);
 			productName = CribbageApp;
 			productReference = D571190280CFB9632F72C5FC /* CribbageApp.app */;
@@ -346,6 +366,9 @@
 			);
 			mainGroup = 9AECCBBF7C160D4590F8AF70;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				8A79EC6B3A0BCFE4922FF903 /* XCRemoteSwiftPackageReference "SwiftSDK" */,
+			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
@@ -388,11 +411,13 @@
 				BFB43201056A5B95049B4296 /* ActionBarView.swift in Sources */,
 				9BA00C46D04375E53CCC5D80 /* AdManager.swift in Sources */,
 				AB46FB4381DF5E01B28C7827 /* AdaptiveGameLayout.swift in Sources */,
+				221FA31AB4E1036BEB0AE776 /* AnalyticsManager.swift in Sources */,
 				0DAFB042FCD0ED6889AF6B8D /* AnimationHelpers.swift in Sources */,
 				86AF000D6201E1A831B4E8A3 /* Card.swift in Sources */,
 				E0EA41F3DEB12A54C299B466 /* CardFanView.swift in Sources */,
 				3C27279F7E886C2E75FD4BC6 /* CardSizeEnvironment.swift in Sources */,
 				34A598D8F7FB00B3CBDC123F /* CardView.swift in Sources */,
+				728944A0987FD2F13850968C /* CloudSyncManager.swift in Sources */,
 				2918C67F7D74748DA8A40D7A /* Constants.swift in Sources */,
 				7AC5FF60B67DB2C6F4B990EC /* ContentView.swift in Sources */,
 				750B01449ADF02C544A29A6E /* CribbageAppApp.swift in Sources */,
@@ -679,6 +704,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8A79EC6B3A0BCFE4922FF903 /* XCRemoteSwiftPackageReference "SwiftSDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TelemetryDeck/SwiftSDK";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3AEC2AA2F19ECFF6ADC05960 /* TelemetryDeck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8A79EC6B3A0BCFE4922FF903 /* XCRemoteSwiftPackageReference "SwiftSDK" */;
+			productName = TelemetryDeck;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = BD42E3C65A71947C76621891 /* Project object */;
 }

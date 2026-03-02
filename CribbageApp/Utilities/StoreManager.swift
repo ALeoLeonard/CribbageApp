@@ -57,6 +57,7 @@ final class StoreManager {
                 await transaction.finish()
                 await updatePurchasedProducts()
                 purchaseError = nil
+                AnalyticsManager.shared.trackPurchaseCompleted(productID: product.id)
                 return true
             case .userCancelled:
                 return false

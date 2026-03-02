@@ -132,6 +132,7 @@ final class StatsManager {
             totalLosses += 1
             currentWinStreak = 0
         }
+        CloudSyncManager.shared.pushStats()
     }
 
     /// Record skunk result at end of game.
@@ -155,21 +156,25 @@ final class StatsManager {
                 skunksReceived += 1
             }
         }
+        CloudSyncManager.shared.pushStats()
     }
 
     func recordPeggingPoints(_ points: Int) {
         totalPeggingPoints += points
         totalPeggingRounds += 1
+        CloudSyncManager.shared.pushStats()
     }
 
     func recordHandScore(_ score: Int) {
         totalHandPoints += score
         totalHandsCounted += 1
         highestHandScore = max(highestHandScore, score)
+        CloudSyncManager.shared.pushStats()
     }
 
     func recordCribScore(_ score: Int) {
         highestCribScore = max(highestCribScore, score)
+        CloudSyncManager.shared.pushStats()
     }
 
     func resetAll() {
@@ -186,6 +191,7 @@ final class StatsManager {
         for key in keys {
             defaults.removeObject(forKey: key)
         }
+        CloudSyncManager.shared.pushStats()
     }
 
     // MARK: - Private

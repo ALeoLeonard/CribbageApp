@@ -62,6 +62,25 @@ enum Rank: String, CaseIterable, Codable, Hashable {
         }
     }
 
+    /// Human-readable name for VoiceOver.
+    var spokenName: String {
+        switch self {
+        case .ace: "Ace"
+        case .two: "2"
+        case .three: "3"
+        case .four: "4"
+        case .five: "5"
+        case .six: "6"
+        case .seven: "7"
+        case .eight: "8"
+        case .nine: "9"
+        case .ten: "10"
+        case .jack: "Jack"
+        case .queen: "Queen"
+        case .king: "King"
+        }
+    }
+
     /// Scoring value (A=1, 2-9 face, 10/J/Q/K=10).
     var value: Int {
         switch self {
@@ -88,4 +107,7 @@ struct Card: Identifiable, Hashable, Codable {
     var id: String { "\(rank.rawValue)\(suit.rawValue)" }
     var value: Int { rank.value }
     var label: String { "\(rank.rawValue)\(suit.symbol)" }
+
+    /// VoiceOver-friendly description, e.g. "Jack of Hearts".
+    var accessibilityDescription: String { "\(rank.spokenName) of \(suit.rawValue)" }
 }
