@@ -15,16 +15,16 @@ refs: []
 
 **Current Phase**: Beta / Pre-Launch
 
-Sprints 1-6 are complete. The app has a production-quality game engine, three AI tiers, polished UI with animations/sound/haptics, tutorial, pass-and-play, muggins, hint system, StoreKit 2 IAP, Game Center leaderboards + achievements, iCloud sync, TelemetryDeck analytics, VoiceOver accessibility, score breakdown with card-highlighting animation, in-app privacy policy, and release build optimizations. Ad monetization is deferred until post-launch to focus on game quality first.
+Sprints 1-6 are complete. The app has a production-quality game engine, three AI tiers, polished UI with animations/sound/haptics, tutorial, pass-and-play, muggins, hint system, StoreKit 2 IAP, Game Center leaderboards + achievements, iCloud sync, TelemetryDeck analytics, VoiceOver accessibility, score breakdown with card-highlighting animation, in-app privacy policy, and release build optimizations. The CosmeticRegistry foundation layer is complete, enabling scalable deep customization for v1.1. Ad monetization is deferred until post-launch to focus on game quality first.
 
 | Area | Maturity | Notes |
 |------|----------|-------|
-| Game Engine | Production | All rules, scoring, phases complete. 54 unit tests. |
+| Game Engine | Production | All rules, scoring, phases complete. 73 unit tests. |
 | AI | Production | 3 distinct strategies, well-tested. |
 | UI/UX | Production | Full views, animations, card highlighting, themes. |
 | Audio/Haptics | Production | Synthesized sounds, haptic feedback wired. |
 | Statistics | Production | Full stats, skunk tracking, synced via iCloud KVS. |
-| Themes | Production | 13 themes, premium unlock via StoreKit 2 IAP. |
+| Themes/Cosmetics | Production | 13 themes wrapped in CosmeticRegistry. 9 customization slots defined. ThemeManager is typealias. |
 | Monetization | Beta | StoreKit 2 IAP complete ($4.99 premium). Ads deferred. |
 | Analytics | Production | TelemetryDeck integrated (guarded in DEBUG). |
 | Game Center | Production | Auth, leaderboards, 13 achievements. |
@@ -142,6 +142,9 @@ Status: active | 2/5 done
 ### Sprint 6: Score Animation & App Store Prep
 - [x] Score breakdown card-highlighting animation, in-app privacy policy, app icon asset catalog, release build config, AnalyticsManager DEBUG guard, settings rate/privacy fixes
 
+### CosmeticRegistry: Deep Customization Foundation
+- [x] CosmeticSlot enum (9 slots), CosmeticItem protocol, theme wrappers, CosmeticRegistry class, ThemeManager typealias, 19 new tests
+
 ---
 
 ## Remaining Work to Ship v1.0
@@ -162,8 +165,8 @@ Status: active | 2/5 done
 ### v1.1: Deep Customization & Progression (NEW — from idea-tactile-immersion)
 
 #### epic-cosmetic-system: Cosmetic System & Deep Customization
-Status: draft | 8 tickets | Ref: [idea-tactile-immersion](../ideas/tactile-immersion.md)
-- [ ] `ticket-cosmetic-registry` [L] [p0-critical] — CosmeticSlot enum, CosmeticItem protocol, unified registry
+Status: active | 7 remaining | Ref: [idea-tactile-immersion](../ideas/tactile-immersion.md)
+- [x] `ticket-cosmetic-registry` [L] [p0-critical] — CosmeticSlot enum, CosmeticItem protocol, unified registry ✅
 - [ ] `ticket-phrase-packs` [M] [p1-high] — PhrasePack protocol + 3 packs (Classic, Grandpa, Trash Talk)
 - [ ] `ticket-peg-themes` [S] [p1-high] — PegTheme protocol + 6 peg styles
 - [ ] `ticket-sound-packs` [M] [p2-medium] — SoundPack protocol, refactor SoundManager, 2 packs
@@ -226,7 +229,7 @@ DONE ─────────────────────────
   Sprint 6 polish (complete)       ─┘
 
                     Post-MVP v1.1 (Customization — priority):
-ticket-cosmetic-registry ─────────┐
+ticket-cosmetic-registry (DONE) ──┐
   │                                ├──> epic-cosmetic-system (phrase packs, pegs, sounds, personas)
   └──> ticket-unlock-engine ───────┤
                                    └──> epic-progression-unlocks (celebrations, collection, nudges)
