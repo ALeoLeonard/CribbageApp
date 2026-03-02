@@ -19,12 +19,12 @@ Sprints 1-6 are complete. The app has a production-quality game engine, three AI
 
 | Area | Maturity | Notes |
 |------|----------|-------|
-| Game Engine | Production | All rules, scoring, phases complete. 73 unit tests. |
+| Game Engine | Production | All rules, scoring, phases complete. 96 unit tests. |
 | AI | Production | 3 distinct strategies, well-tested. |
 | UI/UX | Production | Full views, animations, card highlighting, themes. |
 | Audio/Haptics | Production | Synthesized sounds, haptic feedback wired. |
 | Statistics | Production | Full stats, skunk tracking, synced via iCloud KVS. |
-| Themes/Cosmetics | Production | 13 themes wrapped in CosmeticRegistry. 9 customization slots defined. ThemeManager is typealias. |
+| Themes/Cosmetics | Production | 13 themes + 3 phrase packs wrapped in CosmeticRegistry. 9 customization slots defined. ThemeManager is typealias. |
 | Monetization | Beta | StoreKit 2 IAP complete ($4.99 premium). Ads deferred. |
 | Analytics | Production | TelemetryDeck integrated (guarded in DEBUG). |
 | Game Center | Production | Auth, leaderboards, 13 achievements. |
@@ -145,6 +145,9 @@ Status: active | 2/5 done
 ### CosmeticRegistry: Deep Customization Foundation
 - [x] CosmeticSlot enum (9 slots), CosmeticItem protocol, theme wrappers, CosmeticRegistry class, ThemeManager typealias, 19 new tests
 
+### PhrasePack System
+- [x] PhrasePack protocol + PhraseEventType enum (18 event types), 3 built-in packs (Classic, Grandpa, Trash Talk), CosmeticRegistry integration, GameViewModel callout text driven by active phrase pack, 23 new tests
+
 ---
 
 ## Remaining Work to Ship v1.0
@@ -165,9 +168,9 @@ Status: active | 2/5 done
 ### v1.1: Deep Customization & Progression (NEW — from idea-tactile-immersion)
 
 #### epic-cosmetic-system: Cosmetic System & Deep Customization
-Status: active | 7 remaining | Ref: [idea-tactile-immersion](../ideas/tactile-immersion.md)
+Status: active | 6 remaining | Ref: [idea-tactile-immersion](../ideas/tactile-immersion.md)
 - [x] `ticket-cosmetic-registry` [L] [p0-critical] — CosmeticSlot enum, CosmeticItem protocol, unified registry ✅
-- [ ] `ticket-phrase-packs` [M] [p1-high] — PhrasePack protocol + 3 packs (Classic, Grandpa, Trash Talk)
+- [x] `ticket-phrase-packs` [M] [p1-high] — PhrasePack protocol + 3 packs (Classic, Grandpa, Trash Talk) ✅
 - [ ] `ticket-peg-themes` [S] [p1-high] — PegTheme protocol + 6 peg styles
 - [ ] `ticket-sound-packs` [M] [p2-medium] — SoundPack protocol, refactor SoundManager, 2 packs
 - [ ] `ticket-haptic-packs` [S] [p2-medium] — HapticPack protocol, bundle with sound packs
