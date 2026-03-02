@@ -619,6 +619,15 @@ final class GameViewModel {
         if engine.humanPeggingPoints > 0 {
             stats.recordPeggingPoints(engine.humanPeggingPoints)
         }
+
+        // Game Center score submissions
+        GameCenterManager.shared.submitAllStats()
+
+        // Ad cadence tracking
+        if AdManager.shared.recordGameCompleted() {
+            AdManager.shared.presentInterstitial()
+        }
+
         if won {
             if let milestone = stats.streakMilestone {
                 sound.playStreakFanfare(milestone: milestone)

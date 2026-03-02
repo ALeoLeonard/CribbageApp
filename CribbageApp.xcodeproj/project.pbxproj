@@ -13,11 +13,14 @@
 		14FEEAFAC80D6EB4E04D7C7C /* CribbageBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5843180EF1B46026B3721C9 /* CribbageBoardView.swift */; };
 		175FC45B1729C5D6AE5B04E2 /* GameBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E902C0C3243B6857CE3A9E /* GameBoardView.swift */; };
 		1F370BAB856EAC380B687378 /* PlayPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986B7D6BA95868018D7D2 /* PlayPhase.swift */; };
+		20B14E36F45BAB964C0B88F5 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = AF86EF902C32A5807181A552 /* Configuration.storekit */; };
+		24B051EA20EBC864D3F38343 /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598AC4DFFB08768020AD8F9 /* GameCenterManager.swift */; };
 		25A2A2F286254ED497BE1023 /* ThemePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D995F8DAA78116C879DB121 /* ThemePickerView.swift */; };
 		2918C67F7D74748DA8A40D7A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07DF68449CC062181A44B4 /* Constants.swift */; };
 		34A598D8F7FB00B3CBDC123F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DB89C988981B3EFD5C58CA /* CardView.swift */; };
 		3C27279F7E886C2E75FD4BC6 /* CardSizeEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A4D131C9A603AE0547B325 /* CardSizeEnvironment.swift */; };
 		43BA9691D321EBE4B1B35821 /* PlayPhaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */; };
+		4EE26CEE8B51AFE32F62F86D /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22699546BD6120DFA1B1A906 /* PaywallView.swift */; };
 		5225479A4E6251E954B5B385 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5AD574A3AC4ED85160792A /* DeckView.swift */; };
 		61CAFA57ED8BC3E51C09A3BE /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587E8094E6027D8EAFE30202 /* Deck.swift */; };
 		637854AD0F7ECB3B5E9650CD /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E03452F0CFE95B5DB25883 /* HapticManager.swift */; };
@@ -34,6 +37,8 @@
 		86AF000D6201E1A831B4E8A3 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD3DEF5A2AFE6CBFE5C5465 /* Card.swift */; };
 		87A36B718A7B842E1F817A3C /* AITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A158CEE251162854C6511B68 /* AITests.swift */; };
 		96451395D3A6BBB80C172011 /* SoundManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0DE3DEE7F89EE11DA3FD7B /* SoundManager.swift */; };
+		9B9F42B02A8142CECA5D5489 /* StoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01D1B80544DC8ED9F835943 /* StoreManager.swift */; };
+		9BA00C46D04375E53CCC5D80 /* AdManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F80E2A4B0D93B4B325C10F4 /* AdManager.swift */; };
 		9C8A2EB70B44D98BFC487BCE /* ServerModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F16A53FF0DF504F9F9008C1 /* ServerModels.swift */; };
 		9D9FF0806D9D002996FC34B3 /* AIDifficulty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33A6A1B1AA8EA8CBFE898D8E /* AIDifficulty.swift */; };
 		A55237FC27DE1D86DA51A658 /* StatsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E030DD3CF4837D4C4C44C236 /* StatsManager.swift */; };
@@ -52,6 +57,7 @@
 		E57E7DD23A85BFEA14DF8C66 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CE43B2E3B6E9C47EF1BEF8 /* GameOverView.swift */; };
 		F0168D0B15503351FB603832 /* EasyAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B50602FADD7EBEA096BE3C /* EasyAI.swift */; };
 		F17628926B25A84AB1F5ADB1 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D1EF60D63F69E4B01F357C /* StatsView.swift */; };
+		F8913AB141B84587ED146601 /* LeaderboardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46AF2B3C085DB78C4BD6AD99 /* LeaderboardsView.swift */; };
 		F8B79F0B63D2EC0605C5B4C4 /* MediumAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EFAAE3DBA8A691CF1E3EB8 /* MediumAI.swift */; };
 		FA880C8EDFEB8D33AC37F615 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289A5B4BF6E9EAAF8FF72831 /* MainMenuView.swift */; };
 /* End PBXBuildFile section */
@@ -77,12 +83,15 @@
 		18DB89C988981B3EFD5C58CA /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1AEB0D7D23803CB7EF1BFD55 /* GameEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		1C5AD574A3AC4ED85160792A /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		22699546BD6120DFA1B1A906 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		23A20848A0B39788EB0300CC /* HandOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandOverView.swift; sourceTree = "<group>"; };
 		289A5B4BF6E9EAAF8FF72831 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		2E07DF68449CC062181A44B4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		30D1EF60D63F69E4B01F357C /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
 		33A6A1B1AA8EA8CBFE898D8E /* AIDifficulty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIDifficulty.swift; sourceTree = "<group>"; };
 		3C61206A93B9376985756EB8 /* PlayAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayAreaView.swift; sourceTree = "<group>"; };
+		3F80E2A4B0D93B4B325C10F4 /* AdManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdManager.swift; sourceTree = "<group>"; };
+		46AF2B3C085DB78C4BD6AD99 /* LeaderboardsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardsView.swift; sourceTree = "<group>"; };
 		47EFAAE3DBA8A691CF1E3EB8 /* MediumAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediumAI.swift; sourceTree = "<group>"; };
 		492D7CB16E3A1884924971BE /* MultiplayerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplayerViewModel.swift; sourceTree = "<group>"; };
 		4D995F8DAA78116C879DB121 /* ThemePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemePickerView.swift; sourceTree = "<group>"; };
@@ -105,9 +114,12 @@
 		A3B61DE52168D6A022332897 /* TutorialOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialOverlayView.swift; sourceTree = "<group>"; };
 		A5843180EF1B46026B3721C9 /* CribbageBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CribbageBoardView.swift; sourceTree = "<group>"; };
 		AC166BD84563EF94C851CB97 /* ScoringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringTests.swift; sourceTree = "<group>"; };
+		AF86EF902C32A5807181A552 /* Configuration.storekit */ = {isa = PBXFileReference; path = Configuration.storekit; sourceTree = "<group>"; };
 		AFBF8DB0F5972BAFF91570B4 /* ScoringCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoringCalloutView.swift; sourceTree = "<group>"; };
 		B1E986B7D6BA95868018D7D2 /* PlayPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayPhase.swift; sourceTree = "<group>"; };
 		B5A4D131C9A603AE0547B325 /* CardSizeEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSizeEnvironment.swift; sourceTree = "<group>"; };
+		C01D1B80544DC8ED9F835943 /* StoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreManager.swift; sourceTree = "<group>"; };
+		C598AC4DFFB08768020AD8F9 /* GameCenterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCenterManager.swift; sourceTree = "<group>"; };
 		CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CD15AC727590EB5D488FD7DD /* CardFanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFanView.swift; sourceTree = "<group>"; };
 		D571190280CFB9632F72C5FC /* CribbageApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CribbageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,6 +165,7 @@
 		3AF3A707AA2DC81D03E7CBB2 /* CribbageApp */ = {
 			isa = PBXGroup;
 			children = (
+				AF86EF902C32A5807181A552 /* Configuration.storekit */,
 				CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */,
 				8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */,
 				65073A6FECEEB75F5324D2EC /* Engine */,
@@ -202,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				62B79D876241777F04510143 /* HowToPlayView.swift */,
+				46AF2B3C085DB78C4BD6AD99 /* LeaderboardsView.swift */,
 				289A5B4BF6E9EAAF8FF72831 /* MainMenuView.swift */,
 				30D1EF60D63F69E4B01F357C /* StatsView.swift */,
 			);
@@ -249,6 +263,7 @@
 		BBA88449EF78C26B80F6915B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				22699546BD6120DFA1B1A906 /* PaywallView.swift */,
 				DF3C509E24FBC40F85AD6D7C /* SettingsView.swift */,
 				4D995F8DAA78116C879DB121 /* ThemePickerView.swift */,
 			);
@@ -258,12 +273,15 @@
 		DC99AD2BE329EE3A2F246EFC /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				3F80E2A4B0D93B4B325C10F4 /* AdManager.swift */,
 				0E6495C749C145DCC06A4119 /* AnimationHelpers.swift */,
 				B5A4D131C9A603AE0547B325 /* CardSizeEnvironment.swift */,
 				2E07DF68449CC062181A44B4 /* Constants.swift */,
+				C598AC4DFFB08768020AD8F9 /* GameCenterManager.swift */,
 				12E03452F0CFE95B5DB25883 /* HapticManager.swift */,
 				FF0DE3DEE7F89EE11DA3FD7B /* SoundManager.swift */,
 				E030DD3CF4837D4C4C44C236 /* StatsManager.swift */,
+				C01D1B80544DC8ED9F835943 /* StoreManager.swift */,
 				8C9072C8C39ED621841345A6 /* Theme.swift */,
 				571D51AD48686B7E464D3B8F /* ThemeManager.swift */,
 			);
@@ -278,6 +296,7 @@
 			buildConfigurationList = BF3EC7737F50F6BE3674386F /* Build configuration list for PBXNativeTarget "CribbageApp" */;
 			buildPhases = (
 				D770FD7EEDB54E637FACBD07 /* Sources */,
+				CA2471501F83ABF1C8BB46F0 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -337,6 +356,17 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		CA2471501F83ABF1C8BB46F0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				20B14E36F45BAB964C0B88F5 /* Configuration.storekit in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		20E84FF3CB8D39C8B569D20A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -356,6 +386,7 @@
 				9D9FF0806D9D002996FC34B3 /* AIDifficulty.swift in Sources */,
 				6BFAAD834E5294B099F07943 /* AIProtocol.swift in Sources */,
 				BFB43201056A5B95049B4296 /* ActionBarView.swift in Sources */,
+				9BA00C46D04375E53CCC5D80 /* AdManager.swift in Sources */,
 				AB46FB4381DF5E01B28C7827 /* AdaptiveGameLayout.swift in Sources */,
 				0DAFB042FCD0ED6889AF6B8D /* AnimationHelpers.swift in Sources */,
 				86AF000D6201E1A831B4E8A3 /* Card.swift in Sources */,
@@ -370,6 +401,7 @@
 				5225479A4E6251E954B5B385 /* DeckView.swift in Sources */,
 				F0168D0B15503351FB603832 /* EasyAI.swift in Sources */,
 				175FC45B1729C5D6AE5B04E2 /* GameBoardView.swift in Sources */,
+				24B051EA20EBC864D3F38343 /* GameCenterManager.swift in Sources */,
 				054D553F473BF6CAF8A60C19 /* GameEngine.swift in Sources */,
 				E57E7DD23A85BFEA14DF8C66 /* GameOverView.swift in Sources */,
 				716B224CF7DB4209AC1BE672 /* GameState.swift in Sources */,
@@ -378,9 +410,11 @@
 				637854AD0F7ECB3B5E9650CD /* HapticManager.swift in Sources */,
 				858341BA1BAEE1A353561116 /* HardAI.swift in Sources */,
 				73EED096B7F4570C7DC6FCA1 /* HowToPlayView.swift in Sources */,
+				F8913AB141B84587ED146601 /* LeaderboardsView.swift in Sources */,
 				FA880C8EDFEB8D33AC37F615 /* MainMenuView.swift in Sources */,
 				F8B79F0B63D2EC0605C5B4C4 /* MediumAI.swift in Sources */,
 				E05837780C9DCBC5930F9C62 /* MultiplayerViewModel.swift in Sources */,
+				4EE26CEE8B51AFE32F62F86D /* PaywallView.swift in Sources */,
 				A8F365E9FC9BAF1DC847CD3F /* PlayAreaView.swift in Sources */,
 				1F370BAB856EAC380B687378 /* PlayPhase.swift in Sources */,
 				B647D9AF8A70D9076DC9C8B2 /* ScoreBreakdownView.swift in Sources */,
@@ -391,6 +425,7 @@
 				96451395D3A6BBB80C172011 /* SoundManager.swift in Sources */,
 				A55237FC27DE1D86DA51A658 /* StatsManager.swift in Sources */,
 				F17628926B25A84AB1F5ADB1 /* StatsView.swift in Sources */,
+				9B9F42B02A8142CECA5D5489 /* StoreManager.swift in Sources */,
 				AC7A9533BA22F0E343F422CB /* Theme.swift in Sources */,
 				D891CAED1209BD22D66B4D57 /* ThemeManager.swift in Sources */,
 				25A2A2F286254ED497BE1023 /* ThemePickerView.swift in Sources */,

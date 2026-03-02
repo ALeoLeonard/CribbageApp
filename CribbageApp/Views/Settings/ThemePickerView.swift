@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ThemePickerView: View {
     @Environment(ThemeManager.self) private var themeManager
+    @State private var showPaywall = false
 
     var body: some View {
         ScrollView {
@@ -50,6 +51,9 @@ struct ThemePickerView: View {
         .toolbarBackground(CribbageTheme.feltGreenDark, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
+        .sheet(isPresented: $showPaywall) {
+            PaywallView()
+        }
     }
 
     // MARK: - Section
@@ -78,6 +82,7 @@ struct ThemePickerView: View {
         return Button {
             if isLocked {
                 HapticManager.invalidAction()
+                showPaywall = true
             } else {
                 themeManager.selectCardBack(theme.id)
                 HapticManager.selection()
@@ -130,6 +135,7 @@ struct ThemePickerView: View {
         return Button {
             if isLocked {
                 HapticManager.invalidAction()
+                showPaywall = true
             } else {
                 themeManager.selectTable(theme.id)
                 HapticManager.selection()
@@ -178,6 +184,7 @@ struct ThemePickerView: View {
         return Button {
             if isLocked {
                 HapticManager.invalidAction()
+                showPaywall = true
             } else {
                 themeManager.selectBoard(theme.id)
                 HapticManager.selection()

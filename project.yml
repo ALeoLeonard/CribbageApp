@@ -16,6 +16,9 @@ targets:
     platform: iOS
     sources:
       - CribbageApp
+    capabilities:
+      In-App Purchase: {}
+      Game Center: {}
     settings:
       base:
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: true
@@ -50,6 +53,7 @@ schemes:
         CribbageAppTests: [test]
     run:
       config: Debug
+      storeKitConfiguration: CribbageApp/Configuration.storekit
     test:
       config: Debug
       targets:

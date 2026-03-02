@@ -9,10 +9,45 @@ struct SettingsView: View {
     @AppStorage("mugginsEnabled") private var mugginsEnabled = false
     @AppStorage("nobsEnabled") private var nobsEnabled = true
     @AppStorage("hisHeelsEnabled") private var hisHeelsEnabled = true
+    @State private var showPaywall = false
+    private var store = StoreManager.shared
 
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
+                // Premium section
+                settingsCard(title: "Premium") {
+                    if store.isPremium {
+                        HStack {
+                            Image(systemName: "crown.fill")
+                                .foregroundStyle(CribbageTheme.gold)
+                                .frame(width: 24)
+                            Text("Premium Unlocked")
+                                .font(.body.weight(.medium))
+                                .foregroundStyle(CribbageTheme.ivory)
+                            Spacer()
+                            Image(systemName: "checkmark.seal.fill")
+                                .foregroundStyle(CribbageTheme.gold)
+                        }
+                    } else {
+                        Button {
+                            showPaywall = true
+                        } label: {
+                            HStack {
+                                Image(systemName: "crown.fill")
+                                    .foregroundStyle(CribbageTheme.gold)
+                                    .frame(width: 24)
+                                Text("Upgrade to Premium")
+                                    .foregroundStyle(CribbageTheme.ivory)
+                                Spacer()
+                                Text(store.premiumProduct?.displayPrice ?? "$4.99")
+                                    .font(.subheadline.weight(.semibold))
+                                    .foregroundStyle(CribbageTheme.gold)
+                            }
+                        }
+                    }
+                }
+
                 // Player section
                 settingsCard(title: "Player") {
                     HStack {
@@ -163,6 +198,14 @@ struct SettingsView: View {
                 // Support section
                 settingsCard(title: "Support") {
                     VStack(spacing: 12) {
+                        if !store.isPremium {
+                            Button {
+                                Task { await store.restore() }
+                            } label: {
+                                settingsRow(icon: "arrow.clockwise", label: "Restore Purchases")
+                            }
+                        }
+
                         if let url = URL(string: "https://apps.apple.com/app/id0") { // placeholder
                             Link(destination: url) {
                                 settingsRow(icon: "star.fill", label: "Rate on App Store")
@@ -194,6 +237,9 @@ struct SettingsView: View {
         .toolbarBackground(CribbageTheme.feltGreenDark, for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .toolbarColorScheme(.dark, for: .navigationBar)
+        .sheet(isPresented: $showPaywall) {
+            PaywallView()
+        }
     }
 
     // MARK: - Helpers

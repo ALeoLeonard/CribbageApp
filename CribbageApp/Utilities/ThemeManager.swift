@@ -77,6 +77,13 @@ final class ThemeManager {
         unlockedThemeIDs.contains(themeID)
     }
 
+    var premiumThemeIDs: Set<String> {
+        let cardIDs = cardBacks.filter(\.isPremium).map(\.id)
+        let tableIDs = tables.filter(\.isPremium).map(\.id)
+        let boardIDs = boards.filter(\.isPremium).map(\.id)
+        return Set(cardIDs + tableIDs + boardIDs)
+    }
+
     func selectCardBack(_ id: String) {
         guard isUnlocked(id) else { return }
         activeCardBackID = id
@@ -88,6 +95,18 @@ final class ThemeManager {
     func selectBoard(_ id: String) {
         guard isUnlocked(id) else { return }
         activeBoardID = id
+    }
+
+    func unlockAllPremiumThemes() {
+        unlockedThemeIDs = unlockedThemeIDs.union(premiumThemeIDs)
+    }
+
+    func lockPremiumThemes() {
+        unlockedThemeIDs = unlockedThemeIDs.subtracting(premiumThemeIDs)
+        // Revert active selections to defaults if now locked
+        if !isUnlocked(activeCardBackID) { activeCardBackID = "classic-navy" }
+        if !isUnlocked(activeTableID) { activeTableID = "green-felt" }
+        if !isUnlocked(activeBoardID) { activeBoardID = "classic-wood" }
     }
 
     private init() {

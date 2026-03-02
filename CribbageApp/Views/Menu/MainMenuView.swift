@@ -5,6 +5,8 @@ struct MainMenuView: View {
     @Environment(\.horizontalSizeClass) private var sizeClass
     @State private var pulsing = false
     @State private var showPassAndPlay = false
+    @State private var showLeaderboards = false
+    private var gameCenter = GameCenterManager.shared
 
     var body: some View {
         @Bindable var vm = viewModel
@@ -117,7 +119,7 @@ struct MainMenuView: View {
             .padding(.horizontal, 32)
             .staggeredAppearance(index: 6)
 
-            // Stats, How to Play, and Settings row
+            // Stats, How to Play, Boards, and Settings row
             HStack(spacing: 20) {
                 NavigationLink {
                     StatsView()
@@ -133,6 +135,16 @@ struct MainMenuView: View {
                     Label("Rules", systemImage: "book.fill")
                         .font(.subheadline.weight(.medium))
                         .foregroundStyle(CribbageTheme.ivory.opacity(0.8))
+                }
+
+                if gameCenter.isAuthenticated {
+                    Button {
+                        showLeaderboards = true
+                    } label: {
+                        Label("Boards", systemImage: "trophy.fill")
+                            .font(.subheadline.weight(.medium))
+                            .foregroundStyle(CribbageTheme.ivory.opacity(0.8))
+                    }
                 }
 
                 NavigationLink {
@@ -156,6 +168,9 @@ struct MainMenuView: View {
         .sheet(isPresented: $showPassAndPlay) {
             PassAndPlaySetupView()
                 .environment(viewModel)
+        }
+        .sheet(isPresented: $showLeaderboards) {
+            LeaderboardsView()
         }
     }
 }

@@ -1,0 +1,35 @@
+{
+  "identifier" : "8B5C9A7E-3F1D-4E8A-B2C6-1D9F0E4A5B3C",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "F1A2B3C4-D5E6-7890-ABCD-EF1234567890",
+      "localizations" : [
+        {
+          "description" : "Remove ads and unlock all premium themes",
+          "displayName" : "Premium Upgrade",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.cribbage.premium",
+      "referenceName" : "Premium Upgrade",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "0",
+    "_developerTeamID" : "",
+    "_lastSynchronizedDate" : "2026-03-01T00:00:00Z"
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
