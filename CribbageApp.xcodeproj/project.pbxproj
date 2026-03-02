@@ -15,14 +15,18 @@
 		1F370BAB856EAC380B687378 /* PlayPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E986B7D6BA95868018D7D2 /* PlayPhase.swift */; };
 		20B14E36F45BAB964C0B88F5 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = AF86EF902C32A5807181A552 /* Configuration.storekit */; };
 		221FA31AB4E1036BEB0AE776 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F28378DFA44355E5F03B5C2 /* AnalyticsManager.swift */; };
+		23BD93ACA8E6A30118D7C4EE /* CosmeticItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51DFF58FAB9857E614E40982 /* CosmeticItem.swift */; };
 		24B051EA20EBC864D3F38343 /* GameCenterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598AC4DFFB08768020AD8F9 /* GameCenterManager.swift */; };
 		25A2A2F286254ED497BE1023 /* ThemePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D995F8DAA78116C879DB121 /* ThemePickerView.swift */; };
 		2918C67F7D74748DA8A40D7A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E07DF68449CC062181A44B4 /* Constants.swift */; };
 		34A598D8F7FB00B3CBDC123F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DB89C988981B3EFD5C58CA /* CardView.swift */; };
+		36EBCB32B0D3B3FB968131F4 /* CosmeticRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 662845B473DFA07F7621EF71 /* CosmeticRegistry.swift */; };
 		3C27279F7E886C2E75FD4BC6 /* CardSizeEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5A4D131C9A603AE0547B325 /* CardSizeEnvironment.swift */; };
 		43BA9691D321EBE4B1B35821 /* PlayPhaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */; };
 		4EE26CEE8B51AFE32F62F86D /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22699546BD6120DFA1B1A906 /* PaywallView.swift */; };
 		5225479A4E6251E954B5B385 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C5AD574A3AC4ED85160792A /* DeckView.swift */; };
+		5856128D3566A8990EF8ED62 /* CosmeticRegistryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2767428C8410B731EAB15A5A /* CosmeticRegistryTests.swift */; };
+		59DA49985F00CC3527698582 /* CosmeticItems+Themes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F33066AFBD2842D4B58C792C /* CosmeticItems+Themes.swift */; };
 		5C0A0F4234B27CFB27A367E7 /* PrivacyPolicyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BEA8465368F31484432965F /* PrivacyPolicyView.swift */; };
 		61CAFA57ED8BC3E51C09A3BE /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 587E8094E6027D8EAFE30202 /* Deck.swift */; };
 		637854AD0F7ECB3B5E9650CD /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12E03452F0CFE95B5DB25883 /* HapticManager.swift */; };
@@ -59,6 +63,7 @@
 		E074E1C23982527E873E36BE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6F5F21574ED24741A4A322 /* Assets.xcassets */; };
 		E0E4D5FB8DDFFFC2A0D561F4 /* HandOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A20848A0B39788EB0300CC /* HandOverView.swift */; };
 		E0EA41F3DEB12A54C299B466 /* CardFanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD15AC727590EB5D488FD7DD /* CardFanView.swift */; };
+		E3269F5F9B5927E31348856B /* CosmeticSlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EAC834D015367C4F4607547 /* CosmeticSlot.swift */; };
 		E57E7DD23A85BFEA14DF8C66 /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14CE43B2E3B6E9C47EF1BEF8 /* GameOverView.swift */; };
 		F0168D0B15503351FB603832 /* EasyAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B50602FADD7EBEA096BE3C /* EasyAI.swift */; };
 		F17628926B25A84AB1F5ADB1 /* StatsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D1EF60D63F69E4B01F357C /* StatsView.swift */; };
@@ -90,6 +95,7 @@
 		1C5AD574A3AC4ED85160792A /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 		22699546BD6120DFA1B1A906 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		23A20848A0B39788EB0300CC /* HandOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HandOverView.swift; sourceTree = "<group>"; };
+		2767428C8410B731EAB15A5A /* CosmeticRegistryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticRegistryTests.swift; sourceTree = "<group>"; };
 		289A5B4BF6E9EAAF8FF72831 /* MainMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		2E07DF68449CC062181A44B4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		30D1EF60D63F69E4B01F357C /* StatsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsView.swift; sourceTree = "<group>"; };
@@ -104,11 +110,14 @@
 		4F16A53FF0DF504F9F9008C1 /* ServerModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModels.swift; sourceTree = "<group>"; };
 		4F28378DFA44355E5F03B5C2 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		50E902C0C3243B6857CE3A9E /* GameBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameBoardView.swift; sourceTree = "<group>"; };
+		51DFF58FAB9857E614E40982 /* CosmeticItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticItem.swift; sourceTree = "<group>"; };
 		571D51AD48686B7E464D3B8F /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		57E6C2B9534FF9832B484A4D /* ScoreBreakdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreBreakdownView.swift; sourceTree = "<group>"; };
 		587E8094E6027D8EAFE30202 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
 		62B79D876241777F04510143 /* HowToPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToPlayView.swift; sourceTree = "<group>"; };
+		662845B473DFA07F7621EF71 /* CosmeticRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticRegistry.swift; sourceTree = "<group>"; };
 		76C74977A19BC49777145619 /* GameState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameState.swift; sourceTree = "<group>"; };
+		7EAC834D015367C4F4607547 /* CosmeticSlot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CosmeticSlot.swift; sourceTree = "<group>"; };
 		7FF285A067E0D69E106A177D /* AdaptiveGameLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveGameLayout.swift; sourceTree = "<group>"; };
 		8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CribbageAppApp.swift; sourceTree = "<group>"; };
 		8C9072C8C39ED621841345A6 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
@@ -136,6 +145,7 @@
 		E030DD3CF4837D4C4C44C236 /* StatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsManager.swift; sourceTree = "<group>"; };
 		E74F6CAEA289BE054592F85E /* AIProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProtocol.swift; sourceTree = "<group>"; };
 		F2B50602FADD7EBEA096BE3C /* EasyAI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasyAI.swift; sourceTree = "<group>"; };
+		F33066AFBD2842D4B58C792C /* CosmeticItems+Themes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CosmeticItems+Themes.swift"; sourceTree = "<group>"; };
 		FF0DE3DEE7F89EE11DA3FD7B /* SoundManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -151,6 +161,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		197AC22B3D6DD1BC9A3D916F /* Cosmetics */ = {
+			isa = PBXGroup;
+			children = (
+				51DFF58FAB9857E614E40982 /* CosmeticItem.swift */,
+				F33066AFBD2842D4B58C792C /* CosmeticItems+Themes.swift */,
+				662845B473DFA07F7621EF71 /* CosmeticRegistry.swift */,
+				7EAC834D015367C4F4607547 /* CosmeticSlot.swift */,
+			);
+			path = Cosmetics;
+			sourceTree = "<group>";
+		};
 		1F582779EAB56463B794C756 /* AI */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				A158CEE251162854C6511B68 /* AITests.swift */,
+				2767428C8410B731EAB15A5A /* CosmeticRegistryTests.swift */,
 				97650273E09901D07D5EBD3E /* GameEngineTests.swift */,
 				A3487270295B5CF697C3DC48 /* PlayPhaseTests.swift */,
 				AC166BD84563EF94C851CB97 /* ScoringTests.swift */,
@@ -189,6 +211,7 @@
 				AF86EF902C32A5807181A552 /* Configuration.storekit */,
 				CC8CECE3C606E9CCA2F02E61 /* ContentView.swift */,
 				8A71A4D88BBACFDED78272BF /* CribbageAppApp.swift */,
+				197AC22B3D6DD1BC9A3D916F /* Cosmetics */,
 				65073A6FECEEB75F5324D2EC /* Engine */,
 				5F3BA6B2A3C152504B9B1BC5 /* Models */,
 				DC99AD2BE329EE3A2F246EFC /* Utilities */,
@@ -403,6 +426,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87A36B718A7B842E1F817A3C /* AITests.swift in Sources */,
+				5856128D3566A8990EF8ED62 /* CosmeticRegistryTests.swift in Sources */,
 				85C23A4F21716537B725E0D7 /* GameEngineTests.swift in Sources */,
 				43BA9691D321EBE4B1B35821 /* PlayPhaseTests.swift in Sources */,
 				A6733B4B076AEF9791B90615 /* ScoringTests.swift in Sources */,
@@ -427,6 +451,10 @@
 				728944A0987FD2F13850968C /* CloudSyncManager.swift in Sources */,
 				2918C67F7D74748DA8A40D7A /* Constants.swift in Sources */,
 				7AC5FF60B67DB2C6F4B990EC /* ContentView.swift in Sources */,
+				23BD93ACA8E6A30118D7C4EE /* CosmeticItem.swift in Sources */,
+				59DA49985F00CC3527698582 /* CosmeticItems+Themes.swift in Sources */,
+				36EBCB32B0D3B3FB968131F4 /* CosmeticRegistry.swift in Sources */,
+				E3269F5F9B5927E31348856B /* CosmeticSlot.swift in Sources */,
 				750B01449ADF02C544A29A6E /* CribbageAppApp.swift in Sources */,
 				14FEEAFAC80D6EB4E04D7C7C /* CribbageBoardView.swift in Sources */,
 				61CAFA57ED8BC3E51C09A3BE /* Deck.swift in Sources */,
