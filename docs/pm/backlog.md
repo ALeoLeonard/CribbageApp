@@ -207,7 +207,7 @@ Status: active | 2 remaining | Ref: [idea-tactile-immersion](../ideas/tactile-im
 - [x] `ticket-sound-packs` [M] [p2-medium] — SoundPack protocol, refactor SoundManager, 2 packs (Classic free, Quiet Evening premium) ✅
 - [x] `ticket-haptic-packs` [S] [p2-medium] — HapticPack protocol + 3 packs (Standard, Subtle, Intense), HapticManager delegates to active pack ✅
 - [x] `ticket-card-front-themes` [L] [p2-medium] — CardFrontTheme protocol, CardView refactor, 3 styles (Standard free, Modern free, Vintage premium) ✅
-- [ ] `ticket-cosmetic-picker-ui` [M] [p1-high] — Generic picker view for any CosmeticSlot
+- [x] `ticket-cosmetic-picker-ui` [M] [p1-high] — Full picker UI for all 8 cosmetic slots (card fronts, pegs, phrases, sounds, haptics) ✅
 - [ ] `ticket-persona-system` [M] [p2-medium] — Persona struct: name, avatar, phrase pack, loadout
 
 #### epic-progression-unlocks: Progression & Unlock Engine

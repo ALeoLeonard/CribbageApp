@@ -22,6 +22,24 @@ final class CosmeticSlotTests: XCTestCase {
         XCTAssertEqual(CosmeticSlot.table.defaultItemID, "green-felt")
         XCTAssertEqual(CosmeticSlot.board.defaultItemID, "classic-wood")
     }
+
+    func testDisplayNames() {
+        XCTAssertEqual(CosmeticSlot.cardBack.displayName, "Card Backs")
+        XCTAssertEqual(CosmeticSlot.cardFront.displayName, "Card Fronts")
+        XCTAssertEqual(CosmeticSlot.table.displayName, "Tables")
+        XCTAssertEqual(CosmeticSlot.board.displayName, "Boards")
+        XCTAssertEqual(CosmeticSlot.peg.displayName, "Peg Colors")
+        XCTAssertEqual(CosmeticSlot.soundPack.displayName, "Sound Packs")
+        XCTAssertEqual(CosmeticSlot.hapticPack.displayName, "Haptic Packs")
+        XCTAssertEqual(CosmeticSlot.phrasePack.displayName, "Phrase Packs")
+        XCTAssertEqual(CosmeticSlot.avatar.displayName, "Avatars")
+    }
+
+    func testAllSlotsHaveNonEmptyDisplayName() {
+        for slot in CosmeticSlot.allCases {
+            XCTAssertFalse(slot.displayName.isEmpty, "\(slot.rawValue) should have a non-empty displayName")
+        }
+    }
 }
 
 // MARK: - CosmeticItem Tests

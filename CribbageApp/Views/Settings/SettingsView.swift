@@ -180,7 +180,7 @@ struct SettingsView: View {
                             Image(systemName: "paintpalette.fill")
                                 .foregroundStyle(CribbageTheme.gold)
                                 .frame(width: 24)
-                            Text("Customize Themes")
+                            Text("Customize")
                                 .foregroundStyle(CribbageTheme.ivory)
                             Spacer()
                             Image(systemName: "chevron.right")

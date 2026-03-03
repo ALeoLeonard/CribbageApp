@@ -24,6 +24,21 @@ enum CosmeticSlot: String, CaseIterable, Sendable {
         }
     }
 
+    /// Human-readable section title for the picker UI.
+    var displayName: String {
+        switch self {
+        case .cardBack: return "Card Backs"
+        case .cardFront: return "Card Fronts"
+        case .table: return "Tables"
+        case .board: return "Boards"
+        case .peg: return "Peg Colors"
+        case .soundPack: return "Sound Packs"
+        case .hapticPack: return "Haptic Packs"
+        case .phrasePack: return "Phrase Packs"
+        case .avatar: return "Avatars"
+        }
+    }
+
     /// Default item ID when nothing is equipped.
     var defaultItemID: String {
         switch self {
